@@ -1,8 +1,8 @@
-#Process
+# Process
 
-##Branches
+## Branches
 Make sure to select the right branch
-###Front End
+### Front End
 Tru & Sara & Ap
 
 incl:
@@ -10,22 +10,22 @@ incl:
 - css
 - client js
 
-###Server
+### Server
 Emma
 
 incl:
 - server js
 
-###Database
+### Database
 Ana & Ger
 
 incl:
 - database itself
 - sql queries
 
-##Testing
+## Testing
 Everyone tests their work as they go along through travis.cl
 
-##Version Management
+## Version Management
 New version is classed as having each branch been updated & put into the master file.
 Meet at least once a week to keep track of progress
