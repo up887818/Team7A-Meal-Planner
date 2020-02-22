@@ -1,0 +1,20 @@
+{
+  "name": "team7a-meal-planner",
+  "version": "1.0.0",
+  "description": "Meal Planner for Software Engineering CW",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/up887818/Team7A-Meal-Planner.git"
+  },
+  "author": "887818 900921 855020 919029 825571 883442",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/up887818/Team7A-Meal-Planner/issues"
+  },
+  "homepage": "https://github.com/up887818/Team7A-Meal-Planner#readme"
+}
