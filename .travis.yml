@@ -1,0 +1,20 @@
+#Team 7A Meal Planner
+#Automated Testing using travis-ci
+
+language: node-js
+cache: npm
+
+install:
+  - npm ci
+  #equivilent to npm install
+
+script:
+  - npm start
+  #per package.json: npm server.js
+
+deploy:
+  provider: pages
+  # github pages
+  github-token: $GITHUB_TOKEN
+  on:
+    branch: testing
