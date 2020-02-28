@@ -5,8 +5,9 @@ language: node-js
 cache: npm
 
 install:
-  - npm ci
-  #equivilent to npm install
+  - npm install
+  - npm run setup
+  #these are steps used to setup the web programming cw
 
 script:
   - npm start
