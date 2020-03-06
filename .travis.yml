@@ -6,7 +6,8 @@ cache: npm
 
 install:
   - npm install
-  - npm run setup
+  #not currently needed
+  #- npm run setup
   #these are steps used to setup the web programming cw
 
 script:
