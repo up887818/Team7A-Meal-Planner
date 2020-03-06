@@ -2,7 +2,7 @@
 #Automated Testing using travis-ci
 
 language: node_js
-rvm:
+node_js:
   - 12.16.1
   # recommended, latest is 13.10.1
   # travis runs an earlier version that actually ends up breaking the code
