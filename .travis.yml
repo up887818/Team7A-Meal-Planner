@@ -1,7 +1,7 @@
 #Team 7A Meal Planner
 #Automated Testing using travis-ci
 
-language: node-js
+language: node_js
 rvm:
   - 12.16.1
   # recommended, latest is 13.10.1
