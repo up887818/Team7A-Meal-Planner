@@ -14,6 +14,9 @@ create table recipe (
     calories varchar(20),
     fat varchar (20),
     protein varchar (20),
+    salt varchar (20),
+    sugar varchar (20),
+    fibre varchar (20), 
     carbonhydrates varchar(20)
 );
 
