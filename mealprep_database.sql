@@ -40,3 +40,7 @@ create table recipe_allergen (
     foreign key (recipe_id) references recipe(recipe_id),
     foreign key (allergen_id) references allergen(allergen_id)
 );
+
+
+create table user ?
+);
