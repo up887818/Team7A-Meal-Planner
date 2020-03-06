@@ -10,3 +10,5 @@ create table recipe (
     fibre varchar (20), 
     carbonhydrates varchar(20)
 );
+
+//add this changes to the main database file 'mealprep_database.sql'
