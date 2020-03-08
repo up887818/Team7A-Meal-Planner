@@ -4,11 +4,11 @@ create database mealprep;
 
 create table cuisine (
     cuisine_id serial primary key,
-    cuisine_name varchar(20),
+    cuisine_name varchar(20)
 );
 
 create table recipe (
-    recipe_id serial primary key.
+    recipe_id serial primary key,
     recipe_name varchar(25),
     cooking_time varchar(10),
     calories varchar(20),
