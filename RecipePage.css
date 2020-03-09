@@ -1,5 +1,19 @@
 /*This external stylesheet is for the Recipe page of the website*/
+.topBar{background-color: #333359;
+		margin-top: 0px;
+		margin-bottom:0px;
+		margin-left:0px; 
+		margin-right:0px;}
 
+span.topBar{font-size: 350%; 
+			text-align: center;}
 
-p.rightBar{margin-left: 70%;
-background-color: #333359;}
+input.topSearch{margin-top: 0px;
+				margin-bottom:0px;
+				margin-left: 65%;
+				margin-right:40%}
+
+.rightBar{margin-left:70%;
+		  margin-top:0%;
+		  margin-bottom:0%;
+		  background-color: #333359;}
