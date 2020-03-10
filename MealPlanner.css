@@ -1,4 +1,27 @@
 /*This external stylesheet is for the Recipe page of the website*/
+
+body{background-color:#cce6ff;}
+
+/*Below is the css for the Index page*/
+.form-Format{width:30px;
+			 position: absolute;
+			 top:35%;
+			 left:35%;}
+
+a.form-Format{top: 100%;
+			  left:70%;
+			  width: 300px;
+			  display: inline-block;
+			  text-align: center;
+			   }
+
+.text-in{ height:30px;
+    font-size:14pt;}
+
+
+
+/*Below is the css for the Recipe page*/
+
 .topBar{background-color: #333359;
 		margin-top: 0px;
 		margin-bottom:0px;
