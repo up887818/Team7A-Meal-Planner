@@ -58,7 +58,7 @@ create table app_user (
 create table user_allergen (
     user_id int not null,
     allergen_id int not null,
-    foreign key (user_id) references user(user_id),
+    foreign key (user_id) references app_user(user_id),
     foreign key (allergen_id) references allergen(allergen_id)
 );
 
@@ -66,6 +66,6 @@ create table user_allergen (
 create table user_cuisine (
     user_id int not null,
     cuisine_id int not null,
-    foreign key (user_id) references user(user_id),
+    foreign key (user_id) references app_user(user_id),
     foreign key (cuisine_id) references cuisine(cuisine_id)
 );
