@@ -53,3 +53,19 @@ create table user (
     foreign key (allergen_id) references allergen(allergen_id),
     foreign key (cuisine_id) references cuisine(cuisine_id)
 );
+
+/* link table between user table and allergen table to resolve many-to-many relationship */
+create table user_allergen (
+    user_id int not null,
+    allergen_id int not null,
+    foreign key (user_id) references user(user_id),
+    foreign key (allergen_id) references allergen(allergen_id)
+);
+
+/* link table between user table and cuisine table to resolve many-to-many relationship */
+create table user_cuisine (
+    user_id int not null,
+    cuisine_id int not null,
+    foreign key (user_id) references user(user_id),
+    foreign key (cuisine_id) references cuisine(cuisine_id)
+);
