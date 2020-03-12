@@ -61,16 +61,16 @@ insert into recipe_allergen (recipe_id, allergen_id) values (7, 9);
 insert into recipe_allergen (recipe_id, allergen_id) values (1, 4);
 
 --table user
-insert into user (user_id, first_name, last_name, email, calories, allergen_id, cuisine_id) values (1, 'Hube', 'Grieve', 'hgrieve0@oracle.com', 1975, 8, 4);
-insert into user (user_id, first_name, last_name, email, calories, allergen_id, cuisine_id) values (2, 'Herta', 'Tomaszynski', 'htomaszynski1@desdev.cn', 1696, 2, 8);
-insert into user (user_id, first_name, last_name, email, calories, allergen_id, cuisine_id) values (3, 'Domenic', 'Yegoshin', 'dyegoshin2@google.cn', 1438, 13, 7);
-insert into user (user_id, first_name, last_name, email, calories, allergen_id, cuisine_id) values (4, 'Marcy', 'Scopes', 'mscopes3@npr.org', 1002, 4, 2);
-insert into user (user_id, first_name, last_name, email, calories, allergen_id, cuisine_id) values (5, 'Ansel', 'Dachs', 'adachs4@timesonline.co.uk', 1870, 10, 9);
-insert into user (user_id, first_name, last_name, email, calories, allergen_id, cuisine_id) values (6, 'Gan', 'Rodell', 'grodell5@slashdot.org', 1884, 4, 9);
-insert into user (user_id, first_name, last_name, email, calories, allergen_id, cuisine_id) values (7, 'Sadie', 'Corran', 'scorran6@baidu.com', 1473, 10, 9);
-insert into user (user_id, first_name, last_name, email, calories, allergen_id, cuisine_id) values (8, 'Mavis', 'Todman', 'mtodman7@icq.com', 1197, 13, 4);
-insert into user (user_id, first_name, last_name, email, calories, allergen_id, cuisine_id) values (9, 'Aaron', 'Ovanesian', 'aovanesian8@php.net', 1510, 8, 6);
-insert into user (user_id, first_name, last_name, email, calories, allergen_id, cuisine_id) values (10, 'Consuela', 'Mourant', 'cmourant9@rambler.ru', 1330, 2, 6);
+insert into app_user (user_id, first_name, last_name, email, calories, allergen_id, cuisine_id) values (1, 'Hube', 'Grieve', 'hgrieve0@oracle.com', 1975, 8, 4);
+insert into app_user (user_id, first_name, last_name, email, calories, allergen_id, cuisine_id) values (2, 'Herta', 'Tomaszynski', 'htomaszynski1@desdev.cn', 1696, 2, 8);
+insert into app_user (user_id, first_name, last_name, email, calories, allergen_id, cuisine_id) values (3, 'Domenic', 'Yegoshin', 'dyegoshin2@google.cn', 1438, 13, 7);
+insert into app_user (user_id, first_name, last_name, email, calories, allergen_id, cuisine_id) values (4, 'Marcy', 'Scopes', 'mscopes3@npr.org', 1002, 4, 2);
+insert into app_user (user_id, first_name, last_name, email, calories, allergen_id, cuisine_id) values (5, 'Ansel', 'Dachs', 'adachs4@timesonline.co.uk', 1870, 10, 9);
+insert into app_user (user_id, first_name, last_name, email, calories, allergen_id, cuisine_id) values (6, 'Gan', 'Rodell', 'grodell5@slashdot.org', 1884, 4, 9);
+insert into app_user (user_id, first_name, last_name, email, calories, allergen_id, cuisine_id) values (7, 'Sadie', 'Corran', 'scorran6@baidu.com', 1473, 10, 9);
+insert into app_user (user_id, first_name, last_name, email, calories, allergen_id, cuisine_id) values (8, 'Mavis', 'Todman', 'mtodman7@icq.com', 1197, 13, 4);
+insert into app_user (user_id, first_name, last_name, email, calories, allergen_id, cuisine_id) values (9, 'Aaron', 'Ovanesian', 'aovanesian8@php.net', 1510, 8, 6);
+insert into app_user (user_id, first_name, last_name, email, calories, allergen_id, cuisine_id) values (10, 'Consuela', 'Mourant', 'cmourant9@rambler.ru', 1330, 2, 6);
 
 --table user_allergen
 insert into user_allergen (user_id, allergen_id) values (6, 3);
