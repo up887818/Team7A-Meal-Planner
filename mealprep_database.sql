@@ -12,12 +12,12 @@ create table recipe (
     recipe_name varchar(25) not null,
     cooking_time varchar(10),
     calories int,
-    fat varchar (20),
-    protein varchar (20),
-    salt varchar (20),
-    sugar varchar (20),
-    fibre varchar (20), 
-    carbonhydrates varchar(20)
+    fat int,
+    protein int,
+    salt int,
+    sugar int,
+    fibre int, 
+    carbonhydrates int
 );
 
 create table allergen (
