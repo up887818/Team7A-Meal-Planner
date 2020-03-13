@@ -20,6 +20,22 @@ a.form-Format{top: 100%;
 
 
 
+/*Homepage css below*/
+
+ul{
+	list-style: none;
+}
+
+
+li.menuBar{align-items: center;
+		   margin: 2%;
+  		   padding: 5%;
+  		   overflow: hidden;
+  		   display: inline-block;
+  		   background-color: #333359;}
+ a.menuBar{color:white;text-decoration:none; }
+
+
 /*Below is the css for the Recipe page*/
 
 .topBar{background-color: #333359;
@@ -40,3 +56,5 @@ input.topSearch{margin-top: 0px;
 		  margin-top:0%;
 		  margin-bottom:0%;
 		  background-color: #333359;}
+
+
