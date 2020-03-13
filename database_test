@@ -118,4 +118,35 @@ mealprep=# select recipe_name, cooking_time, cuisine_name
  quam        | 0:30         | french
 (1 row)
 
+mealprep=# select recipe_name, cooking_time, cuisine_name
+    from recipe
+    join recipe_cuisine on recipe.recipe_id = recipe_cuisine.recipe_id
+    join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id
+    where cuisine.cuisine_id = 1;
+    
+     recipe_name | cooking_time | cuisine_name 
+-------------+--------------+--------------
+ leo rhoncus | 0:50         | japanese
+(1 row)
+
+mealprep=# select recipe_name, cooking_time
+    from recipe
+    join recipe_allergen on recipe.recipe_id = recipe_allergen.recipe_id
+    join allergen on recipe_allergen.allergen_id = allergen.allergen_id
+    where allergen.allergen_id not in (1, 2);
+    
+       recipe_name   | cooking_time 
+-----------------+--------------
+ libero          | 1:00
+ quam            | 0:30
+ amet            | 0:15
+ curae donec     | 0:40
+ nec             | 0:15
+ libero          | 1:00
+ libero          | 1:00
+ ultrices enim   | 0:25
+ quam            | 0:30
+ lobortis sapien | 0:30
+(10 rows)
+
 
