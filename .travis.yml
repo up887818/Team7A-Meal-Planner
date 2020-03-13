@@ -15,7 +15,7 @@ before_install:
   #create database
   - psql --u="postgres" --no-password < client/database/mealprep_database.sql
   #add values to database
-  - psql \mealprep < client/database/mock_data.sql
+  - psql \mealprep < client/database/mock_data2.sql
   #testing to see if it added files
   - psql --dbname="mealprep" 'select * from cuisine;'
 
