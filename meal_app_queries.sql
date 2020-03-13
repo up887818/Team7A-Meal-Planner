@@ -48,3 +48,15 @@ where calories < '600';
 select recipe_name, cooking_time, protein
 from recipe
 where protein > '15';
+
+--filter by sugar
+select recipe_name, cooking_time, sugar
+from recipe
+where sugar < '25';
+
+--filter by fat
+select recipe_name, cooking_time, fat
+from recipe
+where fat < '30';
+
+
