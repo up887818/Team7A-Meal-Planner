@@ -17,7 +17,7 @@ before_install:
   #add values to database
   - psql \mealprep < client/database/mock_data2.sql
   #testing to see if it added files
-  - psql --list
+  - psql \mealprep --list
 
 
 install:
