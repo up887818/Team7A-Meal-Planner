@@ -27,6 +27,7 @@ install:
 script:
   - npm start
   #per package.json: npm server.js
+  - showRecipes()
 
 deploy:
   provider: pages
