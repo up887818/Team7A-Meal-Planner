@@ -202,5 +202,13 @@ mealprep=# select recipe_name, cooking_time, fat
 (1 row)
 
 
+mealprep=# select recipe_name, cooking_time, salt
+     from recipe
+    where salt < '15';
+    
+     recipe_name | cooking_time | salt 
+-------------+--------------+------
+ id          | 0:35         | 11
+(1 row)
 
 
