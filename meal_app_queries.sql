@@ -26,7 +26,7 @@ where cooking_time ILIKE '%0:30%';
 select recipe_name, cooking_time, cuisine_name
 from recipe
 join recipe_cuisine on recipe.recipe_id = recipe_cuisine.recipe_id
-join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id;
+join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id
 where cuisine_id = 1;
 --the id 1 should be an input
 
@@ -34,7 +34,7 @@ where cuisine_id = 1;
 select recipe_name, cooking_time
 from recipe
 join recipe_allergen on recipe.recipe_id = recipe_allergen.recipe_id
-join allergen on recipe_allergen.allergen_id = allergen.allergen_id;
+join allergen on recipe_allergen.allergen_id = allergen.allergen_id
 where allergen_id not in (1, 2);
 --ids 1 nd 2 should be inputs
 
