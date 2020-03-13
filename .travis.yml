@@ -17,7 +17,7 @@ before_install:
   #add values to database
   - psql --u="postgres" --no-password < client/database/mock_data.sql
   #testing to see if it added files
-  - psql --u="postgres" --no-password -c 'select * from cuisine;'
+  - psql --u="postgres" --no-password \d
 
 
 install:
