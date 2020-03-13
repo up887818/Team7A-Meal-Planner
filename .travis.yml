@@ -15,9 +15,9 @@ before_install:
   #create database
   - psql --u="postgres" --no-password < client/database/mealprep_database.sql
   #add values to database
-  - psql < client/database/mock_data.sql
+  - psql \mealprep < client/database/mock_data.sql
   #testing to see if it added files
-  - psql \d
+  - psql \mealprep \d
 
 
 install:
