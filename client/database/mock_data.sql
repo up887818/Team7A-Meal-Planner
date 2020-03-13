@@ -111,3 +111,6 @@ insert into user_cuisine (user_id, cuisine_id)
   (2, 9),
   (1, 7),
   (9, 2);
+
+--tests
+select * from cuisine;
