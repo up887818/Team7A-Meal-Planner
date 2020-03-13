@@ -1,4 +1,4 @@
---tablle cuisine
+--table cuisine
 insert into cuisine (cuisine_id, cuisine_name) values (1, 'japanese');
 insert into cuisine (cuisine_id, cuisine_name) values (2, 'indian');
 insert into cuisine (cuisine_id, cuisine_name) values (3, 'mexican');

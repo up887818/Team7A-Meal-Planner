@@ -12,7 +12,13 @@ services:
   postgresql
 
 before_install:
+  #create database
   - psql --u="postgres" --no-password < client/database/mealprep_database.sql
+  #add values to database
+  - psql --u="postgres" --no-password < client/database/mock_data.sql
+  #testing to see if it added files
+  - psql --u="postgres" --no-password -c 'select * from cuisine;'
+
 
 install:
   - npm install
