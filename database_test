@@ -182,4 +182,25 @@ mealprep=# select recipe_name, cooking_time, protein
  id              | 0:35         | 18
 (10 rows)
 
+mealprep=# select recipe_name, cooking_time, sugar
+    from recipe
+    where sugar < '25';
+    
+     recipe_name | cooking_time | sugar 
+-------------+--------------+-------
+ amet        | 0:15         | 24
+ quam        | 0:30         | 16
+(2 rows)
+
+mealprep=# select recipe_name, cooking_time, fat
+    from recipe
+    where fat < '30';
+    
+     recipe_name | cooking_time | fat 
+-------------+--------------+-----
+ amet        | 0:15         | 2
+(1 row)
+
+
+
 
