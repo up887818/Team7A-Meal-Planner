@@ -6,7 +6,7 @@ join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id;
 
 
 --get recipe information for recipe page
-select recipe_name, cooking_time, calories, fat, protein, carbonhydrates, salt, sugar, fibre, cuisine, allergen_name
+select recipe_name, cooking_time, calories, fat, protein, carbonhydrates, salt, sugar, fibre, cuisine
 from recipe
 join recipe_cuisine on recipe.recipe_id = recipe_cuisine.recipe_id
 join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id;
