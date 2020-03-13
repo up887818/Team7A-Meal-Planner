@@ -12,7 +12,7 @@ services:
   postgresql
 
 before_install:
-  - psql -u root --password="" < client/database/mealprep_database.sql
+  - psql --u="postgres" --password="" < client/database/mealprep_database.sql
 
 install:
   - npm install
