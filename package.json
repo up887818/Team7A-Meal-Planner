@@ -4,7 +4,8 @@
   "description": "Meal Planner for Software Engineering CW",
   "main": "server.js",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "pg": "^7.18.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

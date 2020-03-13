@@ -8,6 +8,16 @@ node_js:
   # travis runs an earlier version that actually ends up breaking the code
 cache: npm
 
+services:
+  postgresql
+
+before_install:
+  #create database
+  - psql --u="postgres" --no-password < client/database/mealprep_database.sql
+  #add values to database
+  - psql \mealprep < client/database/mock_data.sql
+
+
 install:
   - npm install
   #not currently needed
