@@ -88,3 +88,34 @@ CREATE TABLE
 
 
 ------------------------------Testing select queries---------------------------
+mealprep=# select recipe_name, cooking_time, calories, cuisine_name
+    from recipe 
+    join recipe_cuisine on recipe.recipe_id = recipe_cuisine.recipe_id
+    join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id;
+    
+     recipe_name | cooking_time | calories | cuisine_name 
+-------------+--------------+----------+--------------
+ libero      | 1:00         | 425      | portugese
+ amet        | 0:15         | 665      | mexican
+ quam sapien | 1:15         | 553      | british
+ quam sapien | 1:15         | 553      | thai
+ quam sapien | 1:15         | 553      | mexican
+ id          | 0:35         | 255      | american
+ quam        | 0:30         | 482      | french
+ curae donec | 0:40         | 716      | greek
+ leo rhoncus | 0:50         | 225      | british
+ leo rhoncus | 0:50         | 225      | japanese
+(10 rows)
+
+mealprep=# select recipe_name, cooking_time, cuisine_name
+    from recipe
+    join recipe_cuisine on recipe.recipe_id = recipe_cuisine.recipe_id
+    join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id
+    where cooking_time ILIKE '%0:30%';
+     
+     recipe_name | cooking_time | cuisine_name 
+-------------+--------------+--------------
+ quam        | 0:30         | french
+(1 row)
+
+
