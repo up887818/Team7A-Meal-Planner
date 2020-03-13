@@ -149,4 +149,37 @@ mealprep=# select recipe_name, cooking_time
  lobortis sapien | 0:30
 (10 rows)
 
+mealprep=# select recipe_name, cooking_time, calories
+    from recipe
+    where calories < '600';
+    
+     recipe_name  | cooking_time | calories 
+---------------+--------------+----------
+ nec           | 0:15         | 316
+ quam sapien   | 1:15         | 553
+ libero        | 1:00         | 425
+ quam          | 0:30         | 482
+ leo rhoncus   | 0:50         | 225
+ ultrices enim | 0:25         | 424
+ id            | 0:35         | 255
+(7 rows)
+
+mealprep=# select recipe_name, cooking_time, protein
+    from recipe
+    where protein > '15';
+    
+       recipe_name   | cooking_time | protein 
+-----------------+--------------+---------
+ lobortis sapien | 0:30         | 47
+ nec             | 0:15         | 43
+ quam sapien     | 1:15         | 79
+ libero          | 1:00         | 84
+ curae donec     | 0:40         | 94
+ amet            | 0:15         | 75
+ quam            | 0:30         | 18
+ leo rhoncus     | 0:50         | 75
+ ultrices enim   | 0:25         | 59
+ id              | 0:35         | 18
+(10 rows)
+
 
