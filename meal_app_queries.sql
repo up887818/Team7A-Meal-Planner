@@ -59,4 +59,8 @@ select recipe_name, cooking_time, fat
 from recipe
 where fat < '30';
 
+--filter by salt
+select recipe_name, cooking_time, salt
+from recipe
+where salt < '15';
 
