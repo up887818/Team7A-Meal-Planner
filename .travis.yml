@@ -27,7 +27,9 @@ install:
 script:
   - npm start
   #per package.json: npm server.js
-  - showRecipes()
+  # testing getting queries via server
+  - console.log(showRecipes())
+  - console.log(getRecipe({"id":1}))
 
 deploy:
   provider: pages
