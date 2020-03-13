@@ -19,7 +19,7 @@ where recipe_id = 1;
 select recipe_name, cooking_time, cuisine_name
 from recipe
 join recipe_cuisine on recipe.recipe_id = recipe_cuisine.recipe_id
-join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id;
+join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id
 where cooking_time ILIKE '%30 mins to 1 hour%';
 
 --filter by cuisine
