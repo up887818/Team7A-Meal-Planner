@@ -9,10 +9,10 @@ node_js:
 cache: npm
 
 services:
-  -postgresql
+  postgresql
 
 before_install:
-  -psql -c <client/database/mealprep_database.sql -U postgres
+  -psql -U postgres -f client/database/mealprep_database.sql 
 
 install:
   - npm install
