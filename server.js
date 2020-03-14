@@ -2,6 +2,9 @@
 
 
 // required
+//Testing
+const puppeteer = require('puppeteer');
+// this is basically like headless chrome??
 // node.js server
 const express = require('express');
 const app = express();
@@ -17,7 +20,10 @@ client.connect();
 function sendQuery(query) {
   client
     .query(query)
-    .then(res => JSON.parse(res))
+    .then(function(res) {
+      console.log(res);
+      JSON.parse(res);
+    })
     .catch(e => console.error(e.stack))
 }
 
@@ -62,6 +68,23 @@ function filterRecipe(req, res) {
   res.json(sendQuery(query));
 }
 
+async function runTests() {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+
+  await page.goto('localhost:8080/');
+  //homepage
+
+  await page.goto('localhost:8080/showAll');
+  //show all recipes
+}
+
 app.get('/recipe', getRecipe);
 
+app.get('/filter', filterRecipe);
+
+app.get('/showAll', showRecipes);
+
 app.listen(8080);
+
+runTests();
