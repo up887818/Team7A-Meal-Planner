@@ -28,8 +28,7 @@ script:
   - npm start
   #per package.json: npm server.js
   # testing getting queries via server
-  - console.log(await showRecipes())
-  - console.log(await getRecipe({"id":1}))
+  - node tests.js
   - pkill node
 
 deploy:
