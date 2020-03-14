@@ -73,6 +73,7 @@ async function runTests() {
 
   try {
     const page = await browser.newPage();
+    await page.waitFor(1000);
 
     await page.goto('localhost:8080/');
     await page.waitFor(1000);
