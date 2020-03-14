@@ -70,33 +70,22 @@ function filterRecipe(req, res) {
 
 async function runTests() {
   const browser = await puppeteer.launch();
-  const page = await browser.newPage();
 
-  //error catching
-  page.on('requestfailed', request => {
-    console.log(`url: ${request.url()}, errText: ${request.failure().errorText}, method: ${request.method()}`)
-  });
-  // Catch console log errors
-  page.on("pageerror", err => {
-    console.log(`Page error: ${err.toString()}`);
-  });
-  // Catch all console messages
-  page.on('console', msg => {
-    console.log('Logger:', msg.type());
-    console.log('Logger:', msg.text());
-    console.log('Logger:', msg.location());
+  try {
+    const page = await browser.newPage();
 
-  });
+    await page.goto('localhost:8080/');
+    await page.waitFor(1000);
+    //homepage, waits 1000ms to make sure its loaded
 
-  await page.goto('localhost:8080/');
-  await page.waitFor(1000);
-  //homepage, waits 1000ms to make sure its loaded
-
-  await page.goto('localhost:8080/showAll');
-  await page.waitFor(1000);
-  //show all recipes
-
-  await browser.close();
+    await page.goto('localhost:8080/showAll');
+    await page.waitFor(1000);
+    //show all recipes
+  } catch (err) {
+    console.error(err.message);
+  } finally {
+    await browser.close();
+  }
   //close browser
 }
 
