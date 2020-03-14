@@ -35,6 +35,23 @@ li.menuBar{align-items: center;
   		   background-color: #333359;}
  a.menuBar{color:white;text-decoration:none; }
 
+li.favTitle{margin: 1px;
+		   margin-right:1px;
+  		   padding: 1px;
+  		   overflow: hidden;
+  		   display: inline-block;
+  		   background-color: #333359;
+  		   color:white;}
+
+li.favPicks{align-items: center;
+		   
+  		   padding: 8%;
+  		   overflow: hidden;
+  		   display: inline-block;
+  		   background-color: #333359;}
+ a.menuBar{color:white;text-decoration:none; }
+
+
 
 /*Below is the css for the Recipe page*/
 
@@ -56,5 +73,3 @@ input.topSearch{margin-top: 0px;
 		  margin-top:0%;
 		  margin-bottom:0%;
 		  background-color: #333359;}
-
-
