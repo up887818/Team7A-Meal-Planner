@@ -106,6 +106,10 @@ app.get('/filter', filterRecipe);
 
 app.get('/showAll', showRecipes);
 
-app.listen(8080);
+let server = app.listen(8080);
+//open server to run tests
 
 runTests();
+
+server.close();
+//turns off server after tests run
