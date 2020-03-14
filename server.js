@@ -64,8 +64,4 @@ function filterRecipe(req, res) {
 
 app.get('/recipe', getRecipe);
 
-app.get('/filter', filterRecipe);
-
-app.get('/showAll', showRecipes);
-
 app.listen(8080);
