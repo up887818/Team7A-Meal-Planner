@@ -5,6 +5,8 @@
 //Testing
 const puppeteer = require('puppeteer');
 // this is basically like headless chrome??
+const ip = require('ip');
+// allows to get ip address
 // node.js server
 const express = require('express');
 const app = express();
@@ -71,17 +73,17 @@ function filterRecipe(req, res) {
 async function runTests() {
   const browser = await puppeteer.launch();
 
+  const ipAdd = ip.address();
+  console.log(ipAdd);
+
   try {
     const page = await browser.newPage();
     await page.waitFor(1000);
 
-    await page.goto('localhost:8080/');
+    await page.goto(`${ipAdd}:8080/`);
     await page.waitFor(1000);
     //homepage, waits 1000ms to make sure its loaded
 
-    await page.goto('localhost:8080/showAll');
-    await page.waitFor(1000);
-    //show all recipes
   } catch (err) {
     console.error(err.message);
   } finally {
