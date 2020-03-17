@@ -29,6 +29,32 @@ function sendQuery(query) {
     .catch(e => console.error(e.stack))
 }
 
+// account functions
+function login(req, res) {
+  const userDetails = JSON.parse(sessionStorage.getItem("login_details"));
+
+  let query = ``; // get username and password where username = userDetails.username
+  const accDetails = res.json(sendQuery(query)).rows[0];
+
+  if (accDetails === null or accDetails.password !== userDetails.password) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function register(req, res) {
+  const userDetails = JSON.parse(sessionStorage.getItem("login_details"));
+
+  let query = ``;
+
+  sendQuery(query);
+
+  // need to figure out how to get error message
+}
+
+
+// recipe functions
 function showRecipes(req, res) {
   let query = `select recipe_name, cooking_time, calories, cuisine_name
   from recipe
@@ -70,28 +96,34 @@ function filterRecipe(req, res) {
   res.json(sendQuery(query));
 }
 
-async function runTests() {
-  const browser = await puppeteer.launch();
+// async function runTests() {
+//   const browser = await puppeteer.launch();
+//
+//   const ipAdd = ip.address();
+//   console.log(ipAdd);
+//
+//   try {
+//     const page = await browser.newPage();
+//     await page.waitFor(1000);
+//
+//     await page.goto(`${ipAdd}:8080/`);
+//     await page.waitFor(1000);
+//     //homepage, waits 1000ms to make sure its loaded
+//
+//   } catch (err) {
+//     console.error(err.message);
+//   } finally {
+//     await browser.close();
+//   }
+//   //close browser
+// }
 
-  const ipAdd = ip.address();
-  console.log(ipAdd);
+// account functions
+app.get('/auth', login);
 
-  try {
-    const page = await browser.newPage();
-    await page.waitFor(1000);
+app.get('/register', register);
 
-    await page.goto(`${ipAdd}:8080/`);
-    await page.waitFor(1000);
-    //homepage, waits 1000ms to make sure its loaded
-
-  } catch (err) {
-    console.error(err.message);
-  } finally {
-    await browser.close();
-  }
-  //close browser
-}
-
+// recipe functions
 app.get('/recipe', getRecipe);
 
 app.get('/filter', filterRecipe);
@@ -101,7 +133,7 @@ app.get('/showAll', showRecipes);
 let server = app.listen(8080);
 //open server to run tests
 
-runTests();
-
-server.close();
+// runTests();
+//
+// server.close();
 //turns off server after tests run
