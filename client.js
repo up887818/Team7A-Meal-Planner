@@ -75,6 +75,7 @@ function register(){
    }
  }
  const recipes = database.ref('#recipes');
+
  //displaying recipes needs work
  function displayRecipes(){
    let rec = document.getElementsByClassName('recipes');
@@ -94,5 +95,19 @@ function register(){
 
 //load json info to server
 async function sendData(){
-  const payload = {}
+
+  let response = await fetch('index.html' ,{
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(),
+  });
+
+  if (response.ok){
+    const output = response.json();
+}
+else{
+  localStorage.setItem("errrCode", response.status);
+  window.location.href = '../error.html';
+}
+
 }
