@@ -16,7 +16,14 @@ a.form-Format{top: 100%;
 			   }
 
 .text-in{ height:30px;
-    font-size:14pt;}
+    font-size:100%;
+margin-right: 45%;
+float: right;
+text-align: center;
+
+}
+span.text-in{line-height:4rem;
+			 float: left;}
 
 
 
@@ -56,20 +63,43 @@ li.favPicks{align-items: center;
 /*Below is the css for the Recipe page*/
 
 .topBar{background-color: #333359;
+		padding-top: auto;
 		margin-top: 0px;
 		margin-bottom:0px;
 		margin-left:0px; 
-		margin-right:0px;}
+		margin-right:0px;
+		 
+		vertical-align:middle;
+			}
+img.topBar{float: left;
+		   width:150px;
+		   height:100px;
+		   vertical-align: middle;}
 
-span.topBar{font-size: 350%; 
-			text-align: center;}
+span.topBar{margin-left:16.5%;
+			margin-top: 6%;
+			font-size: 350%;
+}
+
+
 
 input.topSearch{margin-top: 0px;
 				margin-bottom:0px;
 				margin-left: 65%;
-				margin-right:40%}
+				margin-right:10%;
+				float: right;
+				vertical-align: middle;}
 
-.rightBar{margin-left:70%;
-		  margin-top:0%;
-		  margin-bottom:0%;
-		  background-color: #333359;}
+.rightBar{margin-top:0%;
+		  padding: 8%;
+  		  overflow: hidden;
+  		  font-size: 115%;
+		  background-color: #333359;
+		  float: right;
+		  color: white;
+		  align-items: center;
+		}
+
+p.rightBar{text-decoration: underline;
+text-align:center;
+white-space: nowrap;}
