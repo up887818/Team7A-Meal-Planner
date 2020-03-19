@@ -1,4 +1,8 @@
 'use Strict';
+import {
+  Sha256
+} from "../hash.js";
+
 const el = {};
 
 function handles() {
@@ -9,7 +13,7 @@ function handles() {
   el.password2 = document.querySelector('#Password2');
 }
 
-function register() {
+async function register() {
   // const firstname = document.forms["register"]["Firstame"];
   // const lastname = document.forms["register"]["Lastname"];
   // const email = document.forms["register"]["Email"];
@@ -41,13 +45,47 @@ function register() {
       password2.focus();
       return false;
     } else {
-      window.open('homepage.html');
+      let data = {
+        "username": form.data.value,
+        "password": Sha256.hash(form.password.value)
+      };
+
+      sessionStorage.setItem("login_details", JSON.stringify(data));
+
+      let response = await fetch("/register");
+      if (response.ok) {
+        window.open('homepage.html');
+      } else {
+        errorMessage(response.status;)
+      }
     }
   }
 
   //checks if the entered email and password(login details) are correct
-  function check(form) {
+  async function check(form) {
+    let data = {
+      "username": form.data.value,
+      "password": Sha256.hash(form.password.value)
+    };
+
+    sessionStorage.setItem("login_details", JSON.stringify(data));
+
+    let response = await fetch("/auth");
+    if (response.ok) {
+      verifyData(response.text());
+    } else {
+      errorMessage(response.status;)
+    }
+
     if (form.email.value == "email" && form.password.value == "password") {
+      window.open('homepage.html'); //opens the target page when email and password match
+    } else {
+      alert("Error Password or Username not correct"); //displays error message
+    }
+  }
+
+  function verifyData(value) {
+    if (value === "true") {
       window.open('homepage.html'); //opens the target page when email and password match
     } else {
       alert("Error Password or Username not correct"); //displays error message
@@ -92,8 +130,7 @@ async function loadAllRecipes() {
   if (response.ok) {
     console.log(response.json());
   } else {
-    localStorage.setItem("errrCode", response.status);
-    window.location.href = '../error.html';
+    errorMessage(response.status);
   }
 }
 
@@ -107,8 +144,7 @@ async function getRecipe(id) {
     console.log(response.json());
     // testing purposes only - when ready use return response.json();
   } else {
-    localStorage.setItem("errrCode", response.status);
-    window.location.href = '../error.html';
+    errorMessage(response.status);
   }
 }
 
@@ -136,8 +172,13 @@ async function sendData() {
   if (response.ok) {
     const output = response.json();
   } else {
-    localStorage.setItem("errrCode", response.status);
-    window.location.href = '../error.html';
+    errorMessage(error);
   }
 
+}
+
+function errorMessage(error) {
+  window.location.href = '../error.html';
+  let errorBox = document.querySelector(".errorBox");
+  errorBox.textContent = error;
 }
