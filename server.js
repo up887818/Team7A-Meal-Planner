@@ -101,7 +101,7 @@ app.get('/showAll', showRecipes);
 let server = app.listen(8080);
 //open server to run tests
 
-runTests();
+//runTests();
 
-server.close();
+//server.close();
 //turns off server after tests run
