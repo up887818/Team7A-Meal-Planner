@@ -5,22 +5,34 @@ join recipe_cuisine on recipe.recipe_id = recipe_cuisine.recipe_id
 join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id;
 
 
---get recipe information for recipe page - CAN'T FIND A FIX FOR THIS ONE**
-select recipe_name, cooking_time, calories, fat, protein, carbonhydrates, salt, sugar, fibre, cuisine
+--get recipe information for recipe page 
+--get recipe name, cooking time and cuisine
+select recipe_name, cooking_time, cuisine
 from recipe
 join recipe_cuisine on recipe.recipe_id = recipe_cuisine.recipe_id
 join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id
-join recipe_allergen on recipe.recipe_id = recipe_allergen.recipe_id
-join allergen on recipe_allergen.allergen_id = allergen.allergen_id
-where recipe_id = 1;
---the id '1' should be an input
+where recipe.recipe_id = 1;
 
+--get nutritional info
+select calories, fat, protein, salt, sugar, fibre, carbonhydrates
+from recipe
+where recipe_id = 1;
+
+--get list of allergens for recipe
+select allergen_name 
+from allergen
+left join recipe_allergen on allergen.allergen_id = recipe_allergen.allergen_id
+join recipe on recipe_allergen.recipe_id = recipe.recipe_id;
+
+
+
+--filters
 --filter by cooking time
 select recipe_name, cooking_time, cuisine_name
 from recipe
 join recipe_cuisine on recipe.recipe_id = recipe_cuisine.recipe_id
 join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id
-where cooking_time ILIKE '%0:30%';
+where cooking_time LIKE '%0:30%';
 
 --filter by cuisine
 select recipe_name, cooking_time, cuisine_name
@@ -44,6 +56,26 @@ from recipe
 where calories < '600';
 --600 should be an input
 
+
+--combinations of basic filters
+--filter by cooking time and cuisine
+select recipe_name, cooking_time, cuisine_name
+from recipe
+join recipe_cuisine on recipe.recipe_id = recipe_cuisine.recipe_id
+join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id
+where cooking_time LIKE '%0:30%' and cuisine_id = 1;
+
+--filter by cooking time, cuisine and calories
+select recipe_name, cooking_time, cuisine_name
+from recipe
+join recipe_cuisine on recipe.recipe_id = recipe_cuisine.recipe_id
+join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id
+where cooking_time LIKE '%0:30%' and cuisine_id = 1 and calories <= 600;
+-------------------------------------------------------------------------------------
+
+
+
+--other filetrs
 --filter by protein
 select recipe_name, cooking_time, protein
 from recipe

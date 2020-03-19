@@ -2,15 +2,12 @@ create database mealprep;
 
 \c mealprep;
 
-create table cuisine (
-    cuisine_id serial primary key,
-    cuisine_name varchar(20) not null
-);
 
 create table recipe (
     recipe_id serial primary key,
     recipe_name varchar(25) not null,
     cooking_time varchar(10),
+    cuisine varchar(20),
     calories int,
     fat int,
     protein int,
@@ -25,13 +22,6 @@ create table allergen (
     allergen_name varchar(20) not null
 );
 
-/* link table between recipe table and cuisine table to resolve many-to-many relationship */
-create table recipe_cuisine (
-    recipe_id int not null,
-    cuisine_id int not null,
-    foreign key (recipe_id) references recipe(recipe_id),
-    foreign key (cuisine_id) references cuisine(cuisine_id)
-);
 
 /* link table between recipe table and allergen table to resolve many-to-many relationship */
 create table recipe_allergen (
