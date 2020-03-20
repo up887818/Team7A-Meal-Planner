@@ -20,6 +20,7 @@ async function register() {
   // const password = document.forms["register"]["Password"];
   // const password2 = document.forms["register"]["Password2"];
 
+  // this really needs to be put in a for loop at some point
   if (firstname.value == "") {
     window.alert("Please enter your Firstname.");
     name.focus();

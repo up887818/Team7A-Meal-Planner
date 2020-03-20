@@ -19,7 +19,7 @@ const {
 const client = new Client();
 client.connect();
 
-function sendQuery(query) {
+async function sendQuery(query) {
   client
     .query(query)
     .then(function(res) {
@@ -29,38 +29,60 @@ function sendQuery(query) {
     .catch(e => console.error(e.stack))
 }
 
-// account functions
-function login(req, res) {
-  const userDetails = JSON.parse(sessionStorage.getItem("login_details"));
+async function findAllergenID(name) {
+  let query = `select allergen_id from allergen where allergen_name = ${name}`;
 
-  let query = ``; // get username and password where username = userDetails.username
-  const accDetails = res.json(sendQuery(query)).rows[0];
+  return await res.json(sendQuery(query)).rows[0];
+}
+
+// account functions
+async function login(req, res) {
+  const userDetails = JSON.parse(sessionStorage.getItem("login_details"));
+  // we don't want the user's details to be stored anywhere longer than necessary
+  sessionStorage.remove("login_details");
+
+  let query = `select user_id, password from user_login where email = ${userDetails.email}`;
+  // get username and password where username = userDetails.username
+  const accDetails = await res.json(sendQuery(query)).rows[0];
 
   if (accDetails === null or accDetails.password !== userDetails.password) {
     return false;
   } else {
+    localStorage.setItem("user_id", `${accDetails.userId}`);
     return true;
   }
 }
 
-function register(req, res) {
+async function register(req, res) {
   const userDetails = JSON.parse(sessionStorage.getItem("login_details"));
+  sessionStorage.remove("login_details");
 
-  let query = ``;
+  let query = `insert into user_login (email, password)
+               values (${userDetails.email}, ${userDetails.password})`;
 
-  sendQuery(query);
+  await sendQuery(query);
 
   // need to figure out how to get error message
 }
 
+async function addAllergen(req, res) {
+  let userID = localStorage.getItem("user_id");
+
+  let allergenID = findAllergenID(`${req.allergen}`);
+
+  let query = `insert into user_allergen values (${userID}, ${allergenID.allergen_id})`;
+
+  await sendQuery(query);
+}
+
 
 // recipe functions
-function showRecipes(req, res) {
+async function showRecipes(req, res) {
   let query = `select recipe_name, cooking_time, calories, cuisine_name
   from recipe
   join recipe_cuisine on recipe.recipe_id = recipe_cuisine.recipe_id
   join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id;`
-  res.json(sendQuery(query));
+  return await res.json(sendQuery(query));
 }
 
 function getRecipe(req, res) {
@@ -71,29 +93,38 @@ function getRecipe(req, res) {
   join recipe_allergen on recipe.recipe_id = recipe_allergen.recipe_id
   join allergen on recipe_allergen.allergen_id = allergen.allergen_id
   where recipe_id = ${req.id};`
-  res.json(sendQuery(query));
+  return await res.json(sendQuery(query));
 }
 
-function filterRecipe(req, res) {
+function addSelectorsToQuery(selectors) {
+  return concat("where ", selectors.join(" and "), ";");
+}
+
+async function filterRecipe(req, res) {
   let query = `select recipe_name, cooking_time, cuisine_name
   from recipe
   join recipe_cuisine on recipe.recipe_id = recipe_cuisine.recipe_id
   join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id;`
 
+  selectors = [];
+
   if (`${req.cookingTime}` !== "") {
-    query.concat(query, `where cooking_time ILIKE ${req.cookingTime};`);
+    selectors = selectors.push(`cooking_time ILIKE ${req.cookingTime}`);
   }
   if (`${req.cuisine}` !== "") {
-    query.concat(query, `where cuisine_id = ${req.cuisine};`);
+    selectors = selectors.push(`cuisine_id =  ${req.cuisine}`);
   }
   if (`${req.calories}` !== "") {
-    query.concat(query, `where calories < ${req.calories};`);
+    selectors = selectors.push(`calories < ${req.calories}`);
   }
   if (`${req.allergen !== ""}`) {
-    query.concat(query, `where allergen_id not in ${req.allergen};`);
+    let allergenID = await findAllergenID(`${req.allergen}`);
+    selectors = selectors.push(`allergen_id not in ${allergenID.allergen_id}`);
   }
 
-  res.json(sendQuery(query));
+  query.concat(addSelectorsToQuery(selectors));
+
+  return await res.json(sendQuery(query));
 }
 
 // async function runTests() {
