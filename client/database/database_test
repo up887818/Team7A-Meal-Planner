@@ -14,57 +14,43 @@ You are now connected to database "mealprep" as user "up900921".
 
 
 ----------------------------------Creating tables--------------------------------------
-mealprep=# create table cuisine (
-    cuisine_id serial primary key,
-    cuisine_name varchar(20) not null
-    );
-CREATE TABLE
-
 mealprep=# create table recipe (
+    recipe_id serial primary key,
     recipe_name varchar(25) not null,
     cooking_time varchar(10),
+    cuisine varchar(20),
     calories int,
     fat int,
     protein int,
     salt int,
     sugar int,
-    fibre int, 
+    fibre int,
     carbonhydrates int
-    );
+);
 CREATE TABLE
 
 mealprep=# create table allergen (
-     allergen_id serial primary key,
-     allergen_name varchar(20) not null
-     );
+    allergen_id serial primary key,
+    allergen_name varchar(20) not null
+);
 CREATE TABLE
 
-mealprep=# create table recipe_cuisine (
-     recipe_id int not null,
-     cuisine_id int not null,
-     foreign key (recipe_id) references recipe(recipe_id),
-     foreign key (cuisine_id) references cuisine(cuisine_id)
-     );
-CREATE TABLE
 
 mealprep=# create table recipe_allergen (
-     recipe_id int not null,
-     allergen_id int not null,
-     foreign key (recipe_id) references recipe(recipe_id),
-     foreign key (allergen_id) references allergen(allergen_id)
-     );
+    recipe_id int not null,
+    allergen_id int not null,
+    foreign key (recipe_id) references recipe(recipe_id),
+    foreign key (allergen_id) references allergen(allergen_id)
+);
 CREATE TABLE
 
 mealprep=# create table app_user (
     user_id serial primary key,
     first_name varchar(50) not null,
     last_name varchar(50),
-    email varchar(50) not null,
-    calories int,
+    calories int,                                             
     allergen_id int,
-    cuisine_id int,
-    foreign key (allergen_id) references allergen(allergen_id),
-    foreign key (cuisine_id) references cuisine(cuisine_id)
+    foreign key (allergen_id) references allergen(allergen_id)
 );
 CREATE TABLE
 
@@ -76,17 +62,21 @@ mealprep=# create table user_allergen (
 );
 CREATE TABLE
 
-mealprep=# create table user_cuisine (
-     user_id int not null,
-     cuisine_id int not null,
-     foreign key (user_id) references app_user(user_id),
-     foreign key (cuisine_id) references cuisine(cuisine_id)
-     );
+mealprep=# create table user_login (
+    email varchar(50) primary key,
+    password text not null,
+    user_id int not null,
+    foreign key (user_id) references app_user(user_id)
+);
 CREATE TABLE
 
 
 
 
+
+
+
+-------This section has to be changed as database structure changed----------------
 ------------------------------Testing select queries---------------------------
 mealprep=# select recipe_name, cooking_time, calories, cuisine_name
     from recipe 
