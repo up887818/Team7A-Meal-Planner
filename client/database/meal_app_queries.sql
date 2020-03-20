@@ -18,7 +18,8 @@ where recipe_id = 1;
 select allergen_name 
 from allergen
 left join recipe_allergen on allergen.allergen_id = recipe_allergen.allergen_id
-join recipe on recipe_allergen.recipe_id = recipe.recipe_id;
+join recipe on recipe_allergen.recipe_id = recipe.recipe_id
+where recipe.recipe_id = 1;
 
 
 
