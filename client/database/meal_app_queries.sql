@@ -1,16 +1,12 @@
 --get list of recipes for search page
-select recipe_name, cooking_time, calories, cuisine_name
-from recipe
-join recipe_cuisine on recipe.recipe_id = recipe_cuisine.recipe_id
-join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id;
+select recipe_name, cooking_time, calories, cuisine
+from recipe;
 
 
 --get recipe information for recipe page 
 --get recipe name, cooking time and cuisine
 select recipe_name, cooking_time, cuisine
 from recipe
-join recipe_cuisine on recipe.recipe_id = recipe_cuisine.recipe_id
-join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id
 where recipe.recipe_id = 1;
 
 --get nutritional info
@@ -22,27 +18,23 @@ where recipe_id = 1;
 select allergen_name 
 from allergen
 left join recipe_allergen on allergen.allergen_id = recipe_allergen.allergen_id
-join recipe on recipe_allergen.recipe_id = recipe.recipe_id;
+join recipe on recipe_allergen.recipe_id = recipe.recipe_id
+where recipe.recipe_id = 1;
 
 
 
 --filters
 --filter by cooking time
-select recipe_name, cooking_time, cuisine_name
+select recipe_name, cooking_time, cuisine
 from recipe
-join recipe_cuisine on recipe.recipe_id = recipe_cuisine.recipe_id
-join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id
 where cooking_time LIKE '%0:30%';
 
 --filter by cuisine
-select recipe_name, cooking_time, cuisine_name
+select recipe_name, cooking_time, cuisine
 from recipe
-join recipe_cuisine on recipe.recipe_id = recipe_cuisine.recipe_id
-join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id
-where cuisine.cuisine_id = 1;
---the id 1 should be an input
+where cuisine = 'french'; 
 
---filter by allergen
+--filter by allergens
 select recipe_name, cooking_time
 from recipe
 join recipe_allergen on recipe.recipe_id = recipe_allergen.recipe_id
@@ -59,18 +51,56 @@ where calories < '600';
 
 --combinations of basic filters
 --filter by cooking time and cuisine
-select recipe_name, cooking_time, cuisine_name
+select recipe_name, cooking_time, cuisine, calories
 from recipe
-join recipe_cuisine on recipe.recipe_id = recipe_cuisine.recipe_id
-join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id
-where cooking_time LIKE '%0:30%' and cuisine_id = 1;
+where cooking_time LIKE '%0:30%' and cuisine = 'french';
 
 --filter by cooking time, cuisine and calories
-select recipe_name, cooking_time, cuisine_name
+select recipe_name, cooking_time, cuisine, calories
 from recipe
-join recipe_cuisine on recipe.recipe_id = recipe_cuisine.recipe_id
-join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id
-where cooking_time LIKE '%0:30%' and cuisine_id = 1 and calories <= 600;
+where cooking_time LIKE '%0:30%' and cuisine = 'french' and calories <= 600;
+
+--filter by cuisine and calories
+select recipe_name, cooking_time, cuisine, calories
+from recipe
+where cuisine = 'french' and calories <= 600;
+
+--filter by cooking time and calories
+select recipe_name, cooking_time, cuisine, calories
+from recipe
+where cooking_time LIKE '%0:30%' and calories <= 600;
+
+--filter by cooking time, allergens, calories and cuisine
+select recipe_name, cooking_time, cuisine, calories
+from recipe
+join recipe_allergen on recipe.recipe_id = recipe_allergen.recipe_id
+join allergen on recipe_allergen.allergen_id = allergen.allergen_id
+where allergen.allergen_id not in (1, 2) and cooking_time LIKE '%0:30%' and 
+cuisine = 'french' and calories <= 600;
+
+--filter by allergen, cooking time and cuisine
+select recipe_name, cooking_time, cuisine, calories
+from recipe
+join recipe_allergen on recipe.recipe_id = recipe_allergen.recipe_id
+join allergen on recipe_allergen.allergen_id = allergen.allergen_id
+where allergen.allergen_id not in (1, 2) and cooking_time LIKE '%0:30%' and 
+cuisine = 'french';
+
+--filter by allergens, cooking time and calories
+select recipe_name, cooking_time, cuisine, calories
+from recipe
+join recipe_allergen on recipe.recipe_id = recipe_allergen.recipe_id
+join allergen on recipe_allergen.allergen_id = allergen.allergen_id
+where allergen.allergen_id not in (1, 2) and cooking_time LIKE '%0:30%' and 
+calories <= 600;
+
+--filter by allergens, calories and cuisine
+select recipe_name, cooking_time, cuisine, calories
+from recipe
+join recipe_allergen on recipe.recipe_id = recipe_allergen.recipe_id
+join allergen on recipe_allergen.allergen_id = allergen.allergen_id
+where allergen.allergen_id not in (1, 2) and 
+calories <= 600 and cuisine = 'french';
 -------------------------------------------------------------------------------------
 
 

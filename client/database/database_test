@@ -14,57 +14,43 @@ You are now connected to database "mealprep" as user "up900921".
 
 
 ----------------------------------Creating tables--------------------------------------
-mealprep=# create table cuisine (
-    cuisine_id serial primary key,
-    cuisine_name varchar(20) not null
-    );
-CREATE TABLE
-
 mealprep=# create table recipe (
+    recipe_id serial primary key,
     recipe_name varchar(25) not null,
     cooking_time varchar(10),
+    cuisine varchar(20),
     calories int,
     fat int,
     protein int,
     salt int,
     sugar int,
-    fibre int, 
+    fibre int,
     carbonhydrates int
-    );
+);
 CREATE TABLE
 
 mealprep=# create table allergen (
-     allergen_id serial primary key,
-     allergen_name varchar(20) not null
-     );
+    allergen_id serial primary key,
+    allergen_name varchar(20) not null
+);
 CREATE TABLE
 
-mealprep=# create table recipe_cuisine (
-     recipe_id int not null,
-     cuisine_id int not null,
-     foreign key (recipe_id) references recipe(recipe_id),
-     foreign key (cuisine_id) references cuisine(cuisine_id)
-     );
-CREATE TABLE
 
 mealprep=# create table recipe_allergen (
-     recipe_id int not null,
-     allergen_id int not null,
-     foreign key (recipe_id) references recipe(recipe_id),
-     foreign key (allergen_id) references allergen(allergen_id)
-     );
+    recipe_id int not null,
+    allergen_id int not null,
+    foreign key (recipe_id) references recipe(recipe_id),
+    foreign key (allergen_id) references allergen(allergen_id)
+);
 CREATE TABLE
 
 mealprep=# create table app_user (
     user_id serial primary key,
     first_name varchar(50) not null,
     last_name varchar(50),
-    email varchar(50) not null,
-    calories int,
+    calories int,                                             
     allergen_id int,
-    cuisine_id int,
-    foreign key (allergen_id) references allergen(allergen_id),
-    foreign key (cuisine_id) references cuisine(cuisine_id)
+    foreign key (allergen_id) references allergen(allergen_id)
 );
 CREATE TABLE
 
@@ -76,66 +62,96 @@ mealprep=# create table user_allergen (
 );
 CREATE TABLE
 
-mealprep=# create table user_cuisine (
-     user_id int not null,
-     cuisine_id int not null,
-     foreign key (user_id) references app_user(user_id),
-     foreign key (cuisine_id) references cuisine(cuisine_id)
-     );
+mealprep=# create table user_login (
+    email varchar(50) primary key,
+    password text not null,
+    user_id int not null,
+    foreign key (user_id) references app_user(user_id)
+);
 CREATE TABLE
 
 
 
 
+
+
+
+-------This section has to be changed as database structure changed----------------
 ------------------------------Testing select queries---------------------------
-mealprep=# select recipe_name, cooking_time, calories, cuisine_name
-    from recipe 
-    join recipe_cuisine on recipe.recipe_id = recipe_cuisine.recipe_id
-    join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id;
-    
-     recipe_name | cooking_time | calories | cuisine_name 
--------------+--------------+----------+--------------
- libero      | 1:00         | 425      | portugese
- amet        | 0:15         | 665      | mexican
- quam sapien | 1:15         | 553      | british
- quam sapien | 1:15         | 553      | thai
- quam sapien | 1:15         | 553      | mexican
- id          | 0:35         | 255      | american
- quam        | 0:30         | 482      | french
- curae donec | 0:40         | 716      | greek
- leo rhoncus | 0:50         | 225      | british
- leo rhoncus | 0:50         | 225      | japanese
+
+mealprep=# select recipe_name, cooking_time, calories, cuisine
+from recipe;
+   recipe_name   | cooking_time | calories |  cuisine  
+-----------------+--------------+----------+-----------
+ lobortis sapien | 0:30         |      973 | french
+ nec             | 0:15         |      316 | japanese
+ quam sapien     | 1:15         |      553 | indian
+ libero          | 1:00         |      425 | british
+ curae donec     | 0:40         |      716 | portugese
+ amet            | 0:15         |      665 | indian
+ quam            | 0:30         |      482 | japanese
+ leo rhoncus     | 0:50         |      225 | british
+ ultrices enim   | 0:25         |      424 | indian
+ id              | 0:35         |      255 | french
 (10 rows)
 
-mealprep=# select recipe_name, cooking_time, cuisine_name
-    from recipe
-    join recipe_cuisine on recipe.recipe_id = recipe_cuisine.recipe_id
-    join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id
-    where cooking_time ILIKE '%0:30%';
-     
-     recipe_name | cooking_time | cuisine_name 
--------------+--------------+--------------
- quam        | 0:30         | french
+--------------
+mealprep=# select recipe_name, cooking_time, cuisine
+from recipe
+where recipe.recipe_id = 1;
+   recipe_name   | cooking_time | cuisine 
+-----------------+--------------+---------
+ lobortis sapien | 0:30         | french
 (1 row)
 
-mealprep=# select recipe_name, cooking_time, cuisine_name
-    from recipe
-    join recipe_cuisine on recipe.recipe_id = recipe_cuisine.recipe_id
-    join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id
-    where cuisine.cuisine_id = 1;
-    
-     recipe_name | cooking_time | cuisine_name 
--------------+--------------+--------------
- leo rhoncus | 0:50         | japanese
+--------------
+mealprep=# select calories, fat, protein, salt, sugar, fibre, carbonhydrates
+from recipe
+where recipe_id = 1;
+ calories | fat | protein | salt | sugar | fibre | carbonhydrates 
+----------+-----+---------+------+-------+-------+----------------
+      973 |  40 |      47 |   33 |    72 |    96 |             49
 (1 row)
 
+--------------
+mealprep=# select allergen_name 
+from allergen
+left join recipe_allergen on allergen.allergen_id = recipe_allergen.allergen_id
+join recipe on recipe_allergen.recipe_id = recipe.recipe_id
+where recipe.recipe_id = 1;
+ allergen_name 
+---------------
+ shellfish
+(1 row)
+
+
+--------------
+mealprep=# select recipe_name, cooking_time, cuisine
+from recipe
+where cooking_time LIKE '%0:30%';
+   recipe_name   | cooking_time | cuisine  
+-----------------+--------------+----------
+ lobortis sapien | 0:30         | french
+ quam            | 0:30         | japanese
+(2 rows)
+
+------------
+mealprep=# select recipe_name, cooking_time, cuisine
+from recipe
+where cuisine = 'french'; 
+   recipe_name   | cooking_time | cuisine 
+-----------------+--------------+---------
+ lobortis sapien | 0:30         | french
+ id              | 0:35         | french
+(2 rows)
+
+----------
 mealprep=# select recipe_name, cooking_time
-    from recipe
-    join recipe_allergen on recipe.recipe_id = recipe_allergen.recipe_id
-    join allergen on recipe_allergen.allergen_id = allergen.allergen_id
-    where allergen.allergen_id not in (1, 2);
-    
-       recipe_name   | cooking_time 
+from recipe
+join recipe_allergen on recipe.recipe_id = recipe_allergen.recipe_id
+join allergen on recipe_allergen.allergen_id = allergen.allergen_id
+where allergen.allergen_id not in (1, 2);
+   recipe_name   | cooking_time 
 -----------------+--------------
  libero          | 1:00
  quam            | 0:30
@@ -149,66 +165,57 @@ mealprep=# select recipe_name, cooking_time
  lobortis sapien | 0:30
 (10 rows)
 
+-----------------------
 mealprep=# select recipe_name, cooking_time, calories
-    from recipe
-    where calories < '600';
-    
-     recipe_name  | cooking_time | calories 
+from recipe
+where calories < '600';
+  recipe_name  | cooking_time | calories 
 ---------------+--------------+----------
- nec           | 0:15         | 316
- quam sapien   | 1:15         | 553
- libero        | 1:00         | 425
- quam          | 0:30         | 482
- leo rhoncus   | 0:50         | 225
- ultrices enim | 0:25         | 424
- id            | 0:35         | 255
+ nec           | 0:15         |      316
+ quam sapien   | 1:15         |      553
+ libero        | 1:00         |      425
+ quam          | 0:30         |      482
+ leo rhoncus   | 0:50         |      225
+ ultrices enim | 0:25         |      424
+ id            | 0:35         |      255
 (7 rows)
 
-mealprep=# select recipe_name, cooking_time, protein
-    from recipe
-    where protein > '15';
-    
-       recipe_name   | cooking_time | protein 
------------------+--------------+---------
- lobortis sapien | 0:30         | 47
- nec             | 0:15         | 43
- quam sapien     | 1:15         | 79
- libero          | 1:00         | 84
- curae donec     | 0:40         | 94
- amet            | 0:15         | 75
- quam            | 0:30         | 18
- leo rhoncus     | 0:50         | 75
- ultrices enim   | 0:25         | 59
- id              | 0:35         | 18
-(10 rows)
+---------------------
+select recipe_name, cooking_time, cuisine, calories
+from recipe
+where cooking_time LIKE '%0:30%' and cuisine = 'french';
+   recipe_name   | cooking_time | cuisine | calories 
+-----------------+--------------+---------+----------
+ lobortis sapien | 0:30         | french  |      973
+(1 row)
 
-mealprep=# select recipe_name, cooking_time, sugar
-    from recipe
-    where sugar < '25';
-    
-     recipe_name | cooking_time | sugar 
--------------+--------------+-------
- amet        | 0:15         | 24
- quam        | 0:30         | 16
-(2 rows)
-
-mealprep=# select recipe_name, cooking_time, fat
-    from recipe
-    where fat < '30';
-    
-     recipe_name | cooking_time | fat 
--------------+--------------+-----
- amet        | 0:15         | 2
+---------------------
+mealprep=# select recipe_name, cooking_time, cuisine, calories
+from recipe 
+where cooking_time LIKE '%0:30%' and cuisine = 'japanese' and calories <= 600;
+ recipe_name | cooking_time | cuisine  | calories 
+-------------+--------------+----------+----------
+ quam        | 0:30         | japanese |      482
 (1 row)
 
 
-mealprep=# select recipe_name, cooking_time, salt
-     from recipe
-    where salt < '15';
-    
-     recipe_name | cooking_time | salt 
--------------+--------------+------
- id          | 0:35         | 11
+-------------------
+mealprep=# select recipe_name, cooking_time, cuisine, calories
+from recipe
+where cuisine = 'french' and calories <= 600;
+ recipe_name | cooking_time | cuisine | calories 
+-------------+--------------+---------+----------
+ id          | 0:35         | french  |      255
 (1 row)
 
+-------------------------
+mealprep=# select recipe_name, cooking_time, cuisine, calories
+from recipe
+where cooking_time LIKE '%0:30%' and calories <= 600;
+ recipe_name | cooking_time | cuisine  | calories 
+-------------+--------------+----------+----------
+ quam        | 0:30         | japanese |      482
+(1 row)
+
+--------------------
 
