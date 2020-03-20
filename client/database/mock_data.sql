@@ -44,18 +44,18 @@ insert into recipe_allergen (recipe_id, allergen_id)
   (1, 4);
 
 --table user
-insert into app_user (user_id, first_name, last_name, email, calories, allergen_id, cuisine_id)
+insert into app_user (user_id, first_name, last_name, calories, allergen_id)
   values
-  (1, 'Hube', 'Grieve', 'hgrieve0@oracle.com', 1975, 8, 4),
-  (2, 'Herta', 'Tomaszynski', 'htomaszynski1@desdev.cn', 1696, 2, 8),
-  (3, 'Domenic', 'Yegoshin', 'dyegoshin2@google.cn', 1438, 13, 7),
-  (4, 'Marcy', 'Scopes', 'mscopes3@npr.org', 1002, 4, 2),
-  (5, 'Ansel', 'Dachs', 'adachs4@timesonline.co.uk', 1870, 10, 9),
-  (6, 'Gan', 'Rodell', 'grodell5@slashdot.org', 1884, 4, 9),
-  (7, 'Sadie', 'Corran', 'scorran6@baidu.com', 1473, 10, 9),
-  (8, 'Mavis', 'Todman', 'mtodman7@icq.com', 1197, 13, 4),
-  (9, 'Aaron', 'Ovanesian', 'aovanesian8@php.net', 1510, 8, 6),
-  (10, 'Consuela', 'Mourant', 'cmourant9@rambler.ru', 1330, 2, 6);
+  (1, 'Hube', 'Grieve', 1975, 8),
+  (2, 'Herta', 'Tomaszynski', 1696, 2),
+  (3, 'Domenic', 'Yegoshin', 1438, 13),
+  (4, 'Marcy', 'Scopes', 1002, 4),
+  (5, 'Ansel', 'Dachs', 1870, 10),
+  (6, 'Gan', 'Rodell', 1884, 4),
+  (7, 'Sadie', 'Corran', 1473, 10),
+  (8, 'Mavis', 'Todman', 1197, 13),
+  (9, 'Aaron', 'Ovanesian', 1510, 8),
+  (10, 'Consuela', 'Mourant', 1330, 2);
 
 --table user_allergen
 insert into user_allergen (user_id, allergen_id)
@@ -71,19 +71,17 @@ insert into user_allergen (user_id, allergen_id)
   (10, 2),
   (4, 9);
 
---table user_cuisine
-insert into user_cuisine (user_id, cuisine_id)
-  values
-  (1, 1),
-  (7, 1),
-  (2, 6),
-  (7, 5),
-  (7, 2),
-  (6, 4),
-  (6, 9),
-  (2, 9),
-  (1, 7),
-  (9, 2);
 
---tests
-select * from cuisine;
+--table user_login
+insert into user_login (email, password, user_id) 
+values 
+('afluger0@cornell.edu', sha256('ultrices32'), 1),
+('mkernley1@hud.gov', sha256('atqerf4'), 2),
+('koake2@purevolume.com', sha256('felisef22'), 3),
+('cfranken3@miitbeian.gov.cn', sha256('aliquam54'), 4),
+('mgallaccio4@i2i.jp', sha256('ultrice45s'), 5),
+('pwoodrow5@examiner.com', sha256('nu8732nc'), 6),
+('llayfield6@over-blog.com', sha256('738aliquam'), 7),
+('kiley7@virginia.edu', sha256('sollicitudin190'), 8),
+('gfaussett8@gravatar.com', sha256('tellus1212'), 9),
+('mlinebarger9@plala.or.jp', sha256('ipsum021y43'), 10);
