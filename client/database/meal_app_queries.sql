@@ -128,7 +128,7 @@ where allergen.allergen_id not in (1, 2) and cuisine = 'french';
 
 --filter by cooking time and allergens
 --18
-select recipe_name, cooking_time, cuisine, calories
+select distinct recipe_name, cooking_time, cuisine, calories
 from recipe
 join recipe_allergen on recipe.recipe_id = recipe_allergen.recipe_id
 join allergen on recipe_allergen.allergen_id = allergen.allergen_id
@@ -136,7 +136,7 @@ where allergen.allergen_id not in (1, 2) and cooking_time LIKE '%0:30%';
 
 --filter by allergens and calories
 --19
-select recipe_name, cooking_time, cuisine, calories
+select distinct recipe_name, cooking_time, cuisine, calories
 from recipe
 join recipe_allergen on recipe.recipe_id = recipe_allergen.recipe_id
 join allergen on recipe_allergen.allergen_id = allergen.allergen_id
