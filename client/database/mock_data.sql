@@ -72,7 +72,11 @@ insert into user_allergen (user_id, allergen_id)
   (4, 9);
 
 
+
 --table user_login
+
+--sha256 function used for mock data only, passwords will be hashed using javascript
+
 insert into user_login (email, password, user_id) 
 values 
 ('afluger0@cornell.edu', sha256('ultrices32'), 1),
