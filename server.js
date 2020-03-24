@@ -31,7 +31,7 @@ async function sendQuery(query) {
 async function findAllergenID(name) {
   let query = `select allergen_id from allergen where allergen_name = ${name}`;
 
-  return await res.json(sendQuery(query)).rows[0];
+  return res.json(sendQuery(query)).rows[0];
 }
 
 // account functions
@@ -81,7 +81,7 @@ async function showRecipes(req, res) {
   from recipe
   join recipe_cuisine on recipe.recipe_id = recipe_cuisine.recipe_id
   join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id;`
-  return await res.json(sendQuery(query));
+  return res.json(sendQuery(query));
 }
 
 function getRecipe(req, res) {
@@ -92,7 +92,7 @@ function getRecipe(req, res) {
   join recipe_allergen on recipe.recipe_id = recipe_allergen.recipe_id
   join allergen on recipe_allergen.allergen_id = allergen.allergen_id
   where recipe_id = ${req.id};`
-  return await res.json(sendQuery(query));
+  return res.json(sendQuery(query));
 }
 
 function addSelectorsToQuery(selectors) {
@@ -123,7 +123,7 @@ async function filterRecipe(req, res) {
 
   query.concat(addSelectorsToQuery(selectors));
 
-  return await res.json(sendQuery(query));
+  return res.json(sendQuery(query));
 }
 
 // account functions
