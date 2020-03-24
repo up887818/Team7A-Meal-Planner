@@ -55,6 +55,20 @@ function register() {
     }
   }
 
+  //Password PasswordReset
+  function ForgotPassword(form){
+
+    if(form.email.value == "email"){
+      form.password.value == "password";
+    }
+    if(form.email.value != "email" ){
+      alert("email not correct")
+    }
+    if(form.password.value == "" || form.email.value == ""){
+      alert("All fields required");
+    }
+  }
+
   function search() {
     let input = document.getElementById('searchbar').value;
     input = input.toLowerCase();
