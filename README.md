@@ -19,3 +19,6 @@
  - Login/Register through Facebook
  - Sharing to social media
  - Calendar feature (basics created)
+
+ ## Testing
+ We are automatically testing this program using Travis cl and Qunit.

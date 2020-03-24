@@ -7,10 +7,11 @@
     "express": "^4.17.1",
     "ip": "^1.1.5",
     "pg": "^7.18.2",
-    "puppeteer": "^2.1.1"
+    "puppeteer": "^2.1.1",
+    "qunit": "^2.9.3"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "qunit test.js",
     "start": "node server.js"
   },
   "repository": {
