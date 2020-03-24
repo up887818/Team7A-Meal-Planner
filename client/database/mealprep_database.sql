@@ -56,4 +56,9 @@ create table user_login (
     user_id int not null,
     foreign key (user_id) references app_user(user_id)
 );
+<<<<<<< Updated upstream
     
+=======
+
+create user serverconnect password `team7a`;
+>>>>>>> Stashed changes

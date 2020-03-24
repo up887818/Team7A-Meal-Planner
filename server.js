@@ -2,11 +2,6 @@
 
 
 // required
-//Testing
-const puppeteer = require('puppeteer');
-// this is basically like headless chrome??
-const ip = require('ip');
-// allows to get ip address
 // node.js server
 const express = require('express');
 const app = express();
@@ -16,7 +11,11 @@ app.use(express.static('client'));
 const {
   Client
 } = require('pg');
-const client = new Client();
+const client = new Client({
+  database: `mealprep`,
+  user: `serverconnect`,
+  password: `team7a`,
+});
 client.connect();
 
 async function sendQuery(query) {
@@ -45,7 +44,7 @@ async function login(req, res) {
   // get username and password where username = userDetails.username
   const accDetails = await res.json(sendQuery(query)).rows[0];
 
-  if (accDetails === null or accDetails.password !== userDetails.password) {
+  if (accDetails === null || accDetails.password !== userDetails.password) {
     return false;
   } else {
     localStorage.setItem("user_id", `${accDetails.userId}`);
