@@ -76,9 +76,9 @@ CREATE TABLE
 
 
 
--------This section has to be changed as database structure changed----------------
 ------------------------------Testing select queries---------------------------
 
+--1
 mealprep=# select recipe_name, cooking_time, calories, cuisine
 from recipe;
    recipe_name   | cooking_time | calories |  cuisine  
@@ -96,6 +96,7 @@ from recipe;
 (10 rows)
 
 --------------
+--2
 mealprep=# select recipe_name, cooking_time, cuisine
 from recipe
 where recipe.recipe_id = 1;
@@ -105,6 +106,7 @@ where recipe.recipe_id = 1;
 (1 row)
 
 --------------
+--3
 mealprep=# select calories, fat, protein, salt, sugar, fibre, carbonhydrates
 from recipe
 where recipe_id = 1;
@@ -114,6 +116,7 @@ where recipe_id = 1;
 (1 row)
 
 --------------
+--4
 mealprep=# select allergen_name 
 from allergen
 left join recipe_allergen on allergen.allergen_id = recipe_allergen.allergen_id
@@ -126,6 +129,7 @@ where recipe.recipe_id = 1;
 
 
 --------------
+--5
 mealprep=# select recipe_name, cooking_time, cuisine
 from recipe
 where cooking_time LIKE '%0:30%';
@@ -136,6 +140,7 @@ where cooking_time LIKE '%0:30%';
 (2 rows)
 
 ------------
+--6
 mealprep=# select recipe_name, cooking_time, cuisine
 from recipe
 where cuisine = 'french'; 
@@ -146,6 +151,7 @@ where cuisine = 'french';
 (2 rows)
 
 ----------
+--7
 mealprep=# select recipe_name, cooking_time
 from recipe
 join recipe_allergen on recipe.recipe_id = recipe_allergen.recipe_id
@@ -166,6 +172,7 @@ where allergen.allergen_id not in (1, 2);
 (10 rows)
 
 -----------------------
+--8
 mealprep=# select recipe_name, cooking_time, calories
 from recipe
 where calories < '600';
@@ -181,6 +188,7 @@ where calories < '600';
 (7 rows)
 
 ---------------------
+--9
 select recipe_name, cooking_time, cuisine, calories
 from recipe
 where cooking_time LIKE '%0:30%' and cuisine = 'french';
@@ -190,6 +198,7 @@ where cooking_time LIKE '%0:30%' and cuisine = 'french';
 (1 row)
 
 ---------------------
+--10
 mealprep=# select recipe_name, cooking_time, cuisine, calories
 from recipe 
 where cooking_time LIKE '%0:30%' and cuisine = 'japanese' and calories <= 600;
@@ -200,6 +209,7 @@ where cooking_time LIKE '%0:30%' and cuisine = 'japanese' and calories <= 600;
 
 
 -------------------
+--11
 mealprep=# select recipe_name, cooking_time, cuisine, calories
 from recipe
 where cuisine = 'french' and calories <= 600;
@@ -209,6 +219,7 @@ where cuisine = 'french' and calories <= 600;
 (1 row)
 
 -------------------------
+--12
 mealprep=# select recipe_name, cooking_time, cuisine, calories
 from recipe
 where cooking_time LIKE '%0:30%' and calories <= 600;
@@ -218,4 +229,95 @@ where cooking_time LIKE '%0:30%' and calories <= 600;
 (1 row)
 
 --------------------
+--13
+mealprep=# select recipe_name, cooking_time, cuisine, calories
+from recipe
+join recipe_allergen on recipe.recipe_id = recipe_allergen.recipe_id
+join allergen on recipe_allergen.allergen_id = allergen.allergen_id
+where allergen.allergen_id not in (1, 2) and cooking_time LIKE '%0:30%' and 
+cuisine = 'french' and calories <= 1000;
+   recipe_name   | cooking_time | cuisine | calories 
+-----------------+--------------+---------+----------
+ lobortis sapien | 0:30         | french  |      973
+(1 row)
+
+-------------------
+--14
+mealprep=# select recipe_name, cooking_time, cuisine, calories
+from recipe
+join recipe_allergen on recipe.recipe_id = recipe_allergen.recipe_id
+join allergen on recipe_allergen.allergen_id = allergen.allergen_id
+where allergen.allergen_id not in (1, 2) and cooking_time LIKE '%0:30%' and 
+cuisine = 'french';
+   recipe_name   | cooking_time | cuisine | calories 
+-----------------+--------------+---------+----------
+ lobortis sapien | 0:30         | french  |      973
+(1 row)
+
+----------------------
+--15
+mealprep=# select distinct recipe_name, cooking_time, cuisine, calories
+from recipe
+join recipe_allergen on recipe.recipe_id = recipe_allergen.recipe_id
+join allergen on recipe_allergen.allergen_id = allergen.allergen_id
+where allergen.allergen_id not in (1, 2) and cooking_time LIKE '%0:30%' and 
+calories <= 600;
+ recipe_name | cooking_time | cuisine  | calories 
+-------------+--------------+----------+----------
+ quam        | 0:30         | japanese |      482
+(1 row)
+
+-------------------
+--16
+mealprep=# select recipe_name, cooking_time, cuisine, calories
+from recipe
+join recipe_allergen on recipe.recipe_id = recipe_allergen.recipe_id
+join allergen on recipe_allergen.allergen_id = allergen.allergen_id
+where allergen.allergen_id not in (1, 2) and 
+calories <= 1000 and cuisine = 'french';
+   recipe_name   | cooking_time | cuisine | calories 
+-----------------+--------------+---------+----------
+ lobortis sapien | 0:30         | french  |      973
+(1 row)
+
+---------------------
+--17
+mealprep=# select recipe_name, cooking_time, cuisine, calories
+from recipe
+join recipe_allergen on recipe.recipe_id = recipe_allergen.recipe_id
+join allergen on recipe_allergen.allergen_id = allergen.allergen_id
+where allergen.allergen_id not in (1, 2) and cuisine = 'french';
+   recipe_name   | cooking_time | cuisine | calories 
+-----------------+--------------+---------+----------
+ lobortis sapien | 0:30         | french  |      973
+(1 row)
+
+-----------------
+--18
+mealprep=# select distinct recipe_name, cooking_time, cuisine, calories
+from recipe
+join recipe_allergen on recipe.recipe_id = recipe_allergen.recipe_id
+join allergen on recipe_allergen.allergen_id = allergen.allergen_id
+where allergen.allergen_id not in (1, 2) and cooking_time LIKE '%0:30%';
+   recipe_name   | cooking_time | cuisine  | calories 
+-----------------+--------------+----------+----------
+ lobortis sapien | 0:30         | french   |      973
+ quam            | 0:30         | japanese |      482
+(2 rows)
+
+
+------------------
+--19
+mealprep=# select distinct recipe_name, cooking_time, cuisine, calories
+from recipe
+join recipe_allergen on recipe.recipe_id = recipe_allergen.recipe_id
+join allergen on recipe_allergen.allergen_id = allergen.allergen_id
+where allergen.allergen_id not in (1, 2) and calories <= 600;
+  recipe_name  | cooking_time | cuisine  | calories 
+---------------+--------------+----------+----------
+ libero        | 1:00         | british  |      425
+ quam          | 0:30         | japanese |      482
+ ultrices enim | 0:25         | indian   |      424
+ nec           | 0:15         | japanese |      316
+(4 rows)
 
