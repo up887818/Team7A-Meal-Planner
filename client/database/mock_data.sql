@@ -82,12 +82,12 @@ insert into user_allergen (user_id, allergen_id)
 insert into user_login (email, password, user_id)
 values
 ('afluger0@cornell.edu', crypt('ultrices32', gen_salt('md5')), 1),
-('mkernley1@hud.gov', crypt('atqerf4', gen_salt('md5')), 2),
-('koake2@purevolume.com', crypt('felisef22', gen_salt('md5')), 3),
-('cfranken3@miitbeian.gov.cn', crypt('aliquam54', gen_salt('md5')), 4),
-('mgallaccio4@i2i.jp', crypt('ultrice45s', gen_salt('md5')), 5),
-('pwoodrow5@examiner.com', crypt('nu8732nc', gen_salt('md5')), 6),
-('llayfield6@over-blog.com', crypt('738aliquam', gen_salt('md5')), 7),
-('kiley7@virginia.edu', crypt('sollicitudin190', gen_salt('md5')), 8),
-('gfaussett8@gravatar.com', crypt('tellus1212', gen_salt('md5')), 9),
-('mlinebarger9@plala.or.jp', crypt('ipsum021y43', gen_salt('md5')), 10);
+('mkernley1@hud.gov', crypt('atqerf4', 'md5'), 2),
+('koake2@purevolume.com', crypt('felisef22', 'md5'), 3),
+('cfranken3@miitbeian.gov.cn', crypt('aliquam54', 'md5'), 4),
+('mgallaccio4@i2i.jp', crypt('ultrice45s', 'md5'), 5),
+('pwoodrow5@examiner.com', crypt('nu8732nc', 'md5'), 6),
+('llayfield6@over-blog.com', crypt('738aliquam', 'md5'), 7),
+('kiley7@virginia.edu', crypt('sollicitudin190', 'md5'), 8),
+('gfaussett8@gravatar.com', crypt('tellus1212', 'md5'), 9),
+('mlinebarger9@plala.or.jp', crypt('ipsum021y43', 'md5'), 10);

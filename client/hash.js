@@ -2,7 +2,7 @@
 // preferably we will go back to sha256!!
 // from https://css-tricks.com/snippets/javascript/javascript-md5/
 
-function md5(string) {
+export function md5(string) {
 
   function RotateLeft(lValue, iShiftBits) {
     return (lValue << iShiftBits) | (lValue >>> (32 - iShiftBits));

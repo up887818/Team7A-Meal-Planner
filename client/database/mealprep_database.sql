@@ -59,4 +59,5 @@ create table user_login (
     foreign key (user_id) references app_user(user_id)
 );
 
-create user serverconnect password 'team7a';
+/*setting up user for server to use*/
+create user serverconnect password 'team7a' superuser;

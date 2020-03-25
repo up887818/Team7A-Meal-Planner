@@ -3,17 +3,15 @@ import {
   md5
 } from "../hash.js";
 
-const hash = new Sha256();
-
-const formEl = {
-  firstname: document.querySelector('#Firstname'),
-  lastname: document.querySelector('#Lastname'),
-  email: document.querySelector('#email'),
-  password: document.querySelector('#Password'),
-  password2: document.querySelector('#Password2')
-};
-
 async function register() {
+  const formEl = {
+    firstname: document.querySelector('#Firstname'),
+    lastname: document.querySelector('#Lastname'),
+    email: document.querySelector('#email'),
+    password: document.querySelector('#Password'),
+    password2: document.querySelector('#Password2')
+  };
+
   for (const el of formEl) {
     if (el.value == "") {
       window.alert(`Please enter your ${el.name}.`);
@@ -64,10 +62,15 @@ async function register() {
 }
 
 //checks if the entered email and password(login details) are correct
-async function check(form) {
+async function check(event) {
+  event.preventDefault();
+  const formEl = {
+    username: document.getElementsByName("email")[0],
+    password: document.getElementsByName("password")[0]
+  }
   let data = {
-    "username": form.data.value,
-    "password": md5(form.password.value)
+    "username": formEl.username.value,
+    "password": md5(formEl.password.value)
   };
 
   let response = await fetch(`/auth?data=${JSON.stringify(data)}`);
@@ -100,13 +103,12 @@ function search() {
     }
   }
 }
-const recipes = database.ref('#recipes');
 
 //displaying recipes needs work
-function displayRecipes() {
-  let rec = document.getElementsByClassName('recipes');
-  recipe.appendChild(rec);
-}
+// function displayRecipes() {
+//   let rec = document.getElementsByClassName('recipes');
+//   recipe.appendChild(rec);
+// }
 
 //add recipe to showCalendar
 function addToCalendar() {
@@ -175,3 +177,10 @@ function errorMessage(error) {
   let errorBox = document.querySelector(".errorBox");
   errorBox.textContent = error;
 }
+
+window.addEventListener('load', function() {
+  const loginButton = document.getElementsByName("login")[0];
+  if (loginButton != "") {
+    loginButton.addEventListener("click", check);
+  }
+})

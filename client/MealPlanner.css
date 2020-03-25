@@ -1,105 +1,130 @@
 /*This external stylesheet is for the Recipe page of the website*/
-
-body{background-color:#cce6ff;}
+body {
+  background-color: #cce6ff;
+}
 
 /*Below is the css for the Index page*/
-.form-Format{width:30px;
-			 position: absolute;
-			 top:35%;
-			 left:35%;}
-
-a.form-Format{top: 100%;
-			  left:70%;
-			  width: 300px;
-			  display: inline-block;
-			  text-align: center;
-			   }
-
-.text-in{ height:30px;
-    font-size:100%;
-margin-right: 45%;
-float: right;
-text-align: center;
-
+.form-Format {
+  width: 30px;
+  position: absolute;
+  top: 35%;
+  left: 35%;
 }
-span.text-in{line-height:4rem;
-			 float: left;}
 
+a.form-Format {
+  top: 100%;
+  left: 70%;
+  width: 300px;
+  display: inline-block;
+  text-align: center;
+}
 
+.text-in {
+  height: 30px;
+  font-size: 100%;
+  margin-right: 45%;
+  float: right;
+  text-align: center;
+}
+
+span.text-in {
+  line-height: 4rem;
+  float: left;
+}
 
 /*Homepage css below*/
-
-ul{
-	list-style: none;
+ul {
+  list-style: none;
 }
 
+li.menuBar {
+  align-items: center;
+  margin: 2%;
+  padding: 5%;
+  overflow: hidden;
+  display: inline-block;
+  background-color: #333359;
+}
 
-li.menuBar{align-items: center;
-		   margin: 2%;
-  		   padding: 5%;
-  		   overflow: hidden;
-  		   display: inline-block;
-  		   background-color: #333359;}
- a.menuBar{color:white;text-decoration:none; }
+a.menuBar {
+  color: white;
+  text-decoration: none;
+}
 
-li.favTitle{margin: 1px;
-		   margin-right:1px;
-  		   padding: 1px;
-  		   overflow: hidden;
-  		   display: inline-block;
-  		   background-color: #333359;
-  		   color:white;}
+li.favTitle {
+  margin: 1px;
+  margin-right: 1px;
+  padding: 1px;
+  overflow: hidden;
+  display: inline-block;
+  background-color: #333359;
+  color: white;
+}
 
-li.favPicks{align-items: center;
-		   
-  		   padding: 8%;
-  		   overflow: hidden;
-  		   display: inline-block;
-  		   background-color: #333359;}
- a.menuBar{color:white;text-decoration:none; }
+li.favPicks {
+  align-items: center;
+  padding: 8%;
+  overflow: hidden;
+  display: inline-block;
+  background-color: #333359;
+}
 
-
+a.menuBar {
+  color: white;
+  text-decoration: none;
+}
 
 /*Below is the css for the Recipe page*/
-
-.topBar{background-color: #333359;
-		padding-top: auto;
-		margin-top: 0px;
-		margin-bottom:0px;
-		margin-left:0px; 
-		margin-right:0px;
-		 
-		vertical-align:middle;
-			}
-img.topBar{float: left;
-		   width:150px;
-		   height:100px;
-		   vertical-align: middle;}
-
-span.topBar{margin-left:16.5%;
-			margin-top: 6%;
-			font-size: 350%;
+.topBar {
+  background-color: #333359;
+  padding-top: auto;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+  vertical-align: middle;
 }
 
+img.topBar {
+  float: left;
+  width: 150px;
+  height: 100px;
+  vertical-align: middle;
+}
 
+span.topBar {
+  margin-left: 16.5%;
+  margin-top: 6%;
+  font-size: 350%;
+}
 
-input.topSearch{margin-top: 0px;
-				margin-bottom:0px;
-				margin-left: 65%;
-				margin-right:10%;
-				float: right;
-				vertical-align: middle;}
+input.topSearch {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: 65%;
+  margin-right: 10%;
+  float: right;
+  vertical-align: middle;
+}
 
-.rightBar{margin-top:0%;
-		  padding: 8%;
-  		  overflow: hidden;
-  		  font-size: 115%;
-		  background-color: #333359;
-		  float: right;
-		  color: white;
-		  align-items: center;
-		}
+.rightBar {
+  margin-top: 0%;
+  padding: 8%;
+  overflow: hidden;
+  font-size: 115%;
+  background-color: #333359;
+  float: right;
+  color: white;
+  align-items: center;
+}
 
-p.rightBar{text-decoration: underline;
-text-align:center;
-white-space: nowrap;}
+p.rightBar {
+  text-decoration: underline;
+  text-align: center;
+  white-space: nowrap;
+}
+
+a {
+  margin: 2rem;
+  border: 1rem;
+}

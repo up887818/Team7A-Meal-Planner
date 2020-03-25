@@ -21,9 +21,8 @@ client.connect();
 async function sendQuery(query) {
   client
     .query(query)
-    .then(function(res) {
-      console.log(res);
-      JSON.parse(res);
+    .then(function(result) {
+      result.rows;
     })
     .catch(e => console.error(e.stack))
 }
@@ -38,16 +37,19 @@ async function findAllergenID(name) {
 async function login(req, res) {
   const userDetails = JSON.parse(req.query.data);
 
-  let query = `select user_id, password from user_login where email = ${userDetails.email}`;
+  let query = `select user_id, password from user_login where "email" = '${userDetails.username}';`;
   // get username and password where username = userDetails.username
-  const accDetails = await res.json(sendQuery(query)).rows[0];
 
-  if (accDetails === null || accDetails.password !== userDetails.password) {
-    return false;
-  } else {
-    localStorage.setItem("user_id", `${accDetails.userId}`);
-    return true;
-  }
+  let accDetails = await sendQuery(query)[0];
+
+  // const accDetails = await res.json(sendQuery(query).rows[0];
+
+  // if (accDetails === null || accDetails.password !== userDetails.password) {
+  //   return false;
+  // } else {
+  //   localStorage.setItem("user_id", `${accDetails.userId}`);
+  //   return true;
+  // }
 }
 
 async function register(req, res) {
