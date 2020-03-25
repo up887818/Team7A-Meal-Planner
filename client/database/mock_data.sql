@@ -79,13 +79,13 @@ insert into user_allergen (user_id, allergen_id)
 
 insert into user_login (email, password, user_id)
 values
-('afluger0@cornell.edu', sha256('ultrices32'), 1),
-('mkernley1@hud.gov', sha256('atqerf4'), 2),
-('koake2@purevolume.com', sha256('felisef22'), 3),
-('cfranken3@miitbeian.gov.cn', sha256('aliquam54'), 4),
-('mgallaccio4@i2i.jp', sha256('ultrice45s'), 5),
-('pwoodrow5@examiner.com', sha256('nu8732nc'), 6),
-('llayfield6@over-blog.com', sha256('738aliquam'), 7),
-('kiley7@virginia.edu', sha256('sollicitudin190'), 8),
-('gfaussett8@gravatar.com', sha256('tellus1212'), 9),
-('mlinebarger9@plala.or.jp', sha256('ipsum021y43'), 10);
+('afluger0@cornell.edu', digest('ultrices32', 'sha256'), 1),
+('mkernley1@hud.gov', digest('atqerf4', 'sha256'), 2),
+('koake2@purevolume.com', digest('felisef22', 'sha256'), 3),
+('cfranken3@miitbeian.gov.cn', digest('aliquam54', 'sha256'), 4),
+('mgallaccio4@i2i.jp', digest('ultrice45s', 'sha256'), 5),
+('pwoodrow5@examiner.com', digest('nu8732nc', 'sha256'), 6),
+('llayfield6@over-blog.com', digest('738aliquam', 'sha256'), 7),
+('kiley7@virginia.edu', digest('sollicitudin190', 'sha256'), 8),
+('gfaussett8@gravatar.com', digest('tellus1212', 'sha256'), 9),
+('mlinebarger9@plala.or.jp', digest('ipsum021y43', 'sha256'), 10);
