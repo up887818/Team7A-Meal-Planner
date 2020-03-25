@@ -9,6 +9,36 @@
 </head>
 
 <body style="background-color:#cce6ff;">
+	<!-- own code-->
+	<script src="client.js" type="module"></script>
+	<!-- facebook api -->
+	<script type="text/javascript">
+		window.fbASyncInit = function() {
+			FB.init({
+				appId: '710291289713662',
+				autoLogAppEvents: true,
+				xfbml: true,
+				version: 'v6.0'
+			});
+		}
+
+		function shareFB() {
+			let recipeName = document.getElementsByTagName("h2")[0];
+			let url = window.location.href;
+
+			FB.ui({
+				method: 'share',
+				href: url,
+				quote: `Have you tried ${recipeName} yet? Get the recipe!`
+			}, function(response) {});
+		}
+
+		let shareButton = document.getElementsByName("share")[0];
+		shareButton.addEventListener("click", shareFB);
+	</script>
+	<script async defer src="https://connect.facebook.net/en_UK/sdk.js">
+
+	</script>
 
 	<header class="topBar">
 		<span>
@@ -45,7 +75,7 @@
 
 	<p>Step 1</p>
 
-	<script src="client.js" type="module"></script>
+	<button type="button" name="share">Share on Facebook!</button>
 </body>
 
 </html>
