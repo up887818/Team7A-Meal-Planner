@@ -47,13 +47,25 @@ function register() {
 }
 
   //checks if the entered email and password(login details) are correct
-  function check(form) {
-    if (form.email.value == "email" && form.password.value == "password") {
-      window.open('homepage.html'); //opens the target page when email and password match
-    } else {
-      alert("Error Password or Username not correct"); //displays error message
-    }
-  }
+  
+
+function check (form) {
+
+const Entered-name = login.email;
+const Entered-pwd = login.password;
+
+login.reset();
+
+if (form.email.value == "email" && form.password.value == "password") {
+      window.open('homepage.html'); //opens the target page when email and password match 
+      }
+
+else { alert("Error Password or Username not correct"); //displays error message}
+
+
+}
+
+document.getElementById("login").addEventListener("onclick",check);
 
   
 
