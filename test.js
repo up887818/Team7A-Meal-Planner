@@ -1,7 +1,7 @@
 // QUnit testing
 'use strict';
 
-QUnit.Module("Server Testing")
+QUnit.module("Server Testing")
 
 QUnit.test(
   "User can log in",
