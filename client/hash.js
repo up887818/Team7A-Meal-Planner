@@ -1,208 +1,233 @@
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
-/* SHA-256 (FIPS 180-4) implementation in JavaScript                  (c) Chris Veness 2002-2019  */
-/*                                                                                   MIT Licence  */
-/* www.movable-type.co.uk/scripts/sha256.html                                                     */
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+// md5 is not meant for passwords so this is temporary
+// preferably we will go back to sha256!!
+// from https://css-tricks.com/snippets/javascript/javascript-md5/
 
+function md5(string) {
 
-/**
- * SHA-256 hash function reference implementation.
- *
- * This is an annotated direct implementation of FIPS 180-4, without any optimisations. It is
- * intended to aid understanding of the algorithm rather than for production use.
- *
- * While it could be used where performance is not critical, I would recommend using the ‘Web
- * Cryptography API’ (developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest) for the browser,
- * or the ‘crypto’ library (nodejs.org/api/crypto.html#crypto_class_hash) in Node.js.
- *
- * See csrc.nist.gov/groups/ST/toolkit/secure_hashing.html
- *     csrc.nist.gov/groups/ST/toolkit/examples.html
- */
-class Sha256 {
+  function RotateLeft(lValue, iShiftBits) {
+    return (lValue << iShiftBits) | (lValue >>> (32 - iShiftBits));
+  }
 
-  /**
-   * Generates SHA-256 hash of string.
-   *
-   * @param   {string} msg - (Unicode) string to be hashed.
-   * @param   {Object} [options]
-   * @param   {string} [options.msgFormat=string] - Message format: 'string' for JavaScript string
-   *   (gets converted to UTF-8 for hashing); 'hex-bytes' for string of hex bytes ('616263' ≡ 'abc') .
-   * @param   {string} [options.outFormat=hex] - Output format: 'hex' for string of contiguous
-   *   hex bytes; 'hex-w' for grouping hex bytes into groups of (4 byte / 8 character) words.
-   * @returns {string} Hash of msg as hex character string.
-   *
-   * @example
-   *   import Sha256 from './sha256.js';
-   *   const hash = Sha256.hash('abc'); // 'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad'
-   */
-  static hash(msg, options) {
-    const defaults = {
-      msgFormat: 'string',
-      outFormat: 'hex'
-    };
-    const opt = Object.assign(defaults, options);
-
-    // note use throughout this routine of 'n >>> 0' to coerce Number 'n' to unsigned 32-bit integer
-
-    switch (opt.msgFormat) {
-      default: // default is to convert string to UTF-8, as SHA only deals with byte-streams
-      case 'string':
-        msg = utf8Encode(msg);
-        break;
-      case 'hex-bytes':
-        msg = hexBytesToString(msg);
-        break; // mostly for running tests
+  function AddUnsigned(lX, lY) {
+    var lX4, lY4, lX8, lY8, lResult;
+    lX8 = (lX & 0x80000000);
+    lY8 = (lY & 0x80000000);
+    lX4 = (lX & 0x40000000);
+    lY4 = (lY & 0x40000000);
+    lResult = (lX & 0x3FFFFFFF) + (lY & 0x3FFFFFFF);
+    if (lX4 & lY4) {
+      return (lResult ^ 0x80000000 ^ lX8 ^ lY8);
     }
-
-    // constants [§4.2.2]
-    const K = [
-      0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
-      0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
-      0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
-      0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,
-      0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
-      0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
-      0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
-      0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
-    ];
-
-    // initial hash value [§5.3.3]
-    const H = [
-      0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19
-    ];
-
-    // PREPROCESSING [§6.2.1]
-
-    msg += String.fromCharCode(0x80); // add trailing '1' bit (+ 0's padding) to string [§5.1.1]
-
-    // convert string msg into 512-bit blocks (array of 16 32-bit integers) [§5.2.1]
-    const l = msg.length / 4 + 2; // length (in 32-bit integers) of msg + ‘1’ + appended length
-    const N = Math.ceil(l / 16); // number of 16-integer (512-bit) blocks required to hold 'l' ints
-    const M = new Array(N); // message M is N×16 array of 32-bit integers
-
-    for (let i = 0; i < N; i++) {
-      M[i] = new Array(16);
-      for (let j = 0; j < 16; j++) { // encode 4 chars per integer (64 per block), big-endian encoding
-        M[i][j] = (msg.charCodeAt(i * 64 + j * 4 + 0) << 24) | (msg.charCodeAt(i * 64 + j * 4 + 1) << 16) |
-          (msg.charCodeAt(i * 64 + j * 4 + 2) << 8) | (msg.charCodeAt(i * 64 + j * 4 + 3) << 0);
-      } // note running off the end of msg is ok 'cos bitwise ops on NaN return 0
+    if (lX4 | lY4) {
+      if (lResult & 0x40000000) {
+        return (lResult ^ 0xC0000000 ^ lX8 ^ lY8);
+      } else {
+        return (lResult ^ 0x40000000 ^ lX8 ^ lY8);
+      }
+    } else {
+      return (lResult ^ lX8 ^ lY8);
     }
-    // add length (in bits) into final pair of 32-bit integers (big-endian) [§5.1.1]
-    // note: most significant word would be (len-1)*8 >>> 32, but since JS converts
-    // bitwise-op args to 32 bits, we need to simulate this by arithmetic operators
-    const lenHi = ((msg.length - 1) * 8) / Math.pow(2, 32);
-    const lenLo = ((msg.length - 1) * 8) >>> 0;
-    M[N - 1][14] = Math.floor(lenHi);
-    M[N - 1][15] = lenLo;
+  }
 
+  function F(x, y, z) {
+    return (x & y) | ((~x) & z);
+  }
 
-    // HASH COMPUTATION [§6.2.2]
+  function G(x, y, z) {
+    return (x & z) | (y & (~z));
+  }
 
-    for (let i = 0; i < N; i++) {
-      const W = new Array(64);
+  function H(x, y, z) {
+    return (x ^ y ^ z);
+  }
 
-      // 1 - prepare message schedule 'W'
-      for (let t = 0; t < 16; t++) W[t] = M[i][t];
-      for (let t = 16; t < 64; t++) {
-        W[t] = (Sha256.σ1(W[t - 2]) + W[t - 7] + Sha256.σ0(W[t - 15]) + W[t - 16]) >>> 0;
+  function I(x, y, z) {
+    return (y ^ (x | (~z)));
+  }
+
+  function FF(a, b, c, d, x, s, ac) {
+    a = AddUnsigned(a, AddUnsigned(AddUnsigned(F(b, c, d), x), ac));
+    return AddUnsigned(RotateLeft(a, s), b);
+  };
+
+  function GG(a, b, c, d, x, s, ac) {
+    a = AddUnsigned(a, AddUnsigned(AddUnsigned(G(b, c, d), x), ac));
+    return AddUnsigned(RotateLeft(a, s), b);
+  };
+
+  function HH(a, b, c, d, x, s, ac) {
+    a = AddUnsigned(a, AddUnsigned(AddUnsigned(H(b, c, d), x), ac));
+    return AddUnsigned(RotateLeft(a, s), b);
+  };
+
+  function II(a, b, c, d, x, s, ac) {
+    a = AddUnsigned(a, AddUnsigned(AddUnsigned(I(b, c, d), x), ac));
+    return AddUnsigned(RotateLeft(a, s), b);
+  };
+
+  function ConvertToWordArray(string) {
+    var lWordCount;
+    var lMessageLength = string.length;
+    var lNumberOfWords_temp1 = lMessageLength + 8;
+    var lNumberOfWords_temp2 = (lNumberOfWords_temp1 - (lNumberOfWords_temp1 % 64)) / 64;
+    var lNumberOfWords = (lNumberOfWords_temp2 + 1) * 16;
+    var lWordArray = Array(lNumberOfWords - 1);
+    var lBytePosition = 0;
+    var lByteCount = 0;
+    while (lByteCount < lMessageLength) {
+      lWordCount = (lByteCount - (lByteCount % 4)) / 4;
+      lBytePosition = (lByteCount % 4) * 8;
+      lWordArray[lWordCount] = (lWordArray[lWordCount] | (string.charCodeAt(lByteCount) << lBytePosition));
+      lByteCount++;
+    }
+    lWordCount = (lByteCount - (lByteCount % 4)) / 4;
+    lBytePosition = (lByteCount % 4) * 8;
+    lWordArray[lWordCount] = lWordArray[lWordCount] | (0x80 << lBytePosition);
+    lWordArray[lNumberOfWords - 2] = lMessageLength << 3;
+    lWordArray[lNumberOfWords - 1] = lMessageLength >>> 29;
+    return lWordArray;
+  };
+
+  function WordToHex(lValue) {
+    var WordToHexValue = "",
+      WordToHexValue_temp = "",
+      lByte, lCount;
+    for (lCount = 0; lCount <= 3; lCount++) {
+      lByte = (lValue >>> (lCount * 8)) & 255;
+      WordToHexValue_temp = "0" + lByte.toString(16);
+      WordToHexValue = WordToHexValue + WordToHexValue_temp.substr(WordToHexValue_temp.length - 2, 2);
+    }
+    return WordToHexValue;
+  };
+
+  function Utf8Encode(string) {
+    string = string.replace(/\r\n/g, "\n");
+    var utftext = "";
+
+    for (var n = 0; n < string.length; n++) {
+
+      var c = string.charCodeAt(n);
+
+      if (c < 128) {
+        utftext += String.fromCharCode(c);
+      } else if ((c > 127) && (c < 2048)) {
+        utftext += String.fromCharCode((c >> 6) | 192);
+        utftext += String.fromCharCode((c & 63) | 128);
+      } else {
+        utftext += String.fromCharCode((c >> 12) | 224);
+        utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+        utftext += String.fromCharCode((c & 63) | 128);
       }
 
-      // 2 - initialise working variables a, b, c, d, e, f, g, h with previous hash value
-      let a = H[0],
-        b = H[1],
-        c = H[2],
-        d = H[3],
-        e = H[4],
-        f = H[5],
-        g = H[6],
-        h = H[7];
-
-      // 3 - main loop (note '>>> 0' for 'addition modulo 2^32')
-      for (let t = 0; t < 64; t++) {
-        const T1 = h + Sha256.Σ1(e) + Sha256.Ch(e, f, g) + K[t] + W[t];
-        const T2 = Sha256.Σ0(a) + Sha256.Maj(a, b, c);
-        h = g;
-        g = f;
-        f = e;
-        e = (d + T1) >>> 0;
-        d = c;
-        c = b;
-        b = a;
-        a = (T1 + T2) >>> 0;
-      }
-
-      // 4 - compute the new intermediate hash value (note '>>> 0' for 'addition modulo 2^32')
-      H[0] = (H[0] + a) >>> 0;
-      H[1] = (H[1] + b) >>> 0;
-      H[2] = (H[2] + c) >>> 0;
-      H[3] = (H[3] + d) >>> 0;
-      H[4] = (H[4] + e) >>> 0;
-      H[5] = (H[5] + f) >>> 0;
-      H[6] = (H[6] + g) >>> 0;
-      H[7] = (H[7] + h) >>> 0;
     }
 
-    // convert H0..H7 to hex strings (with leading zeros)
-    for (let h = 0; h < H.length; h++) H[h] = ('00000000' + H[h].toString(16)).slice(-8);
+    return utftext;
+  };
 
-    // concatenate H0..H7, with separator if required
-    const separator = opt.outFormat == 'hex-w' ? ' ' : '';
+  var x = Array();
+  var k, AA, BB, CC, DD, a, b, c, d;
+  var S11 = 7,
+    S12 = 12,
+    S13 = 17,
+    S14 = 22;
+  var S21 = 5,
+    S22 = 9,
+    S23 = 14,
+    S24 = 20;
+  var S31 = 4,
+    S32 = 11,
+    S33 = 16,
+    S34 = 23;
+  var S41 = 6,
+    S42 = 10,
+    S43 = 15,
+    S44 = 21;
 
-    return H.join(separator);
+  string = Utf8Encode(string);
 
-    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+  x = ConvertToWordArray(string);
 
-    function utf8Encode(str) {
-      try {
-        return new TextEncoder().encode(str, 'utf-8').reduce((prev, curr) => prev + String.fromCharCode(curr), '');
-      } catch (e) { // no TextEncoder available?
-        return unescape(encodeURIComponent(str)); // monsur.hossa.in/2012/07/20/utf-8-in-javascript.html
-      }
-    }
+  a = 0x67452301;
+  b = 0xEFCDAB89;
+  c = 0x98BADCFE;
+  d = 0x10325476;
 
-    function hexBytesToString(hexStr) { // convert string of hex numbers to a string of chars (eg '616263' -> 'abc').
-      const str = hexStr.replace(' ', ''); // allow space-separated groups
-      return str == '' ? '' : str.match(/.{2}/g).map(byte => String.fromCharCode(parseInt(byte, 16))).join('');
-    }
+  for (k = 0; k < x.length; k += 16) {
+    AA = a;
+    BB = b;
+    CC = c;
+    DD = d;
+    a = FF(a, b, c, d, x[k + 0], S11, 0xD76AA478);
+    d = FF(d, a, b, c, x[k + 1], S12, 0xE8C7B756);
+    c = FF(c, d, a, b, x[k + 2], S13, 0x242070DB);
+    b = FF(b, c, d, a, x[k + 3], S14, 0xC1BDCEEE);
+    a = FF(a, b, c, d, x[k + 4], S11, 0xF57C0FAF);
+    d = FF(d, a, b, c, x[k + 5], S12, 0x4787C62A);
+    c = FF(c, d, a, b, x[k + 6], S13, 0xA8304613);
+    b = FF(b, c, d, a, x[k + 7], S14, 0xFD469501);
+    a = FF(a, b, c, d, x[k + 8], S11, 0x698098D8);
+    d = FF(d, a, b, c, x[k + 9], S12, 0x8B44F7AF);
+    c = FF(c, d, a, b, x[k + 10], S13, 0xFFFF5BB1);
+    b = FF(b, c, d, a, x[k + 11], S14, 0x895CD7BE);
+    a = FF(a, b, c, d, x[k + 12], S11, 0x6B901122);
+    d = FF(d, a, b, c, x[k + 13], S12, 0xFD987193);
+    c = FF(c, d, a, b, x[k + 14], S13, 0xA679438E);
+    b = FF(b, c, d, a, x[k + 15], S14, 0x49B40821);
+    a = GG(a, b, c, d, x[k + 1], S21, 0xF61E2562);
+    d = GG(d, a, b, c, x[k + 6], S22, 0xC040B340);
+    c = GG(c, d, a, b, x[k + 11], S23, 0x265E5A51);
+    b = GG(b, c, d, a, x[k + 0], S24, 0xE9B6C7AA);
+    a = GG(a, b, c, d, x[k + 5], S21, 0xD62F105D);
+    d = GG(d, a, b, c, x[k + 10], S22, 0x2441453);
+    c = GG(c, d, a, b, x[k + 15], S23, 0xD8A1E681);
+    b = GG(b, c, d, a, x[k + 4], S24, 0xE7D3FBC8);
+    a = GG(a, b, c, d, x[k + 9], S21, 0x21E1CDE6);
+    d = GG(d, a, b, c, x[k + 14], S22, 0xC33707D6);
+    c = GG(c, d, a, b, x[k + 3], S23, 0xF4D50D87);
+    b = GG(b, c, d, a, x[k + 8], S24, 0x455A14ED);
+    a = GG(a, b, c, d, x[k + 13], S21, 0xA9E3E905);
+    d = GG(d, a, b, c, x[k + 2], S22, 0xFCEFA3F8);
+    c = GG(c, d, a, b, x[k + 7], S23, 0x676F02D9);
+    b = GG(b, c, d, a, x[k + 12], S24, 0x8D2A4C8A);
+    a = HH(a, b, c, d, x[k + 5], S31, 0xFFFA3942);
+    d = HH(d, a, b, c, x[k + 8], S32, 0x8771F681);
+    c = HH(c, d, a, b, x[k + 11], S33, 0x6D9D6122);
+    b = HH(b, c, d, a, x[k + 14], S34, 0xFDE5380C);
+    a = HH(a, b, c, d, x[k + 1], S31, 0xA4BEEA44);
+    d = HH(d, a, b, c, x[k + 4], S32, 0x4BDECFA9);
+    c = HH(c, d, a, b, x[k + 7], S33, 0xF6BB4B60);
+    b = HH(b, c, d, a, x[k + 10], S34, 0xBEBFBC70);
+    a = HH(a, b, c, d, x[k + 13], S31, 0x289B7EC6);
+    d = HH(d, a, b, c, x[k + 0], S32, 0xEAA127FA);
+    c = HH(c, d, a, b, x[k + 3], S33, 0xD4EF3085);
+    b = HH(b, c, d, a, x[k + 6], S34, 0x4881D05);
+    a = HH(a, b, c, d, x[k + 9], S31, 0xD9D4D039);
+    d = HH(d, a, b, c, x[k + 12], S32, 0xE6DB99E5);
+    c = HH(c, d, a, b, x[k + 15], S33, 0x1FA27CF8);
+    b = HH(b, c, d, a, x[k + 2], S34, 0xC4AC5665);
+    a = II(a, b, c, d, x[k + 0], S41, 0xF4292244);
+    d = II(d, a, b, c, x[k + 7], S42, 0x432AFF97);
+    c = II(c, d, a, b, x[k + 14], S43, 0xAB9423A7);
+    b = II(b, c, d, a, x[k + 5], S44, 0xFC93A039);
+    a = II(a, b, c, d, x[k + 12], S41, 0x655B59C3);
+    d = II(d, a, b, c, x[k + 3], S42, 0x8F0CCC92);
+    c = II(c, d, a, b, x[k + 10], S43, 0xFFEFF47D);
+    b = II(b, c, d, a, x[k + 1], S44, 0x85845DD1);
+    a = II(a, b, c, d, x[k + 8], S41, 0x6FA87E4F);
+    d = II(d, a, b, c, x[k + 15], S42, 0xFE2CE6E0);
+    c = II(c, d, a, b, x[k + 6], S43, 0xA3014314);
+    b = II(b, c, d, a, x[k + 13], S44, 0x4E0811A1);
+    a = II(a, b, c, d, x[k + 4], S41, 0xF7537E82);
+    d = II(d, a, b, c, x[k + 11], S42, 0xBD3AF235);
+    c = II(c, d, a, b, x[k + 2], S43, 0x2AD7D2BB);
+    b = II(b, c, d, a, x[k + 9], S44, 0xEB86D391);
+    a = AddUnsigned(a, AA);
+    b = AddUnsigned(b, BB);
+    c = AddUnsigned(c, CC);
+    d = AddUnsigned(d, DD);
   }
 
+  var temp = WordToHex(a) + WordToHex(b) + WordToHex(c) + WordToHex(d);
 
-
-  /**
-   * Rotates right (circular right shift) value x by n positions [§3.2.4].
-   * @private
-   */
-  static ROTR(n, x) {
-    return (x >>> n) | (x << (32 - n));
-  }
-
-
-  /**
-   * Logical functions [§4.1.2].
-   * @private
-   */
-  static Σ0(x) {
-    return Sha256.ROTR(2, x) ^ Sha256.ROTR(13, x) ^ Sha256.ROTR(22, x);
-  }
-  static Σ1(x) {
-    return Sha256.ROTR(6, x) ^ Sha256.ROTR(11, x) ^ Sha256.ROTR(25, x);
-  }
-  static σ0(x) {
-    return Sha256.ROTR(7, x) ^ Sha256.ROTR(18, x) ^ (x >>> 3);
-  }
-  static σ1(x) {
-    return Sha256.ROTR(17, x) ^ Sha256.ROTR(19, x) ^ (x >>> 10);
-  }
-  static Ch(x, y, z) {
-    return (x & y) ^ (~x & z);
-  } // 'choice'
-  static Maj(x, y, z) {
-    return (x & y) ^ (x & z) ^ (y & z);
-  } // 'majority'
-
+  return temp.toLowerCase();
 }
-
-
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
-
-export default Sha256;

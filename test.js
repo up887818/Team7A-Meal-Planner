@@ -4,7 +4,7 @@
 QUnit.Module("Server Testing")
 
 QUnit.test(
-  "User can log in"
+  "User can log in",
 
   function(assert) {
     // requiring the server file starts the server
@@ -14,7 +14,7 @@ QUnit.test(
 
     let testData = {
       "username": "afluger0@cornell.edu",
-      "password": "94db3a83deba80c97aa2bdbc9beb1f2526fd306e320781bf6bd360632046019d"
+      "password": "4d866bbe29ad7fc592c78b380897495d"
       // hashing represents "ultrices32"
       // this is usually hashed on the client end for security
     }
@@ -51,7 +51,7 @@ QUnit.test(
 );
 
 QUnit.test(
-  "Server can register account"
+  "Server can register account",
 
   function(assert) {
     // requiring the server file starts the server
@@ -63,11 +63,11 @@ QUnit.test(
       "firstname": "Test",
       "lastname": "Data",
       "email": "testing@gmail.com",
-      "password": "6ca13d52ca70c883e0f0bb101e425a89e8624de51db2d2392593af6a84118090"
+      "password": "e99a18c428cb38d5f260853678922e03"
+      // hashing represents "abc123"
     }
 
     sessionStorage.setItem("register_details", testData);
-    // hashing represents "abc123"
 
     const options = {
       host: 'localhost',
@@ -100,7 +100,7 @@ QUnit.test(
 );
 
 QUnit.test(
-  "Server can login using new account"
+  "Server can login using new account",
 
   function(assert) {
     // requiring the server file starts the server
@@ -111,7 +111,7 @@ QUnit.test(
     let testData = {
       // same data as previous test
       "email": "testing@gmail.com",
-      "password": "6ca13d52ca70c883e0f0bb101e425a89e8624de51db2d2392593af6a84118090"
+      "password": "e99a18c428cb38d5f260853678922e03"
     }
 
     sessionStorage.setItem("login_details", testData);

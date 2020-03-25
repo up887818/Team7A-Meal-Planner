@@ -1,7 +1,9 @@
 'use Strict';
 import {
-  Sha256
+  md5
 } from "../hash.js";
+
+const hash = new Sha256();
 
 const formEl = {
   firstname: document.querySelector('#Firstname'),
@@ -49,7 +51,7 @@ async function register() {
       "firstname": el.firstname.value,
       "lastname": el.lastname.value,
       "email": el.email.value,
-      "password": Sha256.hash(el.password.value),
+      "password": md5(el.password.value),
     };
 
     sessionStorage.setItem("register_details", JSON.stringify(data));
@@ -58,7 +60,7 @@ async function register() {
     if (response.ok) {
       window.location.href = "homepage.html";
     } else {
-      errorMessage(response.status;)
+      errorMessage(response.status);
     }
   }
 }
@@ -67,7 +69,7 @@ async function register() {
 async function check(form) {
   let data = {
     "username": form.data.value,
-    "password": Sha256.hash(form.password.value)
+    "password": md5(form.password.value)
   };
 
   sessionStorage.setItem("login_details", JSON.stringify(data));
@@ -76,7 +78,7 @@ async function check(form) {
   if (response.ok) {
     verifyData(response.text());
   } else {
-    errorMessage(response.status;)
+    errorMessage(response.status);
   }
 }
 
@@ -111,10 +113,8 @@ function displayRecipes() {
 }
 
 //add recipe to showCalendar
-function addToCalender() {
-  const buttonByRecipe = document.getElementById("addToCalender");
-
-}
+function addToCalendar() {
+  const buttonByRecipe = document.getElementById("addToCalendar");
 }
 
 //display recent Recipes
