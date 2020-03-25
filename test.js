@@ -12,14 +12,8 @@ QUnit.test(
 
     const done = assert.async();
 
-    let testData = {
-      "username": "afluger0@cornell.edu",
-      "password": "94db3a83deba80c97aa2bdbc9beb1f2526fd306e320781bf6bd360632046019d"
-      // hashing represents "ultrices32"
-      // this is usually hashed on the client end for security
-    }
-
-    sessionStorage.setItem("login_details", JSON.stringify(testData));
+    sessionStorage.setItem("login_details", '{"username":"afluger0@cornell.edu","Password":"94db3a83deba80c97aa2bdbc9beb1f2526fd306e320781bf6bd360632046019d"}');
+    // hashing represents "ultrices32"
 
     const options = {
       host: 'localhost',
@@ -59,14 +53,7 @@ QUnit.test(
 
     const done = assert.async();
 
-    let testData = {
-      "firstname": "Test",
-      "lastname": "Data",
-      "email": "testing@gmail.com",
-      "password": "6ca13d52ca70c883e0f0bb101e425a89e8624de51db2d2392593af6a84118090"
-    }
-
-    sessionStorage.setItem("register_details", testData);
+    sessionStorage.setItem("login_details", '{"username":"testing@gmail.com","Password":"6ca13d52ca70c883e0f0bb101e425a89e8624de51db2d2392593af6a84118090"}');
     // hashing represents "abc123"
 
     const options = {
@@ -86,54 +73,6 @@ QUnit.test(
 
       res.on('end', function() {
         assert.equal(str.trim(), "true", "Server has received no error from database");
-      });
-    });
-
-    req.on('error', function(e) {
-      assert.ok(false);
-      done();
-    });
-
-    req.end();
-  }
-
-);
-
-QUnit.test(
-  "Server can login using new account"
-
-  function(assert) {
-    // requiring the server file starts the server
-    require("server.js");
-
-    const done = assert.async();
-
-    let testData = {
-      // same data as previous test
-      "email": "testing@gmail.com",
-      "password": "6ca13d52ca70c883e0f0bb101e425a89e8624de51db2d2392593af6a84118090"
-    }
-
-    sessionStorage.setItem("login_details", testData);
-
-    const options = {
-      host: 'localhost',
-      port: '8080',
-      method: 'GET',
-      path: '/auth',
-    };
-
-    const req = http.request(options, function(res) {
-      assert.qeual(res.statusCode, 200, "If it's working the status should be 200");
-      let str = '';
-
-      res.on('data', function(chunk) {
-        str += chunk;
-      });
-
-      res.on('end', function() {
-        let userId = localStorage.getItem("user_id");
-        assert.equal(userId, 11, "Server has received correct user ID from database");
       });
     });
 

@@ -25,9 +25,12 @@ install:
   #these are steps used to setup the web programming cw
 
 script:
-  - npm test
-  # this runs the QUnit code in test.js... it starts the server and performs
-  # the tests specified
+  - npm start
+  #per package.json: npm server.js
+  # testing getting queries via server
+  - console.log(await showRecipes())
+  - console.log(await getRecipe({"id":1}))
+  - pkill node
 
 deploy:
   provider: pages
