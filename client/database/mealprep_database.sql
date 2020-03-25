@@ -1,3 +1,5 @@
+create extension if not exists plpgsql;
+
 create database mealprep;
 
 \c mealprep;
@@ -57,4 +59,4 @@ create table user_login (
     foreign key (user_id) references app_user(user_id)
 );
 
-create user serverconnect password `team7a`;
+create user serverconnect password 'team7a';

@@ -53,13 +53,23 @@ async function login(req, res) {
 }
 
 async function register(req, res) {
-  const userDetails = JSON.parse(sessionStorage.getItem("login_details"));
-  sessionStorage.remove("login_details");
+  const userDetails = JSON.parse(sessionStorage.getItem("register_details"));
+  sessionStorage.remove("register_details");
 
-  let query = `insert into user_login (email, password)
-               values (${userDetails.email}, ${userDetails.password})`;
+  let app_user_query = `insert into app_user (first_name, last_name)
+              values (${userDetails.firstname}, ${userDetails.lastname})`;
 
-  await sendQuery(query);
+  await sendQuery(app_user_query);
+
+  let get_userId_query = `select user_id from app_user
+              where first_name = ${userDetails.firstname} and last_name = ${userDetails.lastname}`;
+
+  let userId = res.json(sendQuery(get_userId_query)).rows[0];
+
+  let user_login_query = `insert into user_login (email, password, user_id)
+               values (${userDetails.email}, ${userDetails.password}, ${userId})`;
+
+  await sendQuery(user_login_query);
 
   // need to figure out how to get error message
 }

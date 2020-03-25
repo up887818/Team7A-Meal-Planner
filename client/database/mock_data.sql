@@ -77,8 +77,8 @@ insert into user_allergen (user_id, allergen_id)
 
 --sha256 function used for mock data only, passwords will be hashed using javascript
 
-insert into user_login (email, password, user_id) 
-values 
+insert into user_login (email, password, user_id)
+values
 ('afluger0@cornell.edu', sha256('ultrices32'), 1),
 ('mkernley1@hud.gov', sha256('atqerf4'), 2),
 ('koake2@purevolume.com', sha256('felisef22'), 3),
