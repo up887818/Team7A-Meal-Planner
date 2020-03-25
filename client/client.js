@@ -54,9 +54,7 @@ async function register() {
       "password": md5(el.password.value),
     };
 
-    sessionStorage.setItem("register_details", JSON.stringify(data));
-
-    let response = await fetch("/register");
+    let response = await fetch(`/register?data=${JSON.stringify(data)}`);
     if (response.ok) {
       window.location.href = "homepage.html";
     } else {
@@ -72,9 +70,7 @@ async function check(form) {
     "password": md5(form.password.value)
   };
 
-  sessionStorage.setItem("login_details", JSON.stringify(data));
-
-  let response = await fetch("/auth");
+  let response = await fetch(`/auth?data=${JSON.stringify(data)}`);
   if (response.ok) {
     verifyData(response.text());
   } else {

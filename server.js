@@ -36,9 +36,7 @@ async function findAllergenID(name) {
 
 // account functions
 async function login(req, res) {
-  const userDetails = JSON.parse(sessionStorage.getItem("login_details"));
-  // we don't want the user's details to be stored anywhere longer than necessary
-  sessionStorage.remove("login_details");
+  const userDetails = JSON.parse(req.query.data);
 
   let query = `select user_id, password from user_login where email = ${userDetails.email}`;
   // get username and password where username = userDetails.username
@@ -53,8 +51,7 @@ async function login(req, res) {
 }
 
 async function register(req, res) {
-  const userDetails = JSON.parse(sessionStorage.getItem("register_details"));
-  sessionStorage.remove("register_details");
+  const userDetails = JSON.parse(req.query.data);
 
   let app_user_query = `insert into app_user (first_name, last_name)
               values (${userDetails.firstname}, ${userDetails.lastname})`;
