@@ -22,7 +22,8 @@ async function sendQuery(query) {
   client
     .query(query)
     .then(function(result) {
-      result.rows;
+      console.log(result.rows);
+      return result.rows;
     })
     .catch(e => console.error(e.stack))
 }
@@ -41,6 +42,8 @@ async function login(req, res) {
   // get username and password where username = userDetails.username
 
   let accDetails = await sendQuery(query)[0];
+
+  console.log(accDetails);
 
   // const accDetails = await res.json(sendQuery(query).rows[0];
 

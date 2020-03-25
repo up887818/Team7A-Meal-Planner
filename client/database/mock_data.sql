@@ -81,13 +81,13 @@ insert into user_allergen (user_id, allergen_id)
 
 insert into user_login (email, password, user_id)
 values
-('afluger0@cornell.edu', crypt('ultrices32', 'md5'), 1),
-('mkernley1@hud.gov', crypt('atqerf4', 'md5'), 2),
-('koake2@purevolume.com', crypt('felisef22', 'md5'), 3),
-('cfranken3@miitbeian.gov.cn', crypt('aliquam54', 'md5'), 4),
-('mgallaccio4@i2i.jp', crypt('ultrice45s', 'md5'), 5),
-('pwoodrow5@examiner.com', crypt('nu8732nc', 'md5'), 6),
-('llayfield6@over-blog.com', crypt('738aliquam', 'md5'), 7),
-('kiley7@virginia.edu', crypt('sollicitudin190', 'md5'), 8),
-('gfaussett8@gravatar.com', crypt('tellus1212', 'md5'), 9),
-('mlinebarger9@plala.or.jp', crypt('ipsum021y43', 'md5'), 10);
+('afluger0@cornell.edu', md5('ultrices32'), 1),
+('mkernley1@hud.gov', md5('atqerf4'), 2),
+('koake2@purevolume.com', md5('felisef22'), 3),
+('cfranken3@miitbeian.gov.cn', md5('aliquam54'), 4),
+('mgallaccio4@i2i.jp', md5('ultrice45s'), 5),
+('pwoodrow5@examiner.com', md5('nu8732nc'), 6),
+('llayfield6@over-blog.com', md5('738aliquam'), 7),
+('kiley7@virginia.edu', md5('sollicitudin190'), 8),
+('gfaussett8@gravatar.com', md5('tellus1212'), 9),
+('mlinebarger9@plala.or.jp', md5('ipsum021y43'), 10);
