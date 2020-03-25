@@ -68,25 +68,32 @@ async function check(event) {
     username: document.getElementsByName("email")[0],
     password: document.getElementsByName("password")[0]
   }
-  let data = {
-    "username": formEl.username.value,
-    "password": md5(formEl.password.value)
-  };
 
-  let response = await fetch(`/auth?data=${JSON.stringify(data)}`);
-  if (response.ok) {
-    verifyData(response.text());
-  } else {
-    errorMessage(response.status);
+  if (formEl.username.value !== "" &&
+    formEl.password.value !== "") {
+    let data = {
+      "username": formEl.username.value,
+      "password": md5(formEl.password.value)
+    };
+
+    let response = await fetch(`/auth?data=${JSON.stringify(data)}`);
+    if (response.ok) {
+      let value = await response.text();
+      await verifyData(value);
+    } else {
+      errorMessage(response.status);
+    }
   }
 }
 
 function verifyData(value) {
-  if (value === "true") {
+  if (value == "true") {
+    console.log(value);
+    localStorage.setItem("user_id", value);
     window.location.href = "homepage.html";
     //opens the target page when email and password match
   } else {
-    alert("Error Password or Username not correct"); //displays error message
+    window.alert("Error Password or Username not correct"); //displays error message
   }
 }
 
@@ -179,7 +186,7 @@ function errorMessage(error) {
 }
 
 window.addEventListener('load', function() {
-  const loginButton = document.getElementsByName("login")[0];
+  const loginButton = document.getElementsByName("loginButton")[0];
   if (loginButton != "") {
     loginButton.addEventListener("click", check);
   }

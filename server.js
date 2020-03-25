@@ -18,14 +18,19 @@ const client = new Client({
 });
 client.connect();
 
-async function sendQuery(query) {
-  client
-    .query(query)
-    .then(function(result) {
-      console.log(result.rows);
-      return result.rows;
-    })
-    .catch(e => console.error(e.stack))
+async function sendQuery(query, all) {
+  // boolean item all says whether to return
+  // just 1 row or all of them...
+  try {
+    const results = await client.query(query);
+    if (all) {
+      return results.rows;
+    } else {
+      return results.rows[0];
+    }
+  } catch (e) {
+    return [];
+  }
 }
 
 async function findAllergenID(name) {
@@ -41,18 +46,9 @@ async function login(req, res) {
   let query = `select user_id, password from user_login where "email" = '${userDetails.username}';`;
   // get username and password where username = userDetails.username
 
-  let accDetails = await sendQuery(query)[0];
+  let accDetails = await sendQuery(query, false);
 
-  console.log(accDetails);
-
-  // const accDetails = await res.json(sendQuery(query).rows[0];
-
-  // if (accDetails === null || accDetails.password !== userDetails.password) {
-  //   return false;
-  // } else {
-  //   localStorage.setItem("user_id", `${accDetails.userId}`);
-  //   return true;
-  // }
+  res.send(accDetails.password === userDetails.password);
 }
 
 async function register(req, res) {
