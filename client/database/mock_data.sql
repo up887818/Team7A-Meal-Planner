@@ -81,7 +81,7 @@ insert into user_allergen (user_id, allergen_id)
 
 insert into user_login (email, password, user_id)
 values
-('afluger0@cornell.edu', crypt('ultrices32', gen_salt('md5')), 1),
+('afluger0@cornell.edu', crypt('ultrices32', 'md5'), 1),
 ('mkernley1@hud.gov', crypt('atqerf4', 'md5'), 2),
 ('koake2@purevolume.com', crypt('felisef22', 'md5'), 3),
 ('cfranken3@miitbeian.gov.cn', crypt('aliquam54', 'md5'), 4),
