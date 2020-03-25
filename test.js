@@ -19,13 +19,11 @@ QUnit.test(
       // this is usually hashed on the client end for security
     }
 
-    sessionStorage.setItem("login_details", JSON.stringify(testData));
-
     const options = {
       host: 'localhost',
       port: '8080',
       method: 'GET',
-      path: '/login',
+      path: `/auth?data=${JSON.stringify(testData)}`,
     };
     const req = http.request(options, function(res) {
       assert.qeual(res.statusCode, 200, "If it's working the status should be 200");
@@ -67,13 +65,11 @@ QUnit.test(
       // hashing represents "abc123"
     }
 
-    sessionStorage.setItem("register_details", testData);
-
     const options = {
       host: 'localhost',
       port: '8080',
       method: 'GET',
-      path: '/register',
+      path: `/register?data=${JSON.stringify(testData)}`,
     };
 
     const req = http.request(options, function(res) {
@@ -114,13 +110,11 @@ QUnit.test(
       "password": "e99a18c428cb38d5f260853678922e03"
     }
 
-    sessionStorage.setItem("login_details", testData);
-
     const options = {
       host: 'localhost',
       port: '8080',
       method: 'GET',
-      path: '/auth',
+      path: `/auth?data=${JSON.stringify(testData)}`,
     };
 
     const req = http.request(options, function(res) {
