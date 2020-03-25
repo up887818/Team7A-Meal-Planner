@@ -1,5 +1,6 @@
 // QUnit testing
 'use strict';
+const http = require('http');
 
 QUnit.module("Server Testing")
 
