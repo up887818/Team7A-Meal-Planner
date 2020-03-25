@@ -8,7 +8,7 @@ QUnit.test(
 
   function(assert) {
     // requiring the server file starts the server
-    require("server.js");
+    require("/server.js");
 
     const done = assert.async();
 
@@ -55,7 +55,7 @@ QUnit.test(
 
   function(assert) {
     // requiring the server file starts the server
-    require("server.js");
+    require("/server.js");
 
     const done = assert.async();
 
@@ -104,7 +104,7 @@ QUnit.test(
 
   function(assert) {
     // requiring the server file starts the server
-    require("server.js");
+    require("/server.js");
 
     const done = assert.async();
 
