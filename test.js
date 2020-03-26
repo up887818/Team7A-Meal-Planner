@@ -27,7 +27,7 @@ QUnit.test(
       path: `/auth?data=${JSON.stringify(testData)}`,
     };
     const req = http.request(options, function(res) {
-      assert.qeual(res.statusCode, 200, "If it's working the status should be 200");
+      assert.equal(res.statusCode, 200, "If it's working the status should be 200");
       let str = '';
 
       res.on('data', function(chunk) {
@@ -35,8 +35,7 @@ QUnit.test(
       });
 
       res.on('end', function() {
-        let userId = localStorage.getItem("user_id");
-        assert.equal(userId, 1, "Server has received correct user ID from database");
+        assert.equal(res.text(), "1", "Server has received correct user ID from database");
       });
     });
 
@@ -74,7 +73,7 @@ QUnit.test(
     };
 
     const req = http.request(options, function(res) {
-      assert.qeual(res.statusCode, 200, "If it's working the status should be 200");
+      assert.equal(res.statusCode, 200, "If it's working the status should be 200");
       let str = '';
 
       res.on('data', function(chunk) {
@@ -119,7 +118,7 @@ QUnit.test(
     };
 
     const req = http.request(options, function(res) {
-      assert.qeual(res.statusCode, 200, "If it's working the status should be 200");
+      assert.equal(res.statusCode, 200, "If it's working the status should be 200");
       let str = '';
 
       res.on('data', function(chunk) {
@@ -127,8 +126,59 @@ QUnit.test(
       });
 
       res.on('end', function() {
-        let userId = localStorage.getItem("user_id");
-        assert.equal(userId, 11, "Server has received correct user ID from database");
+        assert.equal(res.text(), "11", "Server has received correct user ID from database");
+      });
+    });
+
+    req.on('error', function(e) {
+      assert.ok(false);
+      done();
+    });
+
+    req.end();
+  }
+
+);
+
+QUnit.test(
+  "Server can find recipe using a recipe id",
+
+  function(assert) {
+    // requiring the server file starts the server
+    require("./server.js");
+
+    const done = assert.async();
+
+
+    const options = {
+      host: 'localhost',
+      port: '8080',
+      method: 'GET',
+      path: `/recipe?id=1`,
+    };
+
+    const req = http.request(options, function(res) {
+      assert.equal(res.statusCode, 200, "If it's working the status should be 200");
+      let str = '';
+
+      res.on('data', function(chunk) {
+        str += chunk;
+      });
+
+      res.on('end', function() {
+        let expectedOutput = {
+          cooking_time: "0:30",
+          calories: 973,
+          fat: 40,
+          protein: 47,
+          carbonhydrates: 49,
+          salt: 33,
+          sugar: 72,
+          fibre: 96,
+          cuisine: "french",
+          allergen_name: "shellfish"
+        }
+        assert.equal(res.json(), expectedOutput, "Server has received correct user ID from database");
       });
     });
 
