@@ -32,6 +32,10 @@ span.text-in {
   float: left;
 }
 
+label>input {
+  display: inline;
+}
+
 /*Homepage css below*/
 ul {
   list-style: none;

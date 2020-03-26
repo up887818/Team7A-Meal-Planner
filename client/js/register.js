@@ -9,14 +9,15 @@ import {
 async function register(event) {
   event.preventDefault();
   const formEl = {
-    firstname: document.querySelector('#Firstname'),
-    lastname: document.querySelector('#Lastname'),
-    email: document.querySelector('#email'),
-    password: document.querySelector('#Password'),
-    password2: document.querySelector('#Password2')
+    firstname: document.getElementsByName("firstname")[0],
+    lastname: document.getElementsByName("lastname")[0],
+    email: document.getElementsByName("email")[0],
+    password: document.getElementsByName("password")[0],
+    password2: document.getElementsByName("password2")[0]
   };
 
-  for (const el in formEl) {
+  for (const el in formEl.values) {
+    console.log(el);
     if (el.value == "") {
       window.alert(`Please enter your ${el.name}.`);
       el.focus();
@@ -30,10 +31,10 @@ async function register(event) {
     return;
   } else {
     let data = {
-      "firstname": el.firstname.value,
-      "lastname": el.lastname.value,
-      "email": el.email.value,
-      "password": md5(el.password.value),
+      "firstname": formEl.firstname.value,
+      "lastname": formEl.lastname.value,
+      "email": formEl.email.value,
+      "password": md5(formEl.password.value),
     };
 
     let response = await fetch(`/register?data=${JSON.stringify(data)}`);

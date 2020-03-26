@@ -12,7 +12,7 @@
 
 <header class="topBar">
 	<span>
-		<img src="Logo.png" alt="Placeholder of team logo" class="topBar">
+		<img src="images/logo.png" alt="Placeholder of team logo" class="topBar">
 		<span class="topBar">Meal Planner</span>
 		<br><br><br>
 
@@ -24,30 +24,25 @@
 <body>
 	<form name="Register">
 
-		<span class="text-in">Firstname</span>
-		<input class="text-in" type="name" placeholder="Firstname" name="firstname" />
+		<label>Firstname
+			<input class="text-in" type="name" placeholder="Firstname" name="firstname" />
+		</label>
 
-		<br>
+		<label>Lastname
+			<input class="text-in" type="name" placeholder="Lastname" name="lastname" />
+		</label>
 
-		<span class="text-in">Lastname</span>
-		<input class="text-in" type="name" placeholder="Lastname" name="lastname" />
+		<label>Email
+			<input class="text-in" type="email" placeholder="Email" name="email">
+		</label>
 
-		<br>
+		<label>Password
+			<input class="text-in" type="password" placeholder="Password" name="password" />
+		</label>
 
-		<span class="text-in">Email</span>
-		<input class="text-in" type="email" placeholder="Email" name="email">
-
-		<br>
-
-		<span class="text-in">Password</span>
-		<input class="text-in" type="password" placeholder="Password" name="password" />
-
-		<br>
-
-		<span class="text-in">Confirm Password</span>
-		<input class="text-in" type="password" placeholder="Confirm Password" name="password2" />
-
-		<br><br>
+		<label>Confirm Password
+			<input class="text-in" type="password" placeholder="Confirm Password" name="password2" />
+		</label>
 
 		<button type="button" name="button">Register</button>
 	</form>
