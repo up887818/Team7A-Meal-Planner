@@ -1,109 +1,40 @@
 'use Strict';
-import {
-  md5
-} from "./hash.js";
 
-async function register(event) {
-  event.preventDefault();
-  const formEl = {
-    firstname: document.querySelector('#Firstname'),
-    lastname: document.querySelector('#Lastname'),
-    email: document.querySelector('#email'),
-    password: document.querySelector('#Password'),
-    password2: document.querySelector('#Password2')
-  };
+//display Recipe steps
 
-  for (const el of formEl) {
-    if (el.value == "") {
-      window.alert(`Please enter your ${el.name}.`);
-      el.focus();
-      return;
+
+async function loadPage(){
+  const response = await fetch('recipe_id.json');
+  const data = await response.json();
+
+  const quizContainer = document.querySelector("#recipe");
+  for (const i of data.recipes) {
+    const title = document.createElement("h1");
+    title.textContent = 'recipe_name';
+    const section = document.createElement("section");
+    section.textContent= i.intro;
+    title.textContent = "Ingredients";
+    const ul=document.createElement('ul');
+    for(var a=0;a<i.ingredients.lenth;a++)
+    {
+        var li=document.createElement('li');
+        li.innerHTML=i.ingredients;
+        ul.appendChild(li);
     }
-  }
-
-  if (formEl.password.value != formEl.password2.value) {
-    window.alert("Passwords don't match");
-    formEl.password2.focus();
-    return;
-  } else {
-    let data = {
-      "firstname": el.firstname.value,
-      "lastname": el.lastname.value,
-      "email": el.email.value,
-      "password": md5(el.password.value),
-    };
-
-    let response = await fetch(`/register?data=${JSON.stringify(data)}`);
-    if (response.ok) {
-      window.location.href = "homepage.html";
-    } else {
-      errorMessage(response.status);
+    div.appendChild(ul);
+    title.textContent = "Steps";
+    for(var a=0;a<i.steps.lenth;a++)
+    {
+      li.innerHTML=i.steps;
+        ul.appendChild(li);
     }
-  }
+    div.appendChild(ul);
+    section.textContent = i.outro;
+}
 }
 
-//checks if the entered email and password(login details) are correct
-async function check(event) {
-  event.preventDefault();
-  const formEl = {
-    username: document.getElementsByName("email")[0],
-    password: document.getElementsByName("password")[0]
-  }
 
-  if (formEl.username.value !== "" &&
-    formEl.password.value !== "") {
-    let data = {
-      "username": formEl.username.value,
-      "password": md5(formEl.password.value)
-    };
 
-    let response = await fetch(`/auth?data=${JSON.stringify(data)}`);
-    if (response.ok) {
-      let value = await response.text();
-      await verifyData(value);
-    } else {
-      errorMessage(response.status);
-    }
-  }
-}
-
-function verifyData(value) {
-  if (value == "true") {
-    console.log(value);
-    localStorage.setItem("user_id", value);
-    window.location.href = "homepage.html";
-    //opens the target page when email and password match
-  } else {
-    window.alert("Error Password or Username not correct"); //displays error message
-  }
-}
-
-function search() {
-  let input = document.getElementById('searchbar').value;
-  input = input.toLowerCase();
-  let x = document.getElementsByClassName(recipes); //xxx to be replaced by list of meals... ps still working on this
-
-  for (i = 0; i < x.length; i++) {
-    if (!x[i].innerHTML.toLowerCase().includes(input)) {
-      x[i].style.display = "none";
-    } else {
-      x[i].style.display = recipes;
-    }
-  }
-}
-
-//displaying recipes needs work
-// function displayRecipes() {
-//   let rec = document.getElementsByClassName('recipes');
-//   recipe.appendChild(rec);
-// }
-
-//add recipe to showCalendar
-function addToCalendar() {
-  const buttonByRecipe = document.getElementById("addToCalendar");
-}
-
-//display recent Recipes
 //load all recipes
 async function loadAllRecipes() {
   let url = "/showAll";
@@ -113,7 +44,8 @@ async function loadAllRecipes() {
   if (response.ok) {
     console.log(response.json());
   } else {
-    errorMessage(response.status);
+    localStorage.setItem("errrCode", response.status);
+    window.location.href = '../error.html';
   }
 }
 
@@ -127,7 +59,8 @@ async function getRecipe(id) {
     console.log(response.json());
     // testing purposes only - when ready use return response.json();
   } else {
-    errorMessage(response.status);
+    localStorage.setItem("errrCode", response.status);
+    window.location.href = '../error.html';
   }
 }
 
@@ -136,10 +69,56 @@ async function filterRecipe(filterJson) {
   //{"filter" : value}
   // e.g.
   // {"calories", 600} for less than 600 calories
-  return;
+  let input = document.getElementById('filter').value;
+  filterJson = input.toLowerCase();
+  let ing = document.getElementsByClassName('ingredients'); //xxx to be replaced by list of meals... ps still working on this
+
+  for (i = 0; i < ing.length; i++) {
+    if (!ing[i].innerHTML.toLowerCase().includes(filterJson)) {
+      ing[i].style.display = 'ingredients';
+    } else {
+      ing[i].style.display = 'none';
+    }
+  }
+
 }
 
 //add event to Calender
+function addEventToCalender(){
+  const addEvent = document.querySelector('#addToCalender');
+
+}
+//send login Data
+async function sendLoginData(){
+  let url = "/auth";
+  let data = sessionStorage.setItem("login-details",'{"username":${email.value},"Password":${password.value}}');
+  let response = await fetch(url, data);
+
+  if (response.ok) {
+    console.log(response.json());
+    // testing purposes only - when ready use return response.json();
+  } else {
+    localStorage.setItem("errrCode", response.status);
+    window.location.href = '../error.html';
+  }
+}
+//send registration details to server
+async function sendRegistDetails() {
+
+    let url = "/register";
+    let data = sessionStorage.setItem("login-details",'{"firstname":${firstname.value},"lastname":${lastname.value},"email":${email.value},"Password":${password.value}}');
+    let response = await fetch(url, data);
+
+    if (response.ok) {
+      console.log(response.json());
+      // testing purposes only - when ready use return response.json();
+    } else {
+      localStorage.setItem("errrCode", response.status);
+      window.location.href = '../error.html';
+    }
+
+}
+
 
 //load json info to server
 async function sendData() {
@@ -155,20 +134,8 @@ async function sendData() {
   if (response.ok) {
     const output = response.json();
   } else {
-    errorMessage(error);
+    localStorage.setItem("errrCode", response.status);
+    window.location.href = '../error.html';
   }
 
 }
-
-function errorMessage(error) {
-  window.location.href = '../error.html';
-  let errorBox = document.querySelector(".errorBox");
-  errorBox.textContent = error;
-}
-
-window.addEventListener('load', function() {
-  const loginButton = document.getElementsByName("loginButton")[0];
-  if (loginButton != "") {
-    loginButton.addEventListener("click", check);
-  }
-})
