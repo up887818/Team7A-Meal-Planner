@@ -14,7 +14,7 @@ async function loadAllRecipes() {
     window.location.href = '../error.html';
   }
 }
-
+document.getElementById("myRecipes").addEventListener("onclick", loadAllRecipes);
 
 async function getRecipe(id) {
   let url = `/recipe?id=${id}`;
