@@ -23,27 +23,26 @@
 	<!-- own code-->
 	<script src="js/recipe.js" type="module"></script>
 	<!-- facebook api -->
-	<script async defer src="https://connect.facebook.net/en_UK/all.js"></script>
-	<script type="text/javascript">
-		window.fbASyncInit = function() {
+	<!-- this div is also here to make fb happy -->
+	<div id="fb-root"></div>
+	<script>
+		window.fbAsyncInit = function() {
 			FB.init({
 				appId: '710291289713662',
-				appSecret: 'b5bfdc12ac7e4089a3955aba6b48bb6c',
 				autoLogAppEvents: true,
 				xfbml: true,
-				status: true,
 				version: 'v6.0'
 			});
-		}
+		};
 
 		function shareFB() {
-			let recipeName = document.getElementsByTagName("h2")[0];
+			let recipeName = document.getElementsByTagName("h1")[0];
 			let url = window.location.href;
 
 			FB.ui({
 				method: 'share',
 				href: url,
-				quote: `Have you tried ${recipeName} yet? Get the recipe!`
+				quote: `Have you tried ${recipeName.textContent} yet? Get the recipe!`
 			}, function(response) {});
 		}
 
@@ -52,8 +51,7 @@
 			shareButton.addEventListener("click", shareFB);
 		});
 	</script>
-	<!-- this div is also here to make fb happy -->
-	<div id="fb-root"></div>
+	<script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
 
 	<h1></h1>
 	<img id="recipeImage" src="" alt="Image of food" style="width:300px;height:200px;">
