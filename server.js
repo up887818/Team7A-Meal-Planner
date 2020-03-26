@@ -104,15 +104,16 @@ async function showRecipes(req, res) {
   return res.json(sendQuery(query));
 }
 
-function getRecipe(req, res) {
+async function getRecipe(req, res) {
   let query = `select recipe_name, cooking_time, calories, fat, protein, carbonhydrates, salt, sugar, fibre, cuisine, allergen_name
   from recipe
-  join recipe_cuisine on recipe.recipe_id = recipe_cuisine.recipe_id
-  join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id;
   join recipe_allergen on recipe.recipe_id = recipe_allergen.recipe_id
   join allergen on recipe_allergen.allergen_id = allergen.allergen_id
-  where recipe_id = ${req.id};`
-  return res.json(sendQuery(query));
+  where recipe.recipe_id = ${parseInt(req.query.id)};`
+
+  let results = await sendQuery(query, "one");
+
+  return res.json(results);
 }
 
 function addSelectorsToQuery(selectors) {
@@ -127,17 +128,17 @@ async function filterRecipe(req, res) {
 
   selectors = [];
 
-  if (`${req.cookingTime}` !== "") {
-    selectors = selectors.push(`cooking_time ILIKE ${req.cookingTime}`);
+  if (`${req.query.cookingTime}` !== "") {
+    selectors = selectors.push(`cooking_time ILIKE ${req.query.cookingTime}`);
   }
-  if (`${req.cuisine}` !== "") {
-    selectors = selectors.push(`cuisine_id =  ${req.cuisine}`);
+  if (`${req.query.cuisine}` !== "") {
+    selectors = selectors.push(`cuisine_id =  ${req.query.cuisine}`);
   }
-  if (`${req.calories}` !== "") {
-    selectors = selectors.push(`calories < ${req.calories}`);
+  if (`${req.query.calories}` !== "") {
+    selectors = selectors.push(`calories < ${req.query.calories}`);
   }
-  if (`${req.allergen !== ""}`) {
-    let allergenID = await findAllergenID(`${req.allergen}`);
+  if (`${req.query.allergen !== ""}`) {
+    let allergenID = await findAllergenID(`${req.query.allergen}`);
     selectors = selectors.push(`allergen_id not in ${allergenID.allergen_id}`);
   }
 

@@ -2,50 +2,129 @@
 <html>
 
 <head>
-	<link rel="stylesheet" type="text/css" href="MealPlanner.css">
-	<script src="search" type="module"></script>
+	<link rel="stylesheet" type="text/css" href="css/MealPlanner.css">
 </head>
-<title>Meal planner</title>
 
+<title> Meal planner </title>
 <header class="topBar">
 	<span>
 		<img src="Logo.png" alt="Placeholder of team logo" class="topBar">
-		<span class="topBar">Meal Planner</span>
+		<span class="topBar"> Meal Planner </span>
 		<form id="searchbar">
-		<input id="search" class= "topSearch"type="text" ><br><br>
+			<input id="search" class="topSearch" type="text">
+			<br>
+			<br>
 
 		</form>
-
 </header>
 
-<div class="rightBar">
-	<p class="rightBar"> Ingredients Needed</p>
-	<ul>
-		<li> flour</li>
-		<li>milk</li>
-		<li> eggs</li>
-	</ul>
-
-	<p class="rightBar"> Nutritional Information</p>
-
-	<ul>
-		<li> carbs: 300g</li>
-		<li> fat: 10g</li>
-		<li> protein 24g</li>
-	</ul>
-</div>
-
- <main class ="main">
-	    <section id= 'recipe' ></section></main>
-
-
 <body style="background-color:#cce6ff;">
-	<h1>Recipes</h1>
-	<h2>*Chosen Meal Name* </h2>
 
-	<img src="https://media.gettyimages.com/photos/different-types-of-food-on-rustic-wooden-table-picture-id861188910?s=612x612" alt="Image of food" style="width:300px;height:200px;">
+	<!-- own code-->
+	<script src="js/recipe.js" type="module"></script>
+	<!-- facebook api -->
+	<script async defer src="https://connect.facebook.net/en_UK/all.js"></script>
+	<script type="text/javascript">
+		window.fbASyncInit = function() {
+			FB.init({
+				appId: '710291289713662',
+				appSecret: 'b5bfdc12ac7e4089a3955aba6b48bb6c',
+				autoLogAppEvents: true,
+				xfbml: true,
+				status: true,
+				version: 'v6.0'
+			});
+		}
 
-	<p>Step 1</p>
+		function shareFB() {
+			let recipeName = document.getElementsByTagName("h2")[0];
+			let url = window.location.href;
+
+			FB.ui({
+				method: 'share',
+				href: url,
+				quote: `Have you tried ${recipeName} yet? Get the recipe!`
+			}, function(response) {});
+		}
+
+		window.addEventListener("load", function() {
+			let shareButton = document.getElementsByName("share")[0];
+			shareButton.addEventListener("click", shareFB);
+		});
+	</script>
+	<!-- this div is also here to make fb happy -->
+	<div id="fb-root"></div>
+
+	<h1></h1>
+	<img id="recipeImage" src="" alt="Image of food" style="width:300px;height:200px;">
+	<section id="intro">
+	</section>
+
+	<section id="info">
+		<h2>Nutritional Information</h2>
+		<table>
+			<tr>
+				<td>Cooking Time</td>
+				<td class="editable"></td>
+			</tr>
+			<tr>
+				<td>Calories</td>
+				<td class="editable"></td>
+			</tr>
+			<tr>
+				<td>Fat</td>
+				<td class="editable"></td>
+			</tr>
+			<tr>
+				<td>Protein</td>
+				<td class="editable"></td>
+			</tr>
+			<tr>
+				<td>Carbs</td>
+				<td class="editable"></td>
+			</tr>
+			<tr>
+				<td>Salt</td>
+				<td class="editable"></td>
+			</tr>
+			<tr>
+				<td>Sugar</td>
+				<td class="editable"></td>
+			</tr>
+			<tr>
+				<td>Fibre</td>
+				<td class="editable"></td>
+			</tr>
+			<tr>
+				<td>Type of Cusine</td>
+				<td class="editable"></td>
+			</tr>
+			<tr>
+				<td>Allergens</td>
+				<td class="editable"></td>
+			</tr>
+		</table>
+	</section>
+
+	<section id="ingredients">
+		<h2>Ingredients</h2>
+		<ul id="ingList">
+		</ul>
+	</section>
+
+	<section id="steps">
+		<h2>Steps</h2>
+		<ul id="stepList">
+		</ul>
+	</section>
+
+	<section id="outro">
+	</section>
+
+	<footer>
+		<button type="button" name="share"> Share on Facebook </button>
+	</footer>
+
 </body>
 
 </html>

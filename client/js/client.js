@@ -2,35 +2,35 @@
 
 //display Recipe steps
 
-
-async function loadPage(){
-  const response = await fetch('recipe_id.json');
+async function loadPage() {
+  const recipeId = sessionStorage.getItem("recipe_id");
+  const response = await fetch(`/recipe?id=${recipeId}`);
   const data = await response.json();
+
+  console.log(data);
 
   const quizContainer = document.querySelector("#recipe");
   for (const i of data.recipes) {
     const title = document.createElement("h1");
     title.textContent = 'recipe_name';
     const section = document.createElement("section");
-    section.textContent= i.intro;
+    section.textContent = i.intro;
     title.textContent = "Ingredients";
-    const ul=document.createElement('ul');
-    for(var a=0;a<i.ingredients.lenth;a++)
-    {
-        var li=document.createElement('li');
-        li.innerHTML=i.ingredients;
-        ul.appendChild(li);
+    const ul = document.createElement('ul');
+    for (var a = 0; a < i.ingredients.lenth; a++) {
+      var li = document.createElement('li');
+      li.innerHTML = i.ingredients;
+      ul.appendChild(li);
     }
     div.appendChild(ul);
     title.textContent = "Steps";
-    for(var a=0;a<i.steps.lenth;a++)
-    {
-      li.innerHTML=i.steps;
-        ul.appendChild(li);
+    for (var a = 0; a < i.steps.lenth; a++) {
+      li.innerHTML = i.steps;
+      ul.appendChild(li);
     }
     div.appendChild(ul);
     section.textContent = i.outro;
-}
+  }
 }
 
 
@@ -84,14 +84,14 @@ async function filterRecipe(filterJson) {
 }
 
 //add event to Calender
-function addEventToCalender(){
+function addEventToCalender() {
   const addEvent = document.querySelector('#addToCalender');
 
 }
 //send login Data
-async function sendLoginData(){
+async function sendLoginData() {
   let url = "/auth";
-  let data = sessionStorage.setItem("login-details",'{"username":${email.value},"Password":${password.value}}');
+  let data = sessionStorage.setItem("login-details", '{"username":${email.value},"Password":${password.value}}');
   let response = await fetch(url, data);
 
   if (response.ok) {
@@ -105,17 +105,17 @@ async function sendLoginData(){
 //send registration details to server
 async function sendRegistDetails() {
 
-    let url = "/register";
-    let data = sessionStorage.setItem("login-details",'{"firstname":${firstname.value},"lastname":${lastname.value},"email":${email.value},"Password":${password.value}}');
-    let response = await fetch(url, data);
+  let url = "/register";
+  let data = sessionStorage.setItem("login-details", '{"firstname":${firstname.value},"lastname":${lastname.value},"email":${email.value},"Password":${password.value}}');
+  let response = await fetch(url, data);
 
-    if (response.ok) {
-      console.log(response.json());
-      // testing purposes only - when ready use return response.json();
-    } else {
-      localStorage.setItem("errrCode", response.status);
-      window.location.href = '../error.html';
-    }
+  if (response.ok) {
+    console.log(response.json());
+    // testing purposes only - when ready use return response.json();
+  } else {
+    localStorage.setItem("errrCode", response.status);
+    window.location.href = '../error.html';
+  }
 
 }
 
