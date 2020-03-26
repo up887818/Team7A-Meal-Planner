@@ -1,0 +1,115 @@
+<!doctype html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Results</title>
+  <link rel="stylesheet" type="text/css" href="../css/MealPlanner.css">
+</head>
+
+<body>
+  <script src="js/search.js" type="module"></script>
+  <section id="filters">
+    <div>
+      <p>Cuisines</p>
+      <select name="cuisine">
+        <option value="french">French</option>
+        <option value="japanese">Japanese</option>
+        <option value="british">British</option>
+        <option value="portugese">Portugese</option>
+        <option value="indian">Indian</option>
+      </select>
+    </div>
+    <div>
+      <p>Allergies</p>
+      <label>
+        <input type="checkbox" value="milk">Milk
+      </label>
+      <label>
+        <input type="checkbox" value="eggs">Eggs
+      </label>
+      <label>
+        <input type="checkbox" value="fish">Fish
+      </label>
+      <label>
+        <input type="checkbox" value="shellfish">Shellfish
+      </label>
+      <label>
+        <input type="checkbox" value="nuts">Nuts
+      </label>
+      <label>
+        <input type="checkbox" value="peanuts">Peanuts
+      </label>
+      <label>
+        <input type="checkbox" value="wheat">Wheat
+      </label>
+      <label>
+        <input type="checkbox" value="soya">Soya
+      </label>
+      <label>
+        <input type="checkbox" value="mustard">Mustard
+      </label>
+      <label>
+        <input type="checkbox" value="molluscs">Molluscs
+      </label>
+      <label>
+        <input type="checkbox" value="lupin">Lupin
+      </label>
+      <label>
+        <input type="checkbox" value="crustaceans">Crustaceans
+      </label>
+      <label>
+        <input type="checkbox" value="gluten">Gluten
+      </label>
+    </div>
+    <div>
+      <p>Max Cooking Time</p>
+      <input type="time">
+    </div>
+    <div>
+      <p>Max Calories</p>
+      <input type="number">
+    </div>
+    <div>
+      <p>Max Fat</p>
+      <input type="number">
+    </div>
+    <div>
+      <p>Max Protein</p>
+      <input type="number">
+    </div>
+    <div>
+      <p>Max Salt</p>
+      <input type="number">
+    </div>
+    <div>
+      <p>Max Sugar</p>
+      <input type="number">
+    </div>
+    <div>
+      <p>Max Fibre</p>
+      <input type="number">
+    </div>
+    <div>
+      <p>Max Carbs</p>
+      <input type="number">
+    </div>
+  </section>
+  <section id="results">
+  </section>
+</body>
+
+<template class="recipe">
+  <section>
+    <img src="" alt="">
+    <h2 class="name">name</h2>
+    <p class="intro">intro</p>
+    <ul>
+      <li name="cooking_time">Cooking Time</li>
+      <li name="calories">Calories</li>
+      <li name="cuisine">Cuisine</li>
+    </ul>
+  </section>
+</template>

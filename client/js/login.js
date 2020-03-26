@@ -4,6 +4,9 @@ import {
 } from "./hash.js"
 // md5 function import used to hash password import prior to fetch
 // eventually will be replaced by sha256
+import {
+  errorMessage
+} from "./error.js"
 
 //when login button pressed
 // retrieves data from html and sends to server

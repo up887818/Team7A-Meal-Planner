@@ -97,11 +97,11 @@ async function addAllergen(req, res) {
 
 // recipe functions
 async function showRecipes(req, res) {
-  let query = `select recipe_name, cooking_time, calories, cuisine_name
-  from recipe
-  join recipe_cuisine on recipe.recipe_id = recipe_cuisine.recipe_id
-  join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id;`
-  return res.json(sendQuery(query));
+  let query = `select recipe_id, recipe_name, cooking_time, calories, cuisine from recipe;`;
+
+  let results = await sendQuery(query, "all");
+
+  return res.json(results);
 }
 
 async function getRecipe(req, res) {
