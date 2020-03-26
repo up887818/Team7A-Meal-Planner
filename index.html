@@ -15,15 +15,14 @@
 </header>
 
 <body>
-  <script src="client.js" type="module"></script>
-
+  
   <div class="form-Format">
 
 
     <form name="login" id = "login">
       <input class="text-in" type="email" placeholder="Username" name="email" required />
       <input class="text-in" type="password" placeholder="Password" name="password" required />
-      <input class="text-in" type="button" value="login" name="login" onclick="check(this.form)" />
+      <button type="button"  onclick="check()">Login</button>
     </form>
 
     <p>Not a Member Yet?</p>
@@ -34,6 +33,7 @@
       href="">
 
   </div>
+  <script src="client.js" type="module"></script>
 </body>
 
 </html>
