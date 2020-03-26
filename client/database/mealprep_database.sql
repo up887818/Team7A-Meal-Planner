@@ -38,9 +38,7 @@ create table app_user (
     user_id serial primary key,
     first_name varchar(50) not null,
     last_name varchar(50),
-    calories int,
-    allergen_id int,
-    foreign key (allergen_id) references allergen(allergen_id)
+    calories int
 );
 
 /* link table between user table and allergen table to resolve many-to-many relationship */
