@@ -5,20 +5,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>:( Error</title>
-  <link rel="stylesheet" type="text/css" href="MealPlanner.css">
+  <link rel="stylesheet" type="text/css" href="../css/MealPlanner.css">
 </head>
 
 <body>
+  <script type="text/javascript">
+    function goBack() {
+      window.history.back();
+    }
+  </script>
   <p>
     <img src="sad.png" alt="sad face" />
   </p>
   <p class="errorBox"> 404 Server can not connect to database</p>
   <p><a href="index.html">
-      <button> Go Home</button>
+      <button onClick="goBack()"> Go Back</button>
     </a>
   </p>
-
-  <script src="client.js" type="module"></script>
 </body>
 
 </html>

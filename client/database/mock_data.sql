@@ -46,18 +46,18 @@ insert into recipe_allergen (recipe_id, allergen_id)
   (1, 4);
 
 --table user
-insert into app_user (user_id, first_name, last_name, calories, allergen_id)
+insert into app_user (user_id, first_name, last_name, calories)
   values
-  (1, 'Hube', 'Grieve', 1975, 8),
-  (2, 'Herta', 'Tomaszynski', 1696, 2),
-  (3, 'Domenic', 'Yegoshin', 1438, 13),
-  (4, 'Marcy', 'Scopes', 1002, 4),
-  (5, 'Ansel', 'Dachs', 1870, 10),
-  (6, 'Gan', 'Rodell', 1884, 4),
-  (7, 'Sadie', 'Corran', 1473, 10),
-  (8, 'Mavis', 'Todman', 1197, 13),
-  (9, 'Aaron', 'Ovanesian', 1510, 8),
-  (10, 'Consuela', 'Mourant', 1330, 2);
+  (1, 'Hube', 'Grieve', 1975),
+  (2, 'Herta', 'Tomaszynski', 1696),
+  (3, 'Domenic', 'Yegoshin', 1438),
+  (4, 'Marcy', 'Scopes', 1002),
+  (5, 'Ansel', 'Dachs', 1870),
+  (6, 'Gan', 'Rodell', 1884),
+  (7, 'Sadie', 'Corran', 1473),
+  (8, 'Mavis', 'Todman', 1197),
+  (9, 'Aaron', 'Ovanesian', 1510),
+  (10, 'Consuela', 'Mourant', 1330);
 
 --table user_allergen
 insert into user_allergen (user_id, allergen_id)

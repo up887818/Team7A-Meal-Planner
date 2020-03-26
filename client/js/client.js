@@ -1,9 +1,10 @@
 'use Strict';
 import {
   md5
-} from "../hash.js";
+} from "./hash.js";
 
-async function register() {
+async function register(event) {
+  event.preventDefault();
   const formEl = {
     firstname: document.querySelector('#Firstname'),
     lastname: document.querySelector('#Lastname'),
@@ -19,27 +20,7 @@ async function register() {
       return;
     }
   }
-  // this really needs to be put in a for loop at some point
-  // if (firstname.value == "") {
-  //   window.alert("Please enter your Firstname.");
-  //   name.focus();
-  //   return false;
-  // }
-  // if (lastname.value == "") {
-  //   window.alert("Please enter your lastname.");
-  //   name.focus();
-  //   return false;
-  // }
-  // if (email.value == "") {
-  //   window.alert("Please enter a valid email address.");
-  //   email.focus();
-  //   return false;
-  // }
-  // if (password.value == "") {
-  //   window.alert("Please enter your password");
-  //   password.focus();
-  //   return false;
-  // }
+
   if (formEl.password.value != formEl.password2.value) {
     window.alert("Passwords don't match");
     formEl.password2.focus();
