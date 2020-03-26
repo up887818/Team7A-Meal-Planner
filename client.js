@@ -1,6 +1,40 @@
 'use Strict';
 
-//display recent Recipes
+//display Recipe steps
+
+
+async function loadPage(){
+  const response = await fetch('recipe_id.json');
+  const data = await response.json();
+
+  const quizContainer = document.querySelector("#recipe");
+  for (const i of data.recipes) {
+    const title = document.createElement("h1");
+    title.textContent = 'recipe_name';
+    const section = document.createElement("section");
+    section.textContent= i.intro;
+    title.textContent = "Ingredients";
+    const ul=document.createElement('ul');
+    for(var a=0;a<i.ingredients.lenth;a++)
+    {
+        var li=document.createElement('li');
+        li.innerHTML=i.ingredients;
+        ul.appendChild(li);
+    }
+    div.appendChild(ul);
+    title.textContent = "Steps";
+    for(var a=0;a<i.steps.lenth;a++)
+    {
+      li.innerHTML=i.steps;
+        ul.appendChild(li);
+    }
+    div.appendChild(ul);
+    section.textContent = i.outro;
+}
+}
+
+
+
 //load all recipes
 async function loadAllRecipes() {
   let url = "/showAll";
@@ -14,7 +48,7 @@ async function loadAllRecipes() {
     window.location.href = '../error.html';
   }
 }
-document.getElementById("myRecipes").addEventListener("onclick", loadAllRecipes);
+
 
 async function getRecipe(id) {
   let url = `/recipe?id=${id}`;
