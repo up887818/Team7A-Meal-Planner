@@ -50,7 +50,7 @@ function verifyData(value) {
   if (value == "true") {
     console.log(value);
     localStorage.setItem("user_id", value);
-    window.location.href = "../html/homepage.html";
+    window.location.href = "../homepage.html";
     //opens the target page when email and password match
   } else {
     // login unsuccessful

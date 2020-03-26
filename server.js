@@ -16,19 +16,21 @@ const client = new Client({
   user: `serverconnect`,
   password: `team7a`,
 });
-client.connect();
 
 async function sendQuery(query, all) {
+  client.connect();
   // boolean item all says whether to return
   // just 1 row or all of them...
   try {
     const results = await client.query(query);
+    client.end();
     if (all) {
       return results.rows;
     } else {
       return results.rows[0];
     }
   } catch (e) {
+    client.end();
     return [];
   }
 }

@@ -16,7 +16,7 @@ async function register(event) {
     password2: document.querySelector('#Password2')
   };
 
-  for (const el of formEl) {
+  for (const el in formEl) {
     if (el.value == "") {
       window.alert(`Please enter your ${el.name}.`);
       el.focus();
