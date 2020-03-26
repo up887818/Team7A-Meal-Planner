@@ -2,80 +2,50 @@
 <html>
 
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Meal Planner</title>
-	<link rel="stylesheet" type="text/css" href="css/MealPlanner.css">
+	<link rel="stylesheet" type="text/css" href="MealPlanner.css">
+	<script src="search" type="module"></script>
 </head>
+<title>Meal planner</title>
+
+<header class="topBar">
+	<span>
+		<img src="Logo.png" alt="Placeholder of team logo" class="topBar">
+		<span class="topBar">Meal Planner</span>
+		<form id="searchbar">
+		<input id="search" class= "topSearch"type="text" ><br><br>
+
+		</form>
+
+</header>
+
+<div class="rightBar">
+	<p class="rightBar"> Ingredients Needed</p>
+	<ul>
+		<li> flour</li>
+		<li>milk</li>
+		<li> eggs</li>
+	</ul>
+
+	<p class="rightBar"> Nutritional Information</p>
+
+	<ul>
+		<li> carbs: 300g</li>
+		<li> fat: 10g</li>
+		<li> protein 24g</li>
+	</ul>
+</div>
+
+ <main class ="main">
+	    <section id= 'recipe' ></section></main>
+
 
 <body style="background-color:#cce6ff;">
-	<!-- own code-->
-	<script src="js/client.js" type="module"></script>
-	<!-- facebook api -->
-	<script type="text/javascript">
-		window.fbASyncInit = function() {
-			FB.init({
-				appId: '710291289713662',
-				autoLogAppEvents: true,
-				xfbml: true,
-				version: 'v6.0'
-			});
-		}
-
-		function shareFB() {
-			let recipeName = document.getElementsByTagName("h2")[0];
-			let url = window.location.href;
-
-			FB.ui({
-				method: 'share',
-				href: url,
-				quote: `Have you tried ${recipeName} yet? Get the recipe!`
-			}, function(response) {});
-		}
-
-		let shareButton = document.getElementsByName("share")[0];
-		shareButton.addEventListener("click", shareFB);
-	</script>
-	<script async defer src="https://connect.facebook.net/en_UK/sdk.js">
-
-	</script>
-
-	<header class="topBar">
-		<span>
-			<img src="Logo.png" alt="Placeholder of team logo" class="topBar">
-			<span class="topBar">Meal Planner</span>
-			<form action="/action_page.php">
-				<input class="topSearch" type="text"><br><br>
-
-			</form>
-
-	</header>
-
-	<div class="rightBar">
-		<p class="rightBar"> Ingredients Needed</p>
-		<ul>
-			<li> flour</li>
-			<li>milk</li>
-			<li> eggs</li>
-		</ul>
-
-		<p class="rightBar"> Nutritional Information</p>
-
-		<ul>
-			<li> carbs: 300g</li>
-			<li> fat: 10g</li>
-			<li> protein 24g</li>
-		</ul>
-	</div>
-
 	<h1>Recipes</h1>
 	<h2>*Chosen Meal Name* </h2>
 
 	<img src="https://media.gettyimages.com/photos/different-types-of-food-on-rustic-wooden-table-picture-id861188910?s=612x612" alt="Image of food" style="width:300px;height:200px;">
 
 	<p>Step 1</p>
-
-	<button type="button" name="share">Share on Facebook!</button>
 </body>
 
 </html>

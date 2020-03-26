@@ -8,16 +8,10 @@ import {
 
 async function register(event) {
   event.preventDefault();
-  const formEl = {
-    firstname: document.getElementsByName("firstname")[0],
-    lastname: document.getElementsByName("lastname")[0],
-    email: document.getElementsByName("email")[0],
-    password: document.getElementsByName("password")[0],
-    password2: document.getElementsByName("password2")[0]
-  };
+  //formEl[0] = firstname, formEl[1] = lastname... etc
+  const formEl = document.getElementsByTagName("input");
 
-  for (const el in formEl.values) {
-    console.log(el);
+  for (const el of formEl) {
     if (el.value == "") {
       window.alert(`Please enter your ${el.name}.`);
       el.focus();
@@ -25,21 +19,26 @@ async function register(event) {
     }
   }
 
-  if (formEl.password.value != formEl.password2.value) {
+  if (formEl[3].value != formEl[4].value) {
     window.alert("Passwords don't match");
     formEl.password2.focus();
     return;
   } else {
     let data = {
-      "firstname": formEl.firstname.value,
-      "lastname": formEl.lastname.value,
-      "email": formEl.email.value,
-      "password": md5(formEl.password.value),
+      "firstname": formEl[0].value,
+      "lastname": formEl[1].value,
+      "email": formEl[2].value,
+      "password": md5(formEl[3].value),
     };
 
     let response = await fetch(`/register?data=${JSON.stringify(data)}`);
     if (response.ok) {
-      window.location.href = "../index.html";
+      let value = await response.text();
+      if (value == "true") {
+        window.location.href = "../index.html";
+      } else {
+        errorMessage(response.status);
+      }
     } else {
       errorMessage(response.status);
     }

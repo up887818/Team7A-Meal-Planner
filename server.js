@@ -11,25 +11,33 @@ app.use(express.static('client'));
 const {
   Client
 } = require('pg');
-const client = new Client({
-  database: `mealprep`,
-  user: `serverconnect`,
-  password: `team7a`,
-});
 
-async function sendQuery(query, all) {
+async function sendQuery(query, output) {
+  // parameter output = says what output to give output
+  // all - all
+  // one - one output ([0])
+  // none - none
+  const client = new Client({
+    database: `mealprep`,
+    user: `serverconnect`,
+    password: `team7a`,
+  });
   client.connect();
-  // boolean item all says whether to return
-  // just 1 row or all of them...
   try {
-    const results = await client.query(query);
+    let results = await client.query(query);
+    await console.log(results);
     client.end();
-    if (all) {
+
+    if (output === "all") {
       return results.rows;
-    } else {
+    }
+    if (output === "one") {
       return results.rows[0];
+    } else {
+      return;
     }
   } catch (e) {
+    console.error(e.stack);
     client.end();
     return [];
   }
@@ -48,30 +56,32 @@ async function login(req, res) {
   let query = `select user_id, password from user_login where "email" = '${userDetails.username}';`;
   // get username and password where username = userDetails.username
 
-  let accDetails = await sendQuery(query, false);
+  let accDetails = await sendQuery(query, "one");
 
   res.send(accDetails.password === userDetails.password);
 }
 
 async function register(req, res) {
   const userDetails = JSON.parse(req.query.data);
+  let userId = 0;
 
-  let app_user_query = `insert into app_user (first_name, last_name)
-              values (${userDetails.firstname}, ${userDetails.lastname})`;
+  try {
+    let userIdQuery = `select user_id from app_user order by user_id desc limit 1;`;
 
-  await sendQuery(app_user_query);
+    userId = (await sendQuery(userIdQuery, "one")).user_id + 1;
 
-  let get_userId_query = `select user_id from app_user
-              where first_name = ${userDetails.firstname} and last_name = ${userDetails.lastname}`;
+    let insertQueries = [`insert into app_user (user_id, first_name, last_name) values (${userId}, '${userDetails.firstname}', '${userDetails.lastname}') returning *;`,
+      `insert into user_login (email, password, user_id) values ('${userDetails.email}', '${userDetails.password}', ${userId}) returning *;`
+    ];
 
-  let userId = res.json(sendQuery(get_userId_query)).rows[0];
+    await sendQuery(insertQueries[0]);
+    await sendQuery(insertQueries[1]);
 
-  let user_login_query = `insert into user_login (email, password, user_id)
-               values (${userDetails.email}, ${userDetails.password}, ${userId})`;
-
-  await sendQuery(user_login_query);
-
-  // need to figure out how to get error message
+    res.send(true);
+  } catch (e) {
+    console.log(e);
+    res.send(false);
+  }
 }
 
 async function addAllergen(req, res) {
