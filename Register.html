@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
-<head><link rel="stylesheet" type="text/css" href="MealPlanner.css"></head>
+<head>
+	<link rel="stylesheet" type="text/css" href="MealPlanner.css">
+	<script src="register.js" type="module"></script>
+</head>
 <title>Meal planner</title>
 
 
@@ -17,7 +20,7 @@
 
 
 <body>
-	<form name ="Register" >
+	<form name ="Register"id="register" >
 
   	<span id="Firstname" class="text-in">Firstname</span>
     <input class="text-in" type="name"placeholder="Firstname"name="Firstname"/>
@@ -45,7 +48,7 @@
     <br><br>
 
 
-    <input class="text-in" type="button" onclick="register()" value="Register"/>
+    <button type="submit" onclick="register()" class="registerbtn">Register</button/>
   </form>
 
 
