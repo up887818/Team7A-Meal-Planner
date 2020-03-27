@@ -8,9 +8,11 @@ function redirectToSearch() {
   if (!(window.location.href).includes("search.html")) {
     window.location.href = "../search.html";
   } else {
-    let searchResults = document.getElementById("results").childNodes.length - 1;
+    let resultsSection = document.getElementById("results");
+    let searchResults = resultsSection.childNodes.length - 1;
     if (searchResults != 0) {
-      window.location.reload();
+      // essentially this removes the previous results
+      resultsSection.innerHTML = "";
     }
   }
 }
@@ -117,10 +119,11 @@ async function findMatchingRecipes(prefs, searchBar) {
 }
 
 export async function search() {
-  redirectToSearch();
 
   let preferences = getPreferences();
   let searchBarValue = getSearchBarValue();
+
+  redirectToSearch();
 
   // default
   if (preferences == null || searchBarValue == "") {
