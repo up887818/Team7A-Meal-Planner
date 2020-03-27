@@ -14,11 +14,20 @@
  - Login/Register locally
   - Passwords are hashed to increase security
  - Filter recipes by allergens, calories, cuisine type, etc
+ - Show all details about a particular recipe
+ - Sharing recipe through Facebook
 
  ## Expected Features
- - Login/Register through Facebook
- - Sharing to social media
+ - Improved CSS
+ - Login/Register through Facebook, Google
+ - Sharing recipe through Twitter
  - Calendar feature (basics created)
 
  ## Testing
- We are automatically testing this program using Travis cl and Qunit.
+ We are automatically testing this program using Travis ci and Qunit.
+
+ ## Demo
+ Our demo video is here: 
+
+ ## Notes
+- The facebook API only works for us since our app is in development mode. (You can see it working in our demo) We cannot set it to live since 1) we do not have a privacy policy at this moment & 2) they are currently only accepting applications from businesses due to Covid-19.

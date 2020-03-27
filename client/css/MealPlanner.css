@@ -48,7 +48,17 @@ img.form-Format {
   left: 50%;
 }
 
-.text-in {
+form {
+  align-items: center;
+}
+
+form>label {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}
+
+/* .text-in {
   border: 0;
   background: #cce6ff;
   display: block;
@@ -57,19 +67,18 @@ img.form-Format {
   text-align: center auto;
   border: 4px solid grey;
   padding: 20% 15%;
-  width: 700%;
+  width: 70%;
   color: Black;
   border-radius: 5%;
   transition: 0.3s;
   cursor: pointer;
 }
 
-.text-in:focus {
+/* .text-in:focus {
   width: 800%;
   font-weight: 35%;
   border: 4px solid green;
-}
-
+} */
 a.form-Format {
   /*to set the position of the links and words directly underneath the input sections*/
   top: 200%;
