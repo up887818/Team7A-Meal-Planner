@@ -43,13 +43,26 @@ async function sendQuery(query, output) {
   }
 }
 
-async function findAllergenIDs(names) {
-  let organisedNames = (names.toString()).replace("[", "(").replace("]", ")");
-  let query = `select allergen_id from allergen where allergen_name in ${organisedNames};`;
+async function findAllergenID(name) {
+  let query = `select allergen_id from allergen where allergen_name = ${name}`;
+
+  let results = await sendQuery(query, "one");
+
+  return results.json(results);
+}
+
+async function findMultipleAllergenID(names) {
+  let query = `select allergen_id from allergen where allergen_name in (${names.map(name => `'${name}'`).join(",")});`;
 
   let results = await sendQuery(query, "all");
 
-  return res.json(results);
+  let output = [];
+
+  for (const result of results) {
+    output.push(result.allergen_id);
+  }
+
+  return output;
 }
 
 // account functions
@@ -119,31 +132,36 @@ async function getRecipe(req, res) {
   return res.json(results);
 }
 
-function addSelectorsToQuery(selectors) {
-  return concat("where ", selectors.join(" and "), ";");
+function addfiltersToQuery(filters) {
+  let output = "where ".concat(filters.join(" and "), ";");
+  return output;
 }
 
 async function filterRecipe(req, res) {
-  let query = `select recipe_id, recipe_name, cooking_time, calories, cuisine from recipe;`
-  selectors = [];
+  let query = `select recipe.recipe_id, recipe_name, cooking_time, calories, cuisine from recipe `;
+  let filters = [];
 
   let searchBarValue = req.query.searchBar;
 
   if (searchBarValue != "") {
-    selectors = selectors.push(`recipe_name like '%${searchBarValue}%'`)
+    filters.push(`recipe_name like '%${searchBarValue}%'`)
   }
 
   if (req.query.pref != "") {
-    prefs = JSON.parse(req.query.pref);
+    let prefs = JSON.parse(req.query.pref);
 
     if (prefs.cuisine != "") {
-      selectors = selectors.push(`cuisine_id =  ${req.query.cuisine}`);
+      filters.push(`cuisine =  '${prefs.cuisine}'`);
     }
     delete prefs.cuisine;
 
-    if (prefs.allergens != []) {
-      let allergenIds = await findAllergenIds(pref.allergens);
-      selectors = selectors.push(`allergen_id not in ${Object.values(allergenIds)}`);
+
+    if ((prefs.allergens).length != 0) {
+      let allergenIds = await findMultipleAllergenID(prefs.allergens);
+
+      filters.push(`recipe_allergen.allergen_id not in (${Object.values(allergenIds)})`);
+
+      query = query.concat("join recipe_allergen on recipe.recipe_id = recipe_allergen.recipe_id join allergen on recipe_allergen.allergen_id = allergen.allergen_id ");
     }
     delete prefs.allergens;
 
@@ -152,16 +170,22 @@ async function filterRecipe(req, res) {
 
     Object.entries(prefs).forEach(function([key, value]) {
       if (value != "") {
-        selectors = selectors.push(`${key} < ${value}`);
+        filters.push(`${key} < ${value}`);
       };
     });
   }
 
-  query.concat(addSelectorsToQuery(selectors));
+  query = query.concat(addfiltersToQuery(filters));
 
-  let results = await sendQuery(query, "all");
+  console.log(query);
 
-  return res.json(results);
+  try {
+    let results = await sendQuery(query, "all");
+    return res.json(results);
+  } catch (e) {
+    console.log(e);
+    return {};
+  }
 }
 
 // account functions

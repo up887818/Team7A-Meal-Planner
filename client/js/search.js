@@ -74,15 +74,14 @@ function getPreferences() {
     cuisine: prefEls[0].getElementsByTagName("select")[0].value,
     allergens: getAllergens(prefEls[1]),
     cooking_time: prefEls[2].getElementsByTagName("input")[0].value,
-    calories: parseInt(prefEls[3].getElementsByTagName("input")[0].value),
-    fat: parseInt(prefEls[4].getElementsByTagName("input")[0].value),
-    protein: parseInt(prefEls[5].getElementsByTagName("input")[0].value),
-    salt: parseInt(prefEls[6].getElementsByTagName("input")[0].value),
-    sugar: parseInt(prefEls[7].getElementsByTagName("input")[0].value),
-    fibre: parseInt(prefEls[8].getElementsByTagName("input")[0].value),
-    carbonhydrates: parseInt(prefEls[9].getElementsByTagName("input")[0].value)
+    calories: parseInt(prefEls[3].getElementsByTagName("input")[0].value) || 0,
+    fat: parseInt(prefEls[4].getElementsByTagName("input")[0].value) || 0,
+    protein: parseInt(prefEls[5].getElementsByTagName("input")[0].value) || 0,
+    salt: parseInt(prefEls[6].getElementsByTagName("input")[0].value) || 0,
+    sugar: parseInt(prefEls[7].getElementsByTagName("input")[0].value) || 0,
+    fibre: parseInt(prefEls[8].getElementsByTagName("input")[0].value) || 0,
+    carbonhydrates: parseInt(prefEls[9].getElementsByTagName("input")[0].value) || 0
   };
-
   return preferences;
 }
 
@@ -104,7 +103,7 @@ export async function showAllRecipes() {
 }
 
 async function findMatchingRecipes(prefs, searchBar) {
-  let url = `/fetch?searchBar=searchBar&pref=${JSON.stringify(prefs)}`;
+  let url = `/filter?searchBar=${searchBar}&pref=${JSON.stringify(prefs)}`;
 
   let response = await fetch(url);
 
@@ -118,6 +117,29 @@ async function findMatchingRecipes(prefs, searchBar) {
   return;
 }
 
+function checkifPrefsFilled(prefs) {
+  let defPrefs = {
+    cuisine: "",
+    allergens: [],
+    cooking_time: "",
+    calories: 0,
+    fat: 0,
+    protein: 0,
+    salt: 0,
+    sugar: 0,
+    fibre: 0,
+    carbonhydrates: 0
+  };
+
+  //no way of comparing 2 objects, they always return false unless they are
+  // in the same memory address
+  if (JSON.stringify(defPrefs) === JSON.stringify(prefs)) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
 export async function search() {
 
   let preferences = getPreferences();
@@ -126,10 +148,11 @@ export async function search() {
   redirectToSearch();
 
   // default
-  if (preferences == null || searchBarValue == "") {
-    showAllRecipes();
-  } else {
+  console.log(checkifPrefsFilled(preferences));
+  if (checkifPrefsFilled(preferences) || searchBarValue != "") {
     findMatchingRecipes(preferences, searchBarValue);
+  } else {
+    showAllRecipes();
   }
 }
 
@@ -138,11 +161,15 @@ export async function searchBar(event) {
   search();
 }
 
+function localSearchBar(event) {
+  searchBar(event);
+}
+
 if ((window.location.href).includes("search.html")) {
   window.addEventListener("load", function() {
     let searchBar = document.getElementById("searchBar");
     searchBar.value = localStorage.getItem("search_bar");
-    searchBar.addEventListener("change", searchBar);
+    searchBar.addEventListener("change", localSearchBar);
     let prefButton = document.getElementsByName("submit")[0];
     prefButton.addEventListener("click", search);
 
