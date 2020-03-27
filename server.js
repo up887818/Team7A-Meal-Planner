@@ -25,8 +25,8 @@ async function sendQuery(query, output) {
   client.connect();
   try {
     let results = await client.query(query);
-    await console.log(results);
-    client.end();
+    //await console.log(results);
+    await client.end();
 
     if (output === "all") {
       return results.rows;

@@ -153,10 +153,13 @@ export async function search() {
     fibre: 0,
     carbonhydrates: 0
   };
+  let searchBarValue = "";
   if ((window.location.href).includes("search.html")) {
     preferences = getPreferences();
+    searchBarValue = getSearchBarValue();
+  } else {
+    searchBarValue = localStorage.getItem("search_bar");
   }
-  let searchBarValue = getSearchBarValue();
 
   redirectToSearch();
 

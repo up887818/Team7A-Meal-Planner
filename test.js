@@ -11,7 +11,7 @@ QUnit.test(
     // requiring the server file starts the server
     require("./server.js");
 
-    const done = assert.async();
+    const done = assert.stop();
 
     let testData = {
       "username": "afluger0@cornell.edu",
@@ -31,11 +31,13 @@ QUnit.test(
       let str = '';
 
       res.on('data', function(chunk) {
-        str += chunk;
+        assert.equal(res.text(), "1", "Server has received correct user ID from database");
+        done();
       });
 
       res.on('end', function() {
         assert.equal(res.text(), "1", "Server has received correct user ID from database");
+        done();
       });
     });
 
@@ -82,6 +84,7 @@ QUnit.test(
 
       res.on('end', function() {
         assert.equal(str.trim(), "true", "Server has received no error from database");
+        done();
       });
     });
 
@@ -127,6 +130,7 @@ QUnit.test(
 
       res.on('end', function() {
         assert.equal(res.text(), "11", "Server has received correct user ID from database");
+        done();
       });
     });
 
@@ -162,10 +166,6 @@ QUnit.test(
       let str = '';
 
       res.on('data', function(chunk) {
-        str += chunk;
-      });
-
-      res.on('end', function() {
         let expectedOutput = {
           cooking_time: "0:30",
           calories: 973,
@@ -179,6 +179,7 @@ QUnit.test(
           allergen_name: "shellfish"
         }
         assert.equal(res.json(), expectedOutput, "Server has received correct user ID from database");
+        done();
       });
     });
 
@@ -190,6 +191,12 @@ QUnit.test(
     req.end();
   }
 
+);
+
+QUnit.done(
+  function(details) {
+    console.log(`Total ${details.total}, Failed ${details.failed}, Passed ${details.passed}, Runtime ${details.runtime}`);
+  }
 );
 
 // async function runTests() {
