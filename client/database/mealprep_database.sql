@@ -7,7 +7,7 @@ create database mealprep;
 
 create table recipe (
     recipe_id serial primary key,
-    recipe_name varchar(25) not null,
+    recipe_name varchar(50) not null,
     cooking_time varchar(10),
     cuisine varchar(20),
     calories int,
