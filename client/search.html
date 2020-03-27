@@ -11,8 +11,19 @@
 
 <body>
   <script src="js/search.js" type="module"></script>
+  <header class="topBar">
+    <span>
+      <img src="images/logo.png" alt="Placeholder of team logo" class="topBar">
+      <span class="topBar"> Meal Planner </span>
+      <form id="searchbar">
+        <input id="searchBar" type="text">
+        <br>
+        <br>
+      </form>
+  </header>
+
   <section id="filters">
-    <div>
+    <div id="cuisine">
       <p>Cuisines</p>
       <select name="cuisine">
         <option value="french">French</option>
@@ -22,7 +33,7 @@
         <option value="indian">Indian</option>
       </select>
     </div>
-    <div>
+    <div id="allergens">
       <p>Allergies</p>
       <label>
         <input type="checkbox" value="milk">Milk
@@ -64,38 +75,39 @@
         <input type="checkbox" value="gluten">Gluten
       </label>
     </div>
-    <div>
+    <div id="cooking_time">
       <p>Max Cooking Time</p>
       <input type="time">
     </div>
-    <div>
+    <div id="calories">
       <p>Max Calories</p>
       <input type="number">
     </div>
-    <div>
+    <div id="fat">
       <p>Max Fat</p>
       <input type="number">
     </div>
-    <div>
+    <div id="protein">
       <p>Max Protein</p>
       <input type="number">
     </div>
-    <div>
+    <div id="salt">
       <p>Max Salt</p>
       <input type="number">
     </div>
-    <div>
+    <div id="sugar">
       <p>Max Sugar</p>
       <input type="number">
     </div>
-    <div>
+    <div id="fibre">
       <p>Max Fibre</p>
       <input type="number">
     </div>
-    <div>
+    <div id="carbonhydrates">
       <p>Max Carbs</p>
       <input type="number">
     </div>
+    <button type="button" name="submit">Submit Preferences</button>
   </section>
   <section id="results">
   </section>

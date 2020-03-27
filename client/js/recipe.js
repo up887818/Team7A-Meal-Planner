@@ -1,8 +1,18 @@
 'use Strict';
+import {
+  searchBar
+} from "./search.js"
 
 //display Recipe steps
 
+function recipeSearchBar(event) {
+  searchBar(event);
+}
+
 async function loadPage() {
+  let searchBar = document.getElementById("searchBar");
+  searchBar.value = localStorage.getItem("search_bar");
+  searchBar.addEventListener("change", recipeSearchBar);
   // default value temporarily 1
   const recipeId = sessionStorage.getItem("recipe_id") || 1;
 

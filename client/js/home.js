@@ -1,7 +1,11 @@
 'use strict';
+import {
+  search,
+  searchBar
+} from "./search.js"
 
 async function showAllRecipes(event) {
-  window.location.href = "search.html";
+  search();
 }
 
 async function showFavRecipes(event) {
@@ -12,6 +16,9 @@ async function showCalendar(event) {
   window.location.href = "calendar.html";
 }
 
+function homeSearchBar(event) {
+  searchBar(event);
+}
 
 // button initialising
 window.addEventListener("load", function() {
@@ -20,4 +27,8 @@ window.addEventListener("load", function() {
   buttons[0].addEventListener("click", showAllRecipes);
   buttons[1].addEventListener("click", showFavRecipes);
   buttons[2].addEventListener("click", showCalendar);
+
+  let searchBar = document.getElementById("searchBar");
+  searchBar.value = localStorage.getItem("search_bar");
+  searchBar.addEventListener("change", homeSearchBar);
 })
