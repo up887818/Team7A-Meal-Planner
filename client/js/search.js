@@ -5,7 +5,6 @@ import {
 
 function redirectToSearch() {
   // checks if it is currently on the search page
-  console.log((window.location.href).includes("search.html"));
   if (!(window.location.href).includes("search.html")) {
     window.location.href = "../search.html";
   } else {
@@ -31,41 +30,30 @@ async function setupHtml(data) {
     let imageEl = clone.querySelector("img");
     imageEl.src = image;
 
-    let nameEl = clone.querySelector("h2");
-    nameEl.textContent = recipe.recipe_name;
+    let recipeEl = clone.querySelector("hide");
+    recipeEl.textContent = recipe.recipe_id;
 
-    let introEl = clone.querySelector("p")
+    let nameEl = clone.querySelector("a");
+    nameEl.textContent = recipe.recipe_name;
+    nameEl.addEventListener("click", function() {
+      let section = nameEl.parentElement.parentElement;
+      let recipeEl = section.querySelector("hide");
+      sessionStorage.setItem("recipe_id", recipeEl.textContent);
+      window.location.href = "../recipepage.html";
+    });
+
+    let introEl = clone.querySelector("p");
     introEl.textContent = jsonData.intro;
 
     let variableEls = clone.querySelectorAll("li");
 
-    variableEls[0].textContent = recipe.cooking_time;
-    variableEls[1].textContent = recipe.calories;
-    variableEls[2].textContent = recipe.cuisine;
+    variableEls[0].textContent = `Cooking time: ${recipe.cooking_time}`;
+    variableEls[1].textContent = `Calories: ${recipe.calories}`;
+    variableEls[2].textContent = `Cuisine: ${recipe.cuisine}`;
 
     section.appendChild(clone);
   }
 }
-
-
-// function search() {
-//   let input = document.getElementById('search').value;
-//   input = input.toLowerCase();
-//   let x = document.getElementsByClassName('recipes'); //xxx to be replaced by list of meals... ps still working on this
-//
-//   for (i = 0; i < x.length; i++) {
-//     if (!x[i].innerHTML.toLowerCase().includes(input)) {
-//       x[i].style.display = "none";
-//     } else {
-//       x[i].style.display = 'recipes';
-//     }
-//   }
-// }
-// document.getElementById("search").addEventListener("keyup", function(event) {
-//   if (event.key === "Enter") {
-//     event.search();
-//   }
-// });
 
 function getAllergens(divEl) {
   let output = [];

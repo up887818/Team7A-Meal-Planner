@@ -1,9 +1,7 @@
 /*This external stylesheet is for the Recipe page of the website*/
-
 /*/////////////////////////
 Below is css for whole site
 /////////////////////////*/
-
 * {
   box-sizing: border-box;
 }
@@ -16,107 +14,105 @@ ul {
   list-style: none;
 }
 
-
-
 /*/////////////////////////////////
 Below is the css for the Index page
 /////////////////////////////////*/
+.logColour {
+  background-color: #333359;
+}
 
-.logColour{background-color:#333359 ;} /* Only the login has this different colous format*/
+/* Only the login has this different colous format*/
+h1.loginHeader {
+  text-align: center;
+  /* This formats the H1 on te login page*/
+  width: 50px;
+  position: relative;
+  white-space: nowrap;
+  top: 5%;
+  left: 30%;
+  font-size: 45px;
+}
 
-
-h1.loginHeader{ text-align:center;    /* This formats the H1 on te login page*/
-        width:50px;
-        position: relative;
-        white-space: nowrap;
-        top:5%;
-        left:30%;
-        font-size:45px;
-      }
-
-
-.form-Format {          /* Sets the position of the inputs, image and button*/
+.form-Format {
+  /* Sets the position of the inputs, image and button*/
   width: 30px;
   position: relative;
   top: 35%;
   left: 35%;
 }
 
-img.form-Format{width: 150px;
-                height: 125px;
-                top: 20%;
-                left: 50%;
-              }
+img.form-Format {
+  width: 150px;
+  height: 125px;
+  top: 20%;
+  left: 50%;
+}
 
 .text-in {
-      border: 0;
-      background:#cce6ff;
-      display: block;
-      align-items: center auto;
-      margin:5% auto;
-      text-align: center auto;
-      border:4px solid grey;
-      padding: 20% 15%;
-      width: 700%;
-      color: Black;
-      border-radius:5%;
-      transition: 0.3s;
-      cursor: pointer;
+  border: 0;
+  background: #cce6ff;
+  display: block;
+  align-items: center auto;
+  margin: 5% auto;
+  text-align: center auto;
+  border: 4px solid grey;
+  padding: 20% 15%;
+  width: 700%;
+  color: Black;
+  border-radius: 5%;
+  transition: 0.3s;
+  cursor: pointer;
 }
 
-.text-in:focus{
+.text-in:focus {
   width: 800%;
   font-weight: 35%;
-  border:4px solid green;
+  border: 4px solid green;
 }
 
-a.form-Format {      /*to set the position of the links and words directly underneath the input sections*/
+a.form-Format {
+  /*to set the position of the links and words directly underneath the input sections*/
   top: 200%;
   left: 70%;
   width: 300px;
   display: inline-block;
-  text-align: center;}
+  text-align: center;
+}
 
-span.login{
+span.login {
   margin: 0;
   padding: 0;
-  
   float: left;
 }
 
-.addon{
+.addon {
   position: relative;
-  left:35%;
-
+  left: 35%;
 }
 
-a.addon{color: white;
-  left:-2%;
+a.addon {
+  color: white;
+  left: -2%;
   float: left;
-
 }
 
-p.add{color:#e9ff24;}
+p.add {
+  color: #e9ff24;
+}
 
-
-
-
-
-img.fbLogo{position: relative;
-           width: 70px;
-           height: 55px;
-         }
+img.fbLogo {
+  position: relative;
+  width: 70px;
+  height: 55px;
+}
 
 label>input {
   display: inline;
 }
 
-
 /*////////////////
 Homepage css below
 ////////////////*/
-
-
 li.menuBar {
   align-items: center;
   margin: 2%;
@@ -157,7 +153,6 @@ a.menuBar {
 /*////////////////////////////////////
 Below is the css for the Recipe page
 ////////////////////////////////////*/
-
 .topBar {
   background-color: #333359;
   padding-top: auto;
@@ -173,7 +168,6 @@ img.topBar {
   width: 150px;
   height: 100px;
   vertical-align: middle;
-
 }
 
 span.topBar {
@@ -211,4 +205,34 @@ p.rightBar {
 a {
   margin: 2rem;
   border: 1rem;
+}
+
+/*////////////////////////////////////
+Below is the css for the Search page
+////////////////////////////////////*/
+@media (min-width: 900px) {
+  #filters {
+    height: 82%;
+    /* Full-height: remove this if you want "auto" height */
+    margin-top: 8%;
+    width: 20%;
+    /* Set the width of the sidebar */
+    position: fixed;
+    /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1;
+    /* Stay on top */
+    top: 0;
+    /* Stay at the top */
+    left: 0;
+    overflow-x: hidden;
+    /* Disable horizontal scroll */
+    padding-top: 20px;
+  }
+
+  /* Style page content */
+  #results {
+    margin-left: 20%;
+    /* Same as the width of the sidebar */
+    padding: 0px 10px;
+  }
 }

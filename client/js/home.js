@@ -29,6 +29,6 @@ window.addEventListener("load", function() {
   buttons[2].addEventListener("click", showCalendar);
 
   let searchBar = document.getElementById("searchBar");
-  searchBar.value = localStorage.getItem("search_bar");
+  localStorage.removeItem("search_bar");
   searchBar.addEventListener("change", homeSearchBar);
 })

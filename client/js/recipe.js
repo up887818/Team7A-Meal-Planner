@@ -2,6 +2,9 @@
 import {
   searchBar
 } from "./search.js"
+import {
+  errorMessage
+} from "./error.js"
 
 //display Recipe steps
 
@@ -11,10 +14,13 @@ function recipeSearchBar(event) {
 
 async function loadPage() {
   let searchBar = document.getElementById("searchBar");
-  searchBar.value = localStorage.getItem("search_bar");
+  localStorage.removeItem("search_bar");
   searchBar.addEventListener("change", recipeSearchBar);
-  // default value temporarily 1
-  const recipeId = sessionStorage.getItem("recipe_id") || 1;
+  const recipeId = sessionStorage.getItem("recipe_id");
+
+  if (recipeId == undefined) {
+    errorMessage(404);
+  }
 
   // getting data accessible without database
   let jsonDataLoc = `../recipes/${recipeId}/${recipeId}.json`;
@@ -58,11 +64,10 @@ async function loadPage() {
 
   let nutroTable = document.querySelectorAll(".editable");
   let i = 0;
-  for (const item of Object.values(data)) {
-    console.log(item);
+  for (const item of Object.values(data))
     nutroTable[i].textContent = item;
-    i++;
-  }
+  i++;
+}
 }
 
 window.addEventListener("load", loadPage());
