@@ -1,48 +1,50 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<link rel="stylesheet" type="text/css" href="MealPlanner.css">
-	<script src="search.js" type="module"></script>
-	<script src="client.js" type="module"></script>
-	</head>
-<title>Home Page</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Meal Planner</title>
+	<link rel="stylesheet" type="text/css" href="css/MealPlanner.css">
+</head>
 
 
+	<div class="topBar" >
+		<ul class="barForm" >
+			<li ><img class="topBar"src="images/logo.png" alt="Placeholder of team logo" ></li>
+			<li><form action="/action_page.php"><input =type="text" class="topSearch"></form>
+			<li class="topBar"><spa>Meal Planner</span></li>
+			
+		</ul>
 
-<header class ="topBar" >
-	<span>
-	<img src="Logo.png" alt="Placeholder of team logo" class="topBar" >
-	<span class="topBar">Meal Planner</span>
-	<form id="searchbar">
-	<input id="search" class= "topSearch"type="text" ><br><br>
-
-	</form>
-
-</header>
+	</div>
 
 
 <body>
 
-<ul>
-	<li class="menuBar"><a class="menuBar" href="RecipePage.html">New Recipes For you</a></li>
-	<li class="menuBar"><a id= "myRecipes" class="menuBar" onclick="loadAllRecipes()">My recipes</a></li>
-	<li class="menuBar"><a class="menuBar" href="calenddar.html">My Calendar</a></li>
-</ul>
 
-<ul>
-	<li class="favTitle"> Favourite recipes</li>
-</ul>
+	<ul>
+		<li class="menuBar"><a class="menuBar" href="RecipePage.html">New Recipes For you</a></li>
 
-<ul>
-	<li class="favPicks"></li>
-	<li class="favPicks"></li>
-	<li class="favPicks"></li>
-	<li class="favPicks"></li>
-	<li class="favPicks"></li>
-</ul>
+		<li class="menuBar"><a id= "myRecipes" class="menuBar" onclick="loadAllRecipes()">My recipes</a></li>
 
+		<li class="menuBar"><a class="menuBar" href="calenddar.html">My Calendar</a></li>
 
+	</ul>
 
+	<ul>
+		<li class="favTitle"> Favourite recipes</li>
+	</ul>
 
+	<ul>
+		<li class="favPicks"></li>
+		<li class="favPicks"></li>
+		<li class="favPicks"></li>
+		<li class="favPicks"></li>
+		<li class="favPicks"></li>
+	</ul>
+
+	<script src="client.js" type="module"></script>
 </body>
+
 </html>
