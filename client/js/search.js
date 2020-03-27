@@ -154,7 +154,7 @@ export async function search() {
     carbonhydrates: 0
   };
   if ((window.location.href).includes("search.html")) {
-    let preferences = getPreferences();
+    preferences = getPreferences();
   }
   let searchBarValue = getSearchBarValue();
 

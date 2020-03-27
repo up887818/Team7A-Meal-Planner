@@ -71,10 +71,14 @@ async function login(req, res) {
 
   let query = `select user_id, password from user_login where "email" = '${userDetails.username}';`;
   // get username and password where username = userDetails.username
-
   let accDetails = await sendQuery(query, "one");
 
-  res.send(accDetails.password === userDetails.password);
+  if (accDetails == undefined) {
+    // if account hasnt been created
+    res.send(false);
+  } else {
+    res.send(accDetails.password === userDetails.password);
+  }
 }
 
 async function register(req, res) {
