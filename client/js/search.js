@@ -101,7 +101,18 @@ export async function showAllRecipes() {
   }
 }
 
-async function findMatchingRecipes() {
+async function findMatchingRecipes(prefs, searchBar) {
+  let url = `/fetch?searchBar=searchBar&pref=${JSON.stringify(prefs)}`;
+
+  let response = await fetch(url);
+
+  if (response.ok) {
+    let data = await response.json();
+    setupHtml(data);
+  } else {
+    errorMessage(response.status);
+  }
+
   return;
 }
 

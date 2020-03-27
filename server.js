@@ -43,10 +43,13 @@ async function sendQuery(query, output) {
   }
 }
 
-async function findAllergenID(name) {
-  let query = `select allergen_id from allergen where allergen_name = ${name}`;
+async function findAllergenIDs(names) {
+  let organisedNames = (names.toString()).replace("[", "(").replace("]", ")");
+  let query = `select allergen_id from allergen where allergen_name in ${organisedNames};`;
 
-  return res.json(sendQuery(query)).rows[0];
+  let results = await sendQuery(query, "all");
+
+  return res.json(results);
 }
 
 // account functions
@@ -121,30 +124,44 @@ function addSelectorsToQuery(selectors) {
 }
 
 async function filterRecipe(req, res) {
-  let query = `select recipe_name, cooking_time, cuisine_name
-  from recipe
-  join recipe_cuisine on recipe.recipe_id = recipe_cuisine.recipe_id
-  join cuisine on recipe_cuisine.cuisine_id = cuisine.cuisine_id;`
-
+  let query = `select recipe_id, recipe_name, cooking_time, calories, cuisine from recipe;`
   selectors = [];
 
-  if (`${req.query.cookingTime}` !== "") {
-    selectors = selectors.push(`cooking_time ILIKE ${req.query.cookingTime}`);
+  let searchBarValue = req.query.searchBar;
+
+  if (searchBarValue != "") {
+    selectors = selectors.push(`recipe_name like '%${searchBarValue}%'`)
   }
-  if (`${req.query.cuisine}` !== "") {
-    selectors = selectors.push(`cuisine_id =  ${req.query.cuisine}`);
-  }
-  if (`${req.query.calories}` !== "") {
-    selectors = selectors.push(`calories < ${req.query.calories}`);
-  }
-  if (`${req.query.allergen !== ""}`) {
-    let allergenID = await findAllergenID(`${req.query.allergen}`);
-    selectors = selectors.push(`allergen_id not in ${allergenID.allergen_id}`);
+
+  if (req.query.pref != "") {
+    prefs = JSON.parse(req.query.pref);
+
+    if (prefs.cuisine != "") {
+      selectors = selectors.push(`cuisine_id =  ${req.query.cuisine}`);
+    }
+    delete prefs.cuisine;
+
+    if (prefs.allergens != []) {
+      let allergenIds = await findAllergenIds(pref.allergens);
+      selectors = selectors.push(`allergen_id not in ${Object.values(allergenIds)}`);
+    }
+    delete prefs.allergens;
+
+    // unsure how to filter this!
+    delete prefs.cooking_time;
+
+    Object.entries(prefs).forEach(function([key, value]) {
+      if (value != "") {
+        selectors = selectors.push(`${key} < ${value}`);
+      };
+    });
   }
 
   query.concat(addSelectorsToQuery(selectors));
 
-  return res.json(sendQuery(query));
+  let results = await sendQuery(query, "all");
+
+  return res.json(results);
 }
 
 // account functions

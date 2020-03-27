@@ -64,10 +64,11 @@ async function loadPage() {
 
   let nutroTable = document.querySelectorAll(".editable");
   let i = 0;
-  for (const item of Object.values(data))
+  for (const item of Object.values(data)) {
     nutroTable[i].textContent = item;
-  i++;
+    i++;
+  }
 }
-}
+
 
 window.addEventListener("load", loadPage());

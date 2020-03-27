@@ -16,7 +16,7 @@ ul {
 
 .topBar {
   position: relative;
-  display: inline-block;
+  display: inline;
   background-color: #333359;
   padding-top: auto;
   width: 100%;
