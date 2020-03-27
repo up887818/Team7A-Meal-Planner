@@ -5,27 +5,31 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Meal Planner</title>
-	<link rel="stylesheet" type="text/css" href="MealPlanner.css">
+	<link rel="stylesheet" type="text/css" href="css/MealPlanner.css">
 </head>
+
+
+	<div class="topBar" >
+		<ul class="barForm" >
+			<li ><img class="topBar"src="images/logo.png" alt="Placeholder of team logo" ></li>
+			<li><form action="/action_page.php"><input =type="text" class="topSearch"></form>
+			<li class="topBar"><spa>Meal Planner</span></li>
+			
+		</ul>
+
+	</div>
 
 
 <body>
 
-	<header class="topBar">
-		<span>
-			<img src="Logo.png" alt="Placeholder of team logo" class="topBar">
-			<span class="topBar">Meal Planner</span>
-			<form action="/action_page.php">
-				<input class="topSearch" type="text"><br><br>
-
-			</form>
-
-	</header>
 
 	<ul>
-		<li class="menuBar"><a class="menuBar" href="">New Recipes For you</a></li>
-		<li class="menuBar"><a class="menuBar" href="">My recipes</a></li>
-		<li class="menuBar"><a class="menuBar" href="">My Calendar</a></li>
+		<li class="menuBar"><a class="menuBar" href="RecipePage.html">New Recipes For you</a></li>
+
+		<li class="menuBar"><a id= "myRecipes" class="menuBar" onclick="loadAllRecipes()">My recipes</a></li>
+
+		<li class="menuBar"><a class="menuBar" href="calenddar.html">My Calendar</a></li>
+
 	</ul>
 
 	<ul>
