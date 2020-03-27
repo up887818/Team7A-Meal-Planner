@@ -4,7 +4,6 @@ create database mealprep;
 
 \c mealprep;
 
-
 create table recipe (
     recipe_id serial primary key,
     recipe_name varchar(50) not null,

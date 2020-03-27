@@ -141,8 +141,21 @@ function checkifPrefsFilled(prefs) {
 }
 
 export async function search() {
-
-  let preferences = getPreferences();
+  let preferences = {
+    cuisine: "",
+    allergens: [],
+    cooking_time: "",
+    calories: 0,
+    fat: 0,
+    protein: 0,
+    salt: 0,
+    sugar: 0,
+    fibre: 0,
+    carbonhydrates: 0
+  };
+  if ((window.location.href).includes("search.html")) {
+    let preferences = getPreferences();
+  }
   let searchBarValue = getSearchBarValue();
 
   redirectToSearch();
